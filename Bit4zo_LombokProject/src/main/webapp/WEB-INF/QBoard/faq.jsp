@@ -11,5 +11,6 @@
 </head>
 <body>
 <h1>boardqqqqq</h1>
+<h2>풀 테스트</h2>
 </body>
 </html>
