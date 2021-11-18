@@ -10,6 +10,6 @@
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 </head>
 <body>
-<h1>board</h1>
+<h1>boardqq</h1>
 </body>
 </html>
