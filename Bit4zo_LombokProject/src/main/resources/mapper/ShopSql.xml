@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.ShopMapper">
+   
+    <insert id="insertShop" parameterType="pdto">
+        insert into product (pro_id,pro_name,price,stock,pro_sub,pro_photo,pro_content,ipgoday) values (#{pro_id},#{pro_name},#{price},#{stock},#{pro_sub},#{pro_photo},#{pro_content},now())
+    </insert>
+    
+    <insert id="insertShopOp" parameterType="podto">
+        insert into pro_option (pro_id,color,s,m,l) values (#{pro_id},#{color},#{s},#{m},#{l})
+    </insert>
+    
+    <select id="getTotalCount" resultType="int">
+		select count(*) from product
+ 	</select>
+ 	
+ 	<select id="getAllLists" parameterType="HashMap" resultType="pdto">
+ 		select * from product order by num desc limit #{start},#{perpage}
+ 	</select>
+ 	
+ 	<select id="getData" parameterType="String" resultType="pdto">
+ 		select * from product where num=#{num}
+ 	</select>
+ 	<select id="getData2" parameterType="String" resultType="pcdto">
+ 		select product.pro_id,product.pro_name,product.price,product.stock,product.pro_sub,product.pro_photo,product.pro_content,pro_option.color,pro_option.s,pro_option.m,pro_option.l
+ 		from product join pro_option on product.pro_id=pro_option.pro_id where product.pro_id=#{pro_id}
+ 	</select>
+ 	
+ 	<update id="updateReadCount" parameterType="String">
+      	update product set readcount=readcount+1 where num=#{num}
+    </update>
+ 	
+</mapper>

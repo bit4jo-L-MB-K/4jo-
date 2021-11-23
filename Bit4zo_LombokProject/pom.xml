@@ -8,11 +8,11 @@
 		<version>2.5.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>boot.day1104</groupId>
-	<artifactId>BootMyBatisTilesEx4</artifactId>
+	<groupId>com.boot</groupId>
+	<artifactId>FinalProjectLombok</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>BootMyBatisTilesEx4</name>
+	<name>FinalProjectLombok</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
@@ -38,19 +38,7 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
-			<!--<version>5.1.6</version>  -->
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-jsp -->
-		<dependency>
-		    <groupId>org.apache.tiles</groupId>
-		    <artifactId>tiles-jsp</artifactId>
-		    <version>3.0.8</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-jsp -->
-		<dependency>
-		    <groupId>org.apache.tiles</groupId>
-		    <artifactId>tiles-el</artifactId>
-		    <version>3.0.8</version>
+			
 		</dependency>
 		
 		
@@ -67,26 +55,28 @@
 		<!-- add -->
 		<!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper -->
 		<dependency>
-		    <groupId>org.apache.tomcat.embed</groupId>
-		    <artifactId>tomcat-embed-jasper</artifactId>
-		    <scope>provided</scope>
+    		<groupId>org.apache.tomcat.embed</groupId>
+    		<artifactId>tomcat-embed-jasper</artifactId>
+    		<scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/jstl/jstl -->
 		<dependency>
-		    <groupId>jstl</groupId>
-		    <artifactId>jstl</artifactId>
-		    <version>1.2</version>
+    		<groupId>jstl</groupId>
+    		<artifactId>jstl</artifactId>
+    		<version>1.2</version>
 		</dependency>
-		
+		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-jsp -->
+		<dependency>
+    		<groupId>org.apache.tiles</groupId>
+    		<artifactId>tiles-jsp</artifactId>
+    		<version>3.0.8</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.apache.tiles</groupId>
+    		<artifactId>tiles-el</artifactId>
+    		<version>3.0.8</version>
+		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
+	
 </project>
