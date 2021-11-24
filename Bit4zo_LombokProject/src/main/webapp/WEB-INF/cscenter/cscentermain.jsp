@@ -3,30 +3,21 @@
 <!DOCTYPE html>
 <html lang="UTF-8">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>고객 센터 | LomBok</title>
-<meta name="description" content="Lombok CS center">
-<link rel="icon" type="image/png" href="imgs/at-solid.png"/>
-<script src="https://kit.fontawesome.com/55fa8b84a2.js" crossorigin="anonymous"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../resources/cscenterstyle.css">
-<script src="main.js" defer></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객 센터 | LomBok</title>
+    <meta name="description" content="Lombok CS center">
+    <link rel="icon" type="image/png" href="imgs/at-solid.png"/>
+    <script src="https://kit.fontawesome.com/55fa8b84a2.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../resources/cscenterstyle.css">
+    <script src="main.js" defer></script>
 <style type="text/css">
 #csheader {
   background: url("../photo/home-background.png") center/cover no-repeat;
   padding: 30px;
   text-align: center;
-}
-.link-list a:hover {
-  border: 1px solid var(--color-orange);
-  color : black;
-
-}
-.link-list :hover i {
-  transform: scale(1.1);
-  
 }
 
 </style>

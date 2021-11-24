@@ -138,6 +138,7 @@ p {
 
 .link-list a:hover {
   border: 1px solid var(--color-orange);
+  color: black;
 }
 .link-list :hover i {
   transform: scale(1.1);
