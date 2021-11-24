@@ -18,12 +18,38 @@
  		select * from product order by num desc limit #{start},#{perpage}
  	</select>
  	
+ 	<!--  <select id="getAllLists2" parameterType="String" resultType="podto">
+ 		select * from pro_option where pro_id=#{pro_id} order by num desc
+ 	</select>-->
+ 		
  	<select id="getData" parameterType="String" resultType="pdto">
  		select * from product where num=#{num}
  	</select>
- 	<select id="getData2" parameterType="String" resultType="pcdto">
- 		select product.pro_id,product.pro_name,product.price,product.stock,product.pro_sub,product.pro_photo,product.pro_content,pro_option.color,pro_option.s,pro_option.m,pro_option.l
+ 	
+ 	
+ 	<select id="getData2" parameterType="podto" resultType="podto">
+ 		select product.pro_name,product.price,product.stock,product.pro_sub,pro_option.color,pro_option.s,pro_option.m,pro_option.l
  		from product join pro_option on product.pro_id=pro_option.pro_id where product.pro_id=#{pro_id}
+ 	</select>
+ 	
+ 	<resultMap type="pdto" id="pdto">
+  	 <result column="pro_name" property="pro_name"/>
+  	 <result column="price" property="price"/>
+  	 <result column="stock" property="stock"/>
+  	 <result column="pro_sub" property="pro_sub"/>
+	</resultMap>
+
+	<resultMap type="podto" id="podto">
+  	 <result column="pro_id" property="pro_id"/>
+  	 <result column="color" property="color"/>
+  	 <result column="s" property="s"/>
+   	<result column="m" property="m"/>
+   	<result column="l" property="l"/>
+<collection property="joindto" resultMap="pdto"/>
+</resultMap>
+ 	
+ 	<select id="getData3" parameterType="String" resultType="podto">
+ 		select * from pro_option where pro_id=#{pro_id}
  	</select>
  	
  	<update id="updateReadCount" parameterType="String">

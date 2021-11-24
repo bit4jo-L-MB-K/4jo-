@@ -12,8 +12,8 @@
 </head>
 <body>
 <form action="insert" method="post" enctype="multipart/form-data">
+<b>상품 정보 입력</b>
 	<table class="table table-bordered" style="width: 700px;">
-		<caption><b>상품 정보 입력</b></caption>
 		<tr>
 			<th bgcolor="#ddd" width="120">상품코드</th>
 			<td>
@@ -68,37 +68,7 @@
 				style="width:200px;" required="required"></textarea>
 			</td>			
 		</tr>
-		<tr>
-			<th bgcolor="#ddd" width="120">색깔</th>
-			<td>
-				<input type="text" name="color" class="form-control"
-				style="width:200px;" required="required">
-			</td>			
-		</tr>
 		
-		<tr>
-			<th bgcolor="#ddd" width="120">s</th>
-			<td>
-				<input type="text" name="s" class="form-control"
-				style="width:200px;" required="required">
-			</td>			
-		</tr>
-		
-		<tr>
-			<th bgcolor="#ddd" width="120">m</th>
-			<td>
-				<input type="text" name="m" class="form-control"
-				style="width:200px;" required="required">
-			</td>			
-		</tr>
-		
-		<tr>
-			<th bgcolor="#ddd" width="120">l</th>
-			<td>
-				<input type="text" name="l" class="form-control"
-				style="width:200px;" required="required">
-			</td>			
-		</tr>
 		<tr>
 			<td colspan="2" align="center">
 			<button type="submit" class="btn btn-info"
@@ -109,5 +79,58 @@
 		</tr>
 	</table>
 </form>
+<div style='width:50%; float:left;'>
+<form action="insert2" method="post" enctype="multipart/form-data">
+   <b>상품정보입력</b>
+   <table class="table table-bordered" style="width: 500px;">
+<tr>
+<th bgcolor="#ddd" width="120">상품아이디</th>
+<td>
+<c:if test="${!empty list}" >
+   <select name="pro_id" required="required" class="form">
+      <c:forEach var="p" items="${list}">
+         <option value="${p.pro_id}">${p.pro_id}</option>
+      </c:forEach>
+   </select>
+</c:if>
+</td>
+</tr>  
+      <tr>
+         <th bgcolor="#ddd" width="120">색상</th>
+         <td>
+            <input type="text" name="color" class="form-control"
+            style="width:200px;" required="required">
+         </td>         
+      </tr>
+      <tr>
+         <th bgcolor="#ddd" width="120">s 재고</th>
+         <td>
+            <input type="text" name="s" class="form-control"
+            style="width:200px;" required="required">
+         </td>         
+      </tr>
+      <tr>
+         <th bgcolor="#ddd" width="120">m 재고</th>
+         <td>
+            <input type="text" name="m" class="form-control"
+            style="width:200px;" required="required">
+         </td>         
+      </tr>
+      <tr>
+         <th bgcolor="#ddd" width="120">l 재고</th>
+         <td>
+            <input type="text" name="l" class="form-control"
+            style="width:200px;" required="required">
+         </td>         
+      </tr>
+      <tr>
+         <td colspan="2" align="center">
+         <button type="submit" class="btn btn-info"
+         style="width: 100px;">저장</button>
+</table>
+</form>
+</div>
+<p style=clear:both;></p>
+
 </body>
 </html>

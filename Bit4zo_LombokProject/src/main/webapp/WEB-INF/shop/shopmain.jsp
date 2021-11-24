@@ -228,7 +228,7 @@
                                         <li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
                                         <li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
                                         </li>
-                                        <li><a href="${root}/shop/details?num=${p.num}&currentPage=${currentPage}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
+                                        <li><a href="${root}/shop/details?num=${p.num}&currentPage=${currentPage}&pro_id=${p.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">      

@@ -102,21 +102,25 @@
                             <h3><fmt:formatNumber value="${dto.price}" pattern="#,###,###"/> ￦</h3>
                             <p>${dto.pro_content }</p>
                             <p>조회수 : ${dto.readcount }</p>
+                            <p>${dto2.color }</p>
+                            <!-- <c:forEach var="po" items="${list2}">
+                           			 <p>색깔 : ${po.color }</p>
+                            	</c:forEach>-->
+                           
+                            
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>Size:</span>
-                                    <label for="xxl">xxl
+                                    <label for="xxl">S
                                         <input type="radio" id="xxl">
                                     </label>
-                                    <label class="active" for="xl">xl
+                                    <label class="active" for="xl">M
                                         <input type="radio" id="xl">
                                     </label>
-                                    <label for="l">l
+                                    <label for="l">L
                                         <input type="radio" id="l">
                                     </label>
-                                    <label for="sm">s
-                                        <input type="radio" id="sm">
-                                    </label>
+                                   
                                 </div>
                                 <div class="product__details__option__color">
                                     <span>Color: </span>

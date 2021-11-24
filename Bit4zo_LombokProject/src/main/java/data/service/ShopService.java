@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import data.dto.ProductCompleteDto;
 import data.dto.ProductDto;
 import data.dto.ProductOpDto;
 import data.mapper.ShopMapper;
@@ -31,7 +30,11 @@ public class ShopService {
     return mapper.getData(num);
   }
 
-  public ProductCompleteDto getData2(String pro_id) {
+  public ProductOpDto getData3(String pro_id) {
+    return mapper.getData3(pro_id);
+  }
+
+  public ProductOpDto getData2(String pro_id) {
     return mapper.getData2(pro_id);
   }
 
@@ -43,8 +46,20 @@ public class ShopService {
     return mapper.getAllLists(map);
   }
 
+  // public List<ProductOpDto> getAllLists2(String pro_id) {
+  //
+  // // HashMap<String, String> map2 = new HashMap<String, String>();
+  // // map2.put("pro_id", pro_id);
+  // // return mapper.getAllLists2(map2);
+  // List<ProductOpDto> list = mapper.getAllLists2(pro_id);
+  // System.out.println(list.size());
+  //
+  // return list;
+  // }
+
   public void updateReadCount(String num) {
     mapper.updateReadCount(num);
   }
+
 
 }
