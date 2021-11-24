@@ -30,13 +30,6 @@ public class ShopService {
     return mapper.getData(num);
   }
 
-  public ProductOpDto getData3(String pro_id) {
-    return mapper.getData3(pro_id);
-  }
-
-  public ProductOpDto getData2(String pro_id) {
-    return mapper.getData2(pro_id);
-  }
 
 
   public List<ProductDto> getAllLists(int start, int perpage) {
@@ -46,16 +39,13 @@ public class ShopService {
     return mapper.getAllLists(map);
   }
 
-  // public List<ProductOpDto> getAllLists2(String pro_id) {
-  //
-  // // HashMap<String, String> map2 = new HashMap<String, String>();
-  // // map2.put("pro_id", pro_id);
-  // // return mapper.getAllLists2(map2);
-  // List<ProductOpDto> list = mapper.getAllLists2(pro_id);
-  // System.out.println(list.size());
-  //
-  // return list;
-  // }
+  public List<ProductOpDto> getAllOptions(String pro_id) {
+    System.out.println("pro_id=" + pro_id);
+
+    return mapper.getAllOptions(pro_id);
+
+
+  }
 
   public void updateReadCount(String num) {
     mapper.updateReadCount(num);

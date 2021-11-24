@@ -102,10 +102,12 @@
                             <h3><fmt:formatNumber value="${dto.price}" pattern="#,###,###"/> ￦</h3>
                             <p>${dto.pro_content }</p>
                             <p>조회수 : ${dto.readcount }</p>
-                            <p>${dto2.color }</p>
-                            <!-- <c:forEach var="po" items="${list2}">
-                           			 <p>색깔 : ${po.color }</p>
-                            	</c:forEach>-->
+                            <!--  <p>${dto2.color }</p>--><p>색깔 :</p>
+                             <c:forEach var="po" items="${list2}">
+                           			 
+                           			 <p>${po.color }</p>
+                           			 
+                            	</c:forEach>
                            
                             
                             <div class="product__details__option">

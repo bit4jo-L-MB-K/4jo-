@@ -98,7 +98,7 @@
       <tr>
          <th bgcolor="#ddd" width="120">색상</th>
          <td>
-            <input type="text" name="color" class="form-control"
+            <input type="color" name="color" class="form-control"
             style="width:200px;" required="required">
          </td>         
       </tr>

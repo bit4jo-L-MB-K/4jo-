@@ -16,13 +16,10 @@ public interface ShopMapper {
 
   public List<ProductDto> getAllLists(HashMap<String, Integer> map);
 
-  // public List<ProductOpDto> getAllLists2(String pro_id);
+  public List<ProductOpDto> getAllOptions(String pro_id);
 
   public ProductDto getData(String num);
 
-  public ProductOpDto getData3(String pro_id);
-
-  public ProductOpDto getData2(String pro_id);
 
   public void updateReadCount(String num);
 

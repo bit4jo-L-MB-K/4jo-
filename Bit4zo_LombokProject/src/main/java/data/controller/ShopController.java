@@ -69,54 +69,37 @@ public class ShopController {
   }
 
   @GetMapping("/shop/details")
-  // public String shopDetails() {
-
   public ModelAndView shopDetails(@RequestParam(defaultValue = "1") int currentPage,
       @RequestParam String num, @RequestParam(value = "pro_id", required = false) String pro_id,
       @RequestParam(required = false) String key) {
     ModelAndView mview = new ModelAndView();
-
+    System.out.println("1:" + pro_id);
     // 조회수 출력
     ProductDto dto = service.getData(num);
     if (key != null)
       service.updateReadCount(num);
 
-    ProductOpDto dto2 = service.getData2(pro_id);
-    ProductOpDto dto3 = service.getData3(pro_id);
     // 최신글 하단에 출력
     int totalCount = service.getTotalCount();
     int start;
     int end = 3;
     start = (currentPage - 1) * end;
     List<ProductDto> list = service.getAllLists(start, end);
-    // List<ProductOpDto> list2 = service.getAllLists2(pro_id);
-
+    // System.out.println("1:" + pro_id);
+    List<ProductOpDto> list2 = service.getAllOptions(pro_id);
+    // System.out.println(list2.size());
 
 
     // 출력에 필요한 변수들을 request에 저장
     mview.addObject("dto", dto);
     mview.addObject("list", list);
-    // mview.addObject("list2", list2);
-
-    mview.addObject("dto2", dto2);
-    mview.addObject("dto3", dto3);
-
+    mview.addObject("list2", list2);
     mview.addObject("currentPage", currentPage);
     mview.addObject("totalCount", totalCount);
     mview.setViewName("/shop/shopdetails");
     return mview;
 
   }
-
-  // @GetMapping("/board/details")
-  // public List<ProductOpDto> shopDetails2(String pro_id) {
-  //
-  //
-  //
-  // return service.getAllLists2(pro_id);
-  // }
-
-
 
   @GetMapping("/shop/form")
   public ModelAndView shopForm(

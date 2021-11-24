@@ -11,16 +11,6 @@ public class ProductOpDto {
   private int s;
   private int m;
   private int l;
-  private ProductDto joindto;
-
-
-  public ProductDto getJoindto() {
-    return joindto;
-  }
-
-  public void setJoindto(ProductDto joindto) {
-    this.joindto = joindto;
-  }
 
   public String getNum() {
     return num;
