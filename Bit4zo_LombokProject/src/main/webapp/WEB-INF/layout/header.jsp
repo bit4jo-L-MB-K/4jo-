@@ -45,8 +45,20 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="#">Sign in</a>
-                                <a href="#">FAQs</a>
+                                <c:choose>
+									<c:when test="${sessionScope.loginok!=null}">
+										<b>${sessionScope.myid}님이 로그인 중입니다</b>
+										<a href="#">My Page</a>
+										<a href="#">Cart</a>
+										<a href="#">FAQs</a>
+										<a href="${root}/login/logoutprocess">Logout</a>
+									</c:when>
+									<c:otherwise>
+										<a href="${root}/login/login">Login</a>
+										<a href="${root}/member/addform">Join</a>
+										<a href="#">FAQs</a>
+									</c:otherwise>
+								</c:choose>
                             </div>
                         </div>
                     </div>
