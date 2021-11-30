@@ -75,8 +75,8 @@ $(function () {
                 <div class="col-lg-3">
                     <div class="shop__sidebar">
                         <div class="shop__sidebar__search">
-                            <form action="search" method="get">
-                                <input name="keyword" type="text" placeholder="Search...">
+                            <form action="#">
+                                <input type="text" placeholder="Search...">
                                 <button type="submit"><span class="icon_search"></span></button>
                             </form>
                         </div>
@@ -93,8 +93,8 @@ $(function () {
                                                     <li><a href="#">Men (20)</a></li>
                                                     <li><a href="#">Women (20)</a></li>
                                                     <li><a href="${root}/shop/list">전체</a></li>
-                                                    <li><a href="${root}/shop/category?pro_sub=반팔">반팔</a></li>
-                                                    <li><a href="${root}/shop/category?pro_sub=긴팔">긴팔</a></li>
+                                                    <li class="st" value="st"><a href="${root}/shop/category?pro_sub=반팔">반팔</a></li>
+                                                    <li class="lt" value="lt"><a href="${root}/shop/category?pro_sub=긴팔">긴팔</a></li>
                                                     <li><a href="${root}/shop/category?pro_sub=패딩">패딩</a></li>
                                                     <li><a href="${root}/shop/category?pro_sub=바지">바지</a></li>
                                                     <li><a href="#">Kids (20)</a></li>
@@ -105,7 +105,23 @@ $(function () {
                                         </div>
                                     </div>
                                 </div>
-                               
+                                <div class="card">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseTwo">Branding</a>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__brand">
+                                                <ul>
+                                                    <li><a href="#">Louis Vuitton</a></li>
+                                                    <li><a href="#">Chanel</a></li>
+                                                    <li><a href="#">Hermes</a></li>
+                                                    <li><a href="#">Gucci</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="card">
                                     <div class="card-heading">
                                         <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
@@ -119,7 +135,6 @@ $(function () {
                                                     <li><a href="#">30,001￦ - 50,000￦</a></li>
                                                     <li><a href="#">50,001￦ - 100,000￦</a></li>
                                                     <li><a href="#">100,001￦ ~</a></li>
-                                                    
                                                 </ul>
                                             </div>
                                         </div>
@@ -269,17 +284,17 @@ $(function () {
                                         <i class="fa fa-star-o"></i>
                                     </div>
                                     <h5><fmt:formatNumber value="${p.price}" pattern="#,###,###"/> ￦ </h5>
-                                    
-                                    <c:forEach var="c" items="${list5}">
-                                    
-		                                    <!--  class="product__color__select" -->
-		                                    	<c:if test="${p.pro_id==c.pro_id}">
-		                                    		<div style="float: left;">
-		                                       			 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  ${c.color}; float: right; margin-right:5px;" ></span>   
-		                                    		</div> 
-		                                   	    </c:if>
-		                                    
-                                    </c:forEach>                              
+                                    <div class="product__color__select">
+                                        <label for="pc-4">
+                                            <input type="radio" id="pc-4">
+                                        </label>
+                                        <label class="active black" for="pc-5">
+                                            <input type="radio" id="pc-5">
+                                        </label>
+                                        <label class="grey" for="pc-6">
+                                            <input type="radio" id="pc-6">
+                                        </label>
+                                    </div>                                
                                 </div>
                             </div>
                         </div>       
@@ -398,32 +413,94 @@ $(function () {
             </div>
         </div>
       </div>
-      
       <c:if test="${totalCount>0 }">
       <div class="row">
           <div class="col-lg-12">
+         	
              <div class="product__pagination">
+             <c:forEach var="p" items="${list}" begin="0" end="0">
              <!-- 이전 -->
+             <c:choose>
+             	<c:when test="${p.pro_sub=='반팔' }">            		
              	<c:if test="${startPage>1 }">
-                   <span><a href="list?currentPage=${startPage-1 }"><</a></span>
+                   <span><a href="category?currentPage=${startPage-1 }&pro_sub=${p.pro_sub}"><</a></span>
                 </c:if>
                 	<c:forEach var="pp" begin="${startPage }" end="${endPage }">
                 		<c:if test="${currentPage==pp }">
-							<span class="active"><a href="list?currentPage=${pp }">${pp }</a></span>
+							<span class="active"><a href="category?currentPage=${pp }&pro_sub=${p.pro_sub}">${pp }</a></span>
 						</c:if>
 						<c:if test="${currentPage!=pp }">
-							<span><a href="list?currentPage=${pp }">${pp }</a></span>
-						</c:if>
+							<span><a href="category?currentPage=${pp }&pro_sub=${p.pro_sub}">${pp }</a></span>
+						</c:if>					
                 	</c:forEach>
-             <!-- 다음 -->
+                	<!-- 다음 -->
                 <c:if test="${endPage<totalPage }">
-						<span><a href="list?currentPage=${endPage+1 }">></a></span>
-				</c:if>
+						<span><a href="category?currentPage=${endPage+1 }&pro_sub=${p.pro_sub}">></a></span>
+				</c:if>  
+                	</c:when>
+                	<c:when test="${p.pro_sub=='긴팔' }">            		
+             	<c:if test="${startPage>1 }">
+                   <span><a href="category?currentPage=${startPage-1 }&pro_sub=${p.pro_sub}"><</a></span>
+                </c:if>
+                	<c:forEach var="pp" begin="${startPage }" end="${endPage }">
+                		<c:if test="${currentPage==pp }">
+							<span class="active"><a href="category?currentPage=${pp }&pro_sub=${p.pro_sub}">${pp }</a></span>
+						</c:if>
+						<c:if test="${currentPage!=pp }">
+							<span><a href="category?currentPage=${pp }&pro_sub=${p.pro_sub}">${pp }</a></span>
+						</c:if>					
+                	</c:forEach>
+                	<!-- 다음 -->
+                <c:if test="${endPage<totalPage }">
+						<span><a href="category?currentPage=${endPage+1 }&pro_sub=${p.pro_sub}">></a></span>
+				</c:if>  
+                	</c:when>
+                	<c:when test="${p.pro_sub=='패딩' }">            		
+             	<c:if test="${startPage>1 }">
+                   <span><a href="category?currentPage=${startPage-1 }&pro_sub=${p.pro_sub}"><</a></span>
+                </c:if>
+                	<c:forEach var="pp" begin="${startPage }" end="${endPage }">
+                		<c:if test="${currentPage==pp }">
+							<span class="active"><a href="category?currentPage=${pp }&pro_sub=${p.pro_sub}">${pp }</a></span>
+						</c:if>
+						<c:if test="${currentPage!=pp }">
+							<span><a href="category?currentPage=${pp }&pro_sub=${p.pro_sub}">${pp }</a></span>
+						</c:if>					
+                	</c:forEach>
+                	<!-- 다음 -->
+                <c:if test="${endPage<totalPage }">
+						<span><a href="category?currentPage=${endPage+1 }&pro_sub=${p.pro_sub}">></a></span>
+				</c:if>  
+                	</c:when>
+                	<c:when test="${p.pro_sub=='바지' }">            		
+             	<c:if test="${startPage>1 }">
+                   <span><a href="category?currentPage=${startPage-1 }&pro_sub=${p.pro_sub}"><</a></span>
+                </c:if>
+                	<c:forEach var="pp" begin="${startPage }" end="${endPage }">
+                		<c:if test="${currentPage==pp }">
+							<span class="active"><a href="category?currentPage=${pp }&pro_sub=${p.pro_sub}">${pp }</a></span>
+						</c:if>
+						<c:if test="${currentPage!=pp }">
+							<span><a href="category?currentPage=${pp }&pro_sub=${p.pro_sub}">${pp }</a></span>
+						</c:if>					
+                	</c:forEach>
+                	<!-- 다음 -->
+                <c:if test="${endPage<totalPage }">
+						<span><a href="category?currentPage=${endPage+1 }&pro_sub=${p.pro_sub}">></a></span>
+				</c:if>  
+                	</c:when>
+                <c:otherwise>
+                 <c:out value="없어!"></c:out>
+                </c:otherwise>
+                </c:choose>
+                </c:forEach>
+                         
              </div>
+             
           </div>
+          
       </div>
-      </c:if>              
-        
+      </c:if>                    
     </section>
     <!-- Shop Section End -->
 </body>

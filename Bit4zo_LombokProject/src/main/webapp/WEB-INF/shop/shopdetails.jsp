@@ -2,11 +2,21 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+$(function(){
+	$("div.product__thumb__pic").on("click",function () {
+		$
+		
+		
+	})
+});
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Dokdo&family=Gugi&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
@@ -27,60 +37,31 @@
                     </div>
                 </div>
                 <div class="row">
-                   
                     <div class="col-lg-3 col-md-3">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
-                                    <div class="product__thumb__pic set-bg" data-setbg="../photo/${dto.pro_photo }">
-                                    </div>
+                            <c:forTokens var="pp" items="${dto.pro_photo }" delims="," begin="0" end="4" varStatus="sts">                                   	
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-${sts.count }" role="tab">
+                                    <div class="product__thumb__pic set-bg" data-setbg="../photo/${pp}">
+                                    </div> 
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
-                                    <div class="product__thumb__pic set-bg" data-setbg="${root}/img/shop-details/thumb-2.png">
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
-                                    <div class="product__thumb__pic set-bg" data-setbg="${root}/img/shop-details/thumb-3.png">
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
-                                    <div class="product__thumb__pic set-bg" data-setbg="${root}/img/shop-details/thumb-4.png">
-                                        <i class="fa fa-play"></i>
-                                    </div>
-                                </a>
-                            </li>
+                                <br>
+                            </c:forTokens>                           
                         </ul>
                     </div>
                     <div class="col-lg-6 col-md-9">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <div class="product__details__pic__item">
-                                    <img src="../photo/${dto.pro_photo }"  alt="">
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="tabs-2" role="tabpanel">
-                                <div class="product__details__pic__item">
-                                    <img src="${root}/img/shop-details/product-big-3.png" alt="">
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="tabs-3" role="tabpanel">
-                                <div class="product__details__pic__item">
-                                    <img src="${root}/img/shop-details/product-big.png" alt="">
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="tabs-4" role="tabpanel">
-                                <div class="product__details__pic__item">
-                                    <img src="${root}/img/shop-details/product-big-4.png" alt="">
-                                    <a href="#" class="video-popup"><i class="fa fa-play"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="tab-content">                     
+                           <c:forTokens var="pp" items="${dto.pro_photo }" delims=","  begin="0" end="0" varStatus="sts">
+								
+								<div class="tab-pane active" id="tabs-${sts.count }" role="tabpanel">
+									<div class="product__details__pic__item">
+                                    <img src="../photo/${pp}" alt="">
+                                	</div>                               
+	                            </div>	                                                            
+								                                                           
+							</c:forTokens>
+                                                                                                        
+                        </div>                       
                     </div>
                 </div>
             </div>
@@ -113,11 +94,11 @@
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>Size:</span>
-                                    <label for="xxl">S
-                                        <input type="radio" id="xxl">
+                                    <label for="s">S
+                                        <input type="radio" id="s">
                                     </label>
-                                    <label class="active" for="xl">M
-                                        <input type="radio" id="xl">
+                                    <label class="active" for="m">M
+                                        <input type="radio" id="m">
                                     </label>
                                     <label for="l">L
                                         <input type="radio" id="l">
@@ -126,21 +107,11 @@
                                 </div>
                                 <div class="product__details__option__color">
                                     <span>Color: </span>
-                                    <label class="c-1" for="sp-1">${dto2.color }
-                                        <input type="radio" id="sp-1">
-                                    </label>
-                                    <label class="c-2" for="sp-2">
-                                        <input type="radio" id="sp-2">
-                                    </label>
-                                    <label class="c-3" for="sp-3">
-                                        <input type="radio" id="sp-3">
-                                    </label>
-                                    <label class="c-4" for="sp-4">
-                                        <input type="radio" id="sp-4">
-                                    </label>
-                                    <label class="c-9" for="sp-9">
-                                        <input type="radio" id="sp-9">
-                                    </label>
+                                    	<c:forEach var="po" items="${list2}">
+                                    		<span id="colorbox" style="border:3px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${po.color}; float: right; margrin-right:5px;" >
+                           						        			 
+                                			</span>
+                            			</c:forEach>
                                 </div>
                             </div>
                             <div class="product__details__cart__option">
@@ -159,8 +130,8 @@
                                 <h5><span>Guaranteed Safe Checkout</span></h5>
                                 <img src="${root}/img/shop-details/details-payment.png" alt="">
                                 <ul>
-                                    <li><span>SKU:</span> 3812912</li>
-                                    <li><span>Categories:</span> Clothes</li>
+                                    <li><span>아이템 코드:</span> ${dto.pro_id }</li>
+                                    <li><span>분류:</span> ${dto.pro_sub }</li>
                                     <li><span>Tag:</span> Clothes, Skin, Body</li>
                                 </ul>
                             </div>
@@ -304,14 +275,28 @@
                 <c:forEach var="p" items="${list}">     
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="../photo/${p.pro_photo}">
-                                    <ul class="product__hover">
-                                        <li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
-                                        <li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                        </li>
-                                        <li><a href="${root}/shop/details?num=${p.num}&currentPage=${currentPage}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
-                                    </ul>
-                                </div>
+                                <c:choose>
+                            		<c:when test="${fn:substringBefore(p.pro_photo,',') !=''}">
+                                		<div class="product__item__pic set-bg" data-setbg="../photo/${fn:substringBefore(p.pro_photo,',')}">
+                                    		<ul class="product__hover">
+                                        		<li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
+                                        		<li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
+                                       		    </li>
+                                        		<li><a href="${root}/shop/details?idx=${p.idx}&currentPage=${currentPage}&pro_id=${p.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
+                                    		</ul>
+                                		</div>
+                                	</c:when>
+                                	<c:otherwise>
+                                		<div class="product__item__pic set-bg" data-setbg="../photo/${p.pro_photo}">
+                                    		<ul class="product__hover">
+                                        		<li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
+                                        		<li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
+                                       		    </li>
+                                        		<li><a href="${root}/shop/details?idx=${p.idx}&currentPage=${currentPage}&pro_id=${p.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
+                                    		</ul>
+                                		</div>                		
+                                	</c:otherwise>
+                                </c:choose>
                                 <div class="product__item__text">      
                                     <h6>${p.pro_name}</h6>
                                     <a href="#" class="add-cart">+ Add To Cart</a>

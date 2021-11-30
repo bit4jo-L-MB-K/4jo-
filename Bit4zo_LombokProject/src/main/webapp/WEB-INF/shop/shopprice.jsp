@@ -2,48 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-//상단 분류셀렉트박스 함수
-$(function () {
-	$("select.selectsort").change(function () {
-	      var s=$(this).val();         
-	      if(s=="rec"){	    	 
-	          $(".seltb").hide();
-	          $("#t1").show();
-	          localStorage.save="t1";         
-	        }else if(s=="lowpri"){        	
-	          $(".seltb").hide();
-	          $("#t2").show();
-	          localStorage.save="t2";     	 
-	        }else if(s=="highpri"){        	
-	          $(".seltb").hide();
-	          $("#t3").show();
-	          localStorage.save="t3";     	 
-	        }	      
-	      });	   
-	   var t=localStorage.save;
-	   
-	   if(t=="t1"){
-		  
-	      $(".seltb").hide();
-	      $("#t1").show();   
-	   } else if(t=="t2"){
-		  
-	      $(".seltb").hide();
-	      $("#t2").show();
-	   } else if(t=="t3"){
-		  
-	      $(".seltb").hide();
-	      $("#t3").show();
-	   }
-});
-</script>
+
+
 <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Dokdo&family=Gugi&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
@@ -75,8 +40,8 @@ $(function () {
                 <div class="col-lg-3">
                     <div class="shop__sidebar">
                         <div class="shop__sidebar__search">
-                            <form action="search" method="get">
-                                <input name="keyword" type="text" placeholder="Search...">
+                            <form action="#">
+                                <input type="text" placeholder="Search...">
                                 <button type="submit"><span class="icon_search"></span></button>
                             </form>
                         </div>
@@ -114,7 +79,7 @@ $(function () {
                                         <div class="card-body">
                                             <div class="shop__sidebar__price">
                                                 <ul>
-                                                    <li><a href="${root}/shop/pricesort">~ 10,000￦</a></li>
+                                                    <li><a href="#">~ 10,000￦</a></li>
                                                     <li><a href="#">10,001￦ - 30,000￦</a></li>
                                                     <li><a href="#">30,001￦ - 50,000￦</a></li>
                                                     <li><a href="#">50,001￦ - 100,000￦</a></li>
@@ -230,34 +195,19 @@ $(function () {
                             </div>
                         </div>
                     </div>
-                    <!-- /////////////최신순 리스트/////////////// -->
+                    <!-- 최신순 리스트 -->
                     <div class="row seltb" id="t1">
                       <c:forEach var="p" items="${list}">     
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                            	<c:choose>
-                            		<c:when test="${fn:substringBefore(p.pro_photo,',') !=''}">
-                                		<div class="product__item__pic set-bg" data-setbg="../photo/${fn:substringBefore(p.pro_photo,',')}">
-                                    		<ul class="product__hover">
-                                        		<li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
-                                        		<li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                       		    </li>
-                                        		<li><a href="${root}/shop/details?idx=${p.idx}&currentPage=${currentPage}&pro_id=${p.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
-                                    		</ul>
-                                		</div>
-                                	</c:when>
-                                	<c:otherwise>
-                                		<div class="product__item__pic set-bg" data-setbg="../photo/${p.pro_photo}">
-                                    		<ul class="product__hover">
-                                        		<li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
-                                        		<li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                       		    </li>
-                                        		<li><a href="${root}/shop/details?idx=${p.idx}&currentPage=${currentPage}&pro_id=${p.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
-                                    		</ul>
-                                		</div>                		
-                                	</c:otherwise>
-                                </c:choose>
-                                
+                                <div class="product__item__pic set-bg" data-setbg="../photo/${p.pro_photo}">
+                                    <ul class="product__hover">
+                                        <li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
+                                        <li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
+                                        </li>
+                                        <li><a href="${root}/shop/details?idx=${p.idx}&currentPage=${currentPage}&pro_id=${p.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
+                                    </ul>
+                                </div>
                                 <div class="product__item__text">      
                                     <h6>${p.pro_name}</h6>
                                     <a href="#" class="add-cart">+ Add To Cart</a>
@@ -269,61 +219,6 @@ $(function () {
                                         <i class="fa fa-star-o"></i>
                                     </div>
                                     <h5><fmt:formatNumber value="${p.price}" pattern="#,###,###"/> ￦ </h5>
-                                    
-                                    <c:forEach var="c" items="${list5}">
-                                    
-		                                    <!--  class="product__color__select" -->
-		                                    	<c:if test="${p.pro_id==c.pro_id}">
-		                                    		<div style="float: left;">
-		                                       			 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  ${c.color}; float: right; margin-right:5px;" ></span>   
-		                                    		</div> 
-		                                   	    </c:if>
-		                                    
-                                    </c:forEach>                              
-                                </div>
-                            </div>
-                        </div>       
-                </c:forEach>
-                </div>
-                <!-- //////////////낮은순 가격 리스트///////////////// -->
-                <div class="row seltb" id="t2"  style="display:none;">               	
-                       <c:forEach var="p2" items="${list2}">     
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                            <c:choose>
-                            		<c:when test="${fn:substringBefore(p2.pro_photo,',') !=''}">
-                                		<div class="product__item__pic set-bg" data-setbg="../photo/${fn:substringBefore(p2.pro_photo,',')}">
-                                    		<ul class="product__hover">
-                                        		<li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
-                                        		<li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                       		    </li>
-                                        		<li><a href="${root}/shop/details?idx=${p2.idx}&currentPage=${currentPage}&pro_id=${p2.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
-                                    		</ul>
-                                		</div>
-                                	</c:when>
-                                	<c:otherwise>
-                                		<div class="product__item__pic set-bg" data-setbg="../photo/${p2.pro_photo}">
-                                    		<ul class="product__hover">
-                                        		<li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
-                                        		<li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                       		    </li>
-                                        		<li><a href="${root}/shop/details?idx=${p2.idx}&currentPage=${currentPage}&pro_id=${p2.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
-                                    		</ul>
-                                		</div>                		
-                                	</c:otherwise>
-                                </c:choose>
-                                
-                                <div class="product__item__text">      
-                                    <h6>${p2.pro_name}</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5><fmt:formatNumber value="${p2.price}" pattern="#,###,###"/> ￦ </h5>
                                     <div class="product__color__select">
                                         <label for="pc-4">
                                             <input type="radio" id="pc-4">
@@ -340,61 +235,9 @@ $(function () {
                         </div>       
                 </c:forEach>
                 </div>
-                <!-- //////////////높은순 가격 리스트//////////// -->
-                <div class="row seltb" id="t3"  style="display:none;">               	
-                       <c:forEach var="p3" items="${list3}">     
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                            <c:choose>
-                            		<c:when test="${fn:substringBefore(p3.pro_photo,',') !=''}">
-                                		<div class="product__item__pic set-bg" data-setbg="../photo/${fn:substringBefore(p3.pro_photo,',')}">
-                                    		<ul class="product__hover">
-                                        		<li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
-                                        		<li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                       		    </li>
-                                        		<li><a href="${root}/shop/details?idx=${p3.idx}&currentPage=${currentPage}&pro_id=${p3.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
-                                    		</ul>
-                                		</div>
-                                	</c:when>
-                                	<c:otherwise>
-                                		<div class="product__item__pic set-bg" data-setbg="../photo/${p3.pro_photo}">
-                                    		<ul class="product__hover">
-                                        		<li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
-                                        		<li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                       		    </li>
-                                        		<li><a href="${root}/shop/details?idx=${p3.idx}&currentPage=${currentPage}&pro_id=${p3.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
-                                    		</ul>
-                                		</div>                		
-                                	</c:otherwise>
-                                </c:choose>
-                                
-                                <div class="product__item__text">      
-                                    <h6>${p3.pro_name}</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5><fmt:formatNumber value="${p3.price}" pattern="#,###,###"/> ￦ </h5>
-                                    <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>                                
-                                </div>
-                            </div>
-                        </div>       
-                </c:forEach>
-                </div>
+                
+                
+               
             </div>
         </div>
       </div>

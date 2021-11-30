@@ -3,32 +3,126 @@
 <mapper namespace="data.mapper.ShopMapper">
    
     <insert id="insertShop" parameterType="pdto">
-        insert into product (pro_id,pro_name,price,stock,pro_sub,pro_photo,pro_content,ipgoday) values (#{pro_id},#{pro_name},#{price},#{stock},#{pro_sub},#{pro_photo},#{pro_content},now())
-    </insert>
+       insert into product (pro_id,pro_name,price,stock,pro_sub,pro_photo,pro_content,ipgoday)
+       values (#{pro_id},#{pro_name},#{price},#{stock},#{pro_sub},#{pro_photo},#{pro_content},now())
+	</insert>
     
-    <insert id="insertShopOp" parameterType="podto">
-        insert into pro_option (pro_id,color,s,m,l) values (#{pro_id},#{color},#{s},#{m},#{l})
-    </insert>
+    <insert id="insertShopOP" parameterType="podto">
+    insert into pro_option (pro_id,color,s,m,l)
+    values (#{pro_id},#{color},#{s},#{m},#{l})
+</insert>
     
     <select id="getTotalCount" resultType="int">
 		select count(*) from product
  	</select>
  	
+ 	
+    
+    <select id="getTotalCountCategory" parameterType="String" resultType="int">
+		select count(*) from product where pro_sub=#{pro_sub}
+ 	</select>
+ 	
  	<select id="getAllLists" parameterType="HashMap" resultType="pdto">
- 		select * from product order by num desc limit #{start},#{perpage}
+ 		select * from product order by idx desc limit #{start},#{perpage}
+ 	</select>
+ 	
+ 	<select id="getAllListsLowPri" parameterType="HashMap" resultType="pdto">
+ 		select * from product order by price asc limit #{start},#{perpage}
+ 	</select>
+ 	<select id="getAllCateLowPri" parameterType="HashMap" resultType="pdto">
+ 		select * from product where  pro_sub=#{pro_sub} order by price asc limit #{start},#{perpage}
+ 	</select>
+ 	
+ 	<select id="getAllListsHigPri" parameterType="HashMap" resultType="pdto">
+ 		select * from product order by price desc limit #{start},#{perpage}
+ 	</select>
+ 	
+ 	<select id="getAllCateHigPri" parameterType="HashMap" resultType="pdto">
+ 		select * from product where  pro_sub=#{pro_sub} order by price desc limit #{start},#{perpage}
  	</select>
  	
  	 <select id="getAllOptions" parameterType="String" resultType="podto">
  		select * from pro_option where pro_id=#{pro_id} order by num desc
  	</select>
- 		
+ 	
+ 	<select id="getAllOp" parameterType="String" resultType="podto">
+ 	select p.pro_id,po.color from product p join pro_option po on p.pro_id=po.pro_id
+ 	</select>
  	<select id="getData" parameterType="String" resultType="pdto">
- 		select * from product where num=#{num}
+ 		select * from product where idx=#{idx}
+ 	</select>
+ 	
+ 	<select id="getCategory" parameterType="HashMap" resultType="pdto">
+ 		select * from product where  pro_sub=#{pro_sub} order by idx desc limit #{start},#{perpage}
  	</select>
  	
  	
  	<update id="updateReadCount" parameterType="String">
-      	update product set readcount=readcount+1 where num=#{num}
+      	update product set readcount=readcount+1 where idx=#{idx}
     </update>
+    
+    <select id="getPriceList" parameterType="HashMap" resultType="pdto">
+ 		select * from product where <![CDATA[price<=10000]]> order by idx desc limit #{start},#{perpage}
+ 	</select>
+ 	
+ 	<select id="getPriceAllCount" resultType="int">
+ 		select count(*) from product where <![CDATA[price<=10000]]>
+    </select>
+    
+    <update id="updateProduct" parameterType="pdto">
+   			update product set pro_id=#{pro_id},pro_name=#{pro_name},price=#{price},stock=#{stock},pro_sub=#{pro_sub},pro_content=#{pro_content}
+   		<if test="pro_photo!=null">
+     		 ,pro_photo=#{pro_photo}
+   		</if>
+   			where idx=#{idx}
+	</update> 
+
+	<select id="getJoinList" parameterType="HashMap" resultMap="podto">
+	SELECT p.idx, o.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
+	FROM product p JOIN pro_option o ON p.pro_id=o.pro_id ORDER BY o.pro_id limit #{start},#{perpage}
+	</select>
+	
+	<select id="getJoinListLeft" parameterType="HashMap" resultMap="podto">
+	SELECT p.idx, o.num, p.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
+	FROM product p LEFT JOIN pro_option o ON p.pro_id=o.pro_id ORDER BY o.pro_id limit #{start},#{perpage}
+	</select>
+	
+	<select id="getJoinNum" parameterType="HashMap" resultMap="podto">
+	SELECT p.idx, o.num, p.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
+	from product p join pro_option o on p.pro_id=o.pro_id where p.idx=#{idx} AND o.color=#{color} order by o.num
+	</select>
+	
+	<update id="updateOption" parameterType="podto">
+	   UPDATE pro_option o inner join product p
+	   on o.pro_id=p.pro_id
+	   set o.pro_id=#{pro_id}, o.color=#{color}
+	   where o.num=#{num}
+	</update>
+
+<delete id="deleteOne" parameterType="podto">
+DELETE FROM o USING pro_option AS o JOIN product AS p ON p.pro_id = o.pro_id WHERE p.idx=#{idx} AND o.color=#{color}
+</delete>
+    <resultMap type="pdto" id="pdto">
+		<result column="idx" property="idx"/>
+		<result column="pro_name" property="pro_name"/>
+		<result column="pro_id" property="pro_id"/>
+		<result column="price" property="price"/>
+		<result column="stock" property="stock"/>
+		<result column="pro_sub" property="pro_sub"/>
+		<result column="pro_photo" property="pro_photo"/>
+		<result column="pro_content" property="pro_content"/>
+		<result column="ipgoday" property="ipgoday"/>
+	</resultMap>
+
+	<resultMap type="podto" id="podto">
+	   <result column="num" property="num"/>
+	   <result column="pro_id" property="pro_id"/>
+	   <result column="color" property="color"/>
+	   <result column="s" property="s"/>
+	   <result column="m" property="m"/>
+	   <result column="l" property="l"/>
+	<collection property="joindto" resultMap="pdto"/>
+	</resultMap>
+    
  	
 </mapper>

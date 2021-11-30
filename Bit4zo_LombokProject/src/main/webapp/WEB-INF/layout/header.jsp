@@ -85,7 +85,7 @@
                                     <li><a href="#">!!!!</a></li>
                                 </ul>
                             </li>
-                            <li><a href="${root}/shop/form">LOOK BOOK</a></li>
+                            <li><a href="${root}/shop/adminmain">LOOK BOOK</a></li>
                             <li><a href="#">EVENT</a>
                                 <ul class="dropdown">
                                     <li><a href="#">진행중인 이벤트</a></li>

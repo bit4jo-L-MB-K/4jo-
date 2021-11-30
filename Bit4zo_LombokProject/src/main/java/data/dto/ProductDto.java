@@ -8,17 +8,35 @@ import org.springframework.web.multipart.MultipartFile;
 @Alias("pdto")
 public class ProductDto {
 
-  private String num;
+  private String idx;
   private String pro_id;
   private String pro_name;
   private String price;
   private int readcount;
-  private int stock;
+  private String stock;
   private String pro_sub;
   private String pro_photo;
   private String pro_content;
   private MultipartFile upload;
   private Timestamp ipgoday;
+
+
+
+  public String getStock() {
+    return stock;
+  }
+
+  public void setStock(String stock) {
+    this.stock = stock;
+  }
+
+  public String getIdx() {
+    return idx;
+  }
+
+  public void setIdx(String idx) {
+    this.idx = idx;
+  }
 
   public int getReadcount() {
     return readcount;
@@ -44,13 +62,7 @@ public class ProductDto {
     this.price = price;
   }
 
-  public String getNum() {
-    return num;
-  }
 
-  public void setNum(String num) {
-    this.num = num;
-  }
 
   public String getPro_id() {
     return pro_id;
@@ -68,13 +80,7 @@ public class ProductDto {
     this.pro_name = pro_name;
   }
 
-  public int getStock() {
-    return stock;
-  }
 
-  public void setStock(int stock) {
-    this.stock = stock;
-  }
 
   public String getPro_sub() {
     return pro_sub;
