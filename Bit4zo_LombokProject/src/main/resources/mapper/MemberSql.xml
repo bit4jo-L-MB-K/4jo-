@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.MemberMapper">
+	<select id="getAllMembers" resultType="mdto">
+		select * from lmember order by id asc
+	</select>
+	<insert id="insertMember" parameterType="mdto">
+		insert into lmember (name,id,pass,hp,addrnum,addr,addrdetail,selegender,birth,height,weight,email,gaipday) values (
+		#{name},#{id},#{pass},#{hp},#{addrnum},#{addr},#{addrdetail},#{selegender},#{birth},#{height},#{weight},#{email},now())
+	</insert>
+	<select id="getIdCheck" parameterType="String" resultType="int">
+		select count(*) from lmember where id=#{id}
+	</select>
+	
+	<select id="getCheckPass" parameterType="HashMap" resultType="int">
+		select count(*) from lmember where num=#{num} and pass=#{pass}
+	</select>
+	
+	<select id="getMember" parameterType="String" resultType="mdto">
+		select * from lmember where num=#{num}
+	</select>
+	
+	<update id="updateMember" parameterType="mdto">
+		update lmember set name=#{name},pass=#{pass},hp=#{hp},addrnum=#{addrnum},addr=#{addr},addrdetail=#{addrdetail},selegender=#{selegender},birth=#{birth},height=#{height},weight=#{weight},email=#{email} where num=#{num}
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		delete from lmember where num=#{num}
+	</delete>
+	
+	<select id="getName" parameterType="String" resultType="String">
+		select name from lmember where id=#{id}
+	</select>
+	
+	<select id="login" parameterType="HashMap" resultType="int">
+		select count(*) from lmember where id=#{id} and pass=#{pass}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
