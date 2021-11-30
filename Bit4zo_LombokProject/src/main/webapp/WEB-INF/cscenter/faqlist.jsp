@@ -13,6 +13,9 @@
     <link rel="icon" type="image/png" href="imgs/at-solid.png"/>
     <script src="https://kit.fontawesome.com/55fa8b84a2.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../resources/cscenterstyle.css">
     <script src="main.js" defer></script>
 <style type="text/css">
@@ -22,12 +25,43 @@
   text-align: center;
 }
 
-.summary a:hover{
-	color:#000;
-}
 
 a:hover {
-	color: #000;
+	text-decoration: none;
+	
+}
+
+.link-list li a{
+	height : 70px;
+	line-height: 70px;
+	width: 25%;
+}
+
+.summary {
+    margin-top: 40px;
+    display: inline-block;
+    width: 770px;
+}
+.faq-contents a {
+	text-decoration: none;
+}
+
+/* For below 1044px screen width */
+@media screen and (max-width: 1044px) {
+	.link-list li a{
+		height : 70px;
+		line-height: 70px;
+		width: 50%;
+	}
+	
+	.main__content__aside{
+		display: none;
+	}
+	
+	.main-content__body {
+		margin: 0 auto;
+	}
+
 }
 
 </style>
@@ -49,32 +83,68 @@ a:hover {
                 <div class="main-content__main">
                     <!-- 고객센터 메뉴 링크 -->
                     <div class="customer-link">
-                        <ul class="link-list">
-                            <li><a href=""><i class="fas fa-envelope-open-text"></i>1:1 문의</a></li>
-                            <li><a href=""><i class="far fa-comments"></i>실시간 채팅</a></li>
-                            <li><a href=""><i class="fas fa-gift"></i>회원 혜택</a></li>
-                            <li><a href="${root}/cscenter/faqlist"><i class="far fa-comment-alt"></i>FAQ</a></li>
+                        <ul class="link-list faq-list">
+                            <li><a href="${root}/cscenter/faqlist">전체</a></li>
+                            <li><a href="">배송</a></li>
+                            <li><a href="">주문/결제</a></li>
+                            <li><a href="">취소/반품/교환</a></li>
+                            <li><a href="">영수증/세금계산서</a></li>
+                            <li><a href="">회원정보/서비스</a></li>
+                            <li><a href="">쿠폰/마일리지</a></li>
+                            <li><a href="">기타</a></li>
                         </ul>
                     </div>
-                    <!-- 공지사항 요약 -->
-					<div class="summary summary--notice">
-						<div class="summary__title" style="display:flex; justify-content: space-between;">공지사항
-						 <a href="${root}/cscenter/noticelist" class="summary__more"><p style="text-align: right;">전체보기</p></a>
-						 </div>
-							<div class="summary__content">
-							<c:if test="${totalCount>0}">
-								<ul class="notice-list">
-									<c:forEach var="n" items="${list}">
-										<a href="${root}/cscenter/noticelist">
-										<li style="width: 500px; height: 50px;">[${n.noticetype}] ${n.nsubject}
-										<p style="text-align: right;"><fmt:formatDate value="${n.writeday}" pattern="yyyy-MM-dd"/></p>
-										</li>
-										</a>
-									</c:forEach>
-							    </ul>
-								</c:if>
-							</div>
-					</div>
+                    
+                    
+                    <div class="summary faq-contents">
+                    <h6 style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px;">전체</h6>
+                    	<div class="panel-group" id="accordion">
+							<c:if test="${totalCount==0}">
+								<h1><b>결과가 없습니다</b></h1>	
+							</c:if>
+						    <c:if test="${totalCount>0}">
+								<c:forEach var="n" items="${list}" varStatus="status">
+									<div class="panel panel-default">
+								      <div class="panel-heading">
+								        <h4 class="panel-title">
+								          <a data-toggle="collapse" data-parent="#accordion" href="#collpase${n.num}">[${n.faqtype}] ${n.ftitle} <p style="text-align: right;"><fmt:formatDate value="${n.writeday}" pattern="yyyy-MM-dd"/></p></a>
+								        </h4>
+								      </div>
+								      <c:set var="count" value="${length-status.index }"/>
+								      <div id="collpase${count}" class="${count eq n.num?'panel-collapse collapse in':'panel-collapse collapse'}" style="display:none;">
+								        <div class="panel-body">${n.fcontent}</div>
+								      </div>
+								    </div>
+								</c:forEach>
+							</c:if> 
+						  </div>
+                    </div>
+                    
+                    
+<!-- 페이징 -->
+	<c:if test="${totalCount>0}">
+		<div style="width: 800px; text-align: center;">
+			<ul class="pagination">
+			<!-- 이전 -->
+			<c:if test="${startPage>1}">
+				<li><a href="list?currentPage=${startPage-1}">이전</a></li>
+			</c:if>
+			<c:forEach var="pp" begin="${startPage}" end="${endPage}">
+				<c:if test="${currentPage==pp}">
+					<li class="active"><a href="list?currentPage=${pp}">${pp}</a></li>
+				</c:if>
+				<c:if test="${currentPage!=pp}">
+					<li><a href="list?currentPage=${pp}">${pp}</a></li>
+				</c:if>
+			</c:forEach>
+			
+			<!-- 다음 -->
+			<c:if test="${endPage<totalPage}">
+				<li><a href="list?currentPage=${endPage+1}">다음</a></li>
+			</c:if>
+			</ul>
+		</div>
+	</c:if>
                 </div>
                 
                 <!-- FAQ Menu side -->
@@ -116,8 +186,7 @@ a:hover {
             </div>
         </div> 
     </section>
-    <button type="button" class="btn btn-default" onclick="location.href='noticeadd'">공지사항 쓰기</button>
-    <button type="button" class="btn btn-default" onclick="location.href='faqadd'">faq 쓰기</button>
+    
 </body>
 <script type="text/javascript">
     
