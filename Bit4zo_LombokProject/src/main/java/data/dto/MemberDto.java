@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import org.apache.ibatis.type.Alias;
 
 
+
 @Alias("mdto")
 public class MemberDto {
   private int num;
@@ -177,6 +178,7 @@ public class MemberDto {
   public void setGaipday(Timestamp gaipday) {
     this.gaipday = gaipday;
   }
+
 
 
 }

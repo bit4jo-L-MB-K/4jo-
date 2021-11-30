@@ -15,8 +15,16 @@
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__option">
             <div class="offcanvas__links">
-                <a href="#">Sign in</a>
-                <a href="#">FAQs</a>
+                <c:choose>
+               <c:when test="${sessionScope.loginok!=null}">
+                  <a href="${root}/login/logoutprocess">Sign out</a>
+                  <a href="#">FAQs</a>
+               </c:when>
+               <c:otherwise>
+                  <a href="${root}/login/signin">Sign in</a>
+                  <a href="#">FAQs</a>
+               </c:otherwise>
+            </c:choose>
             </div>
         </div>
         <div class="offcanvas__nav__option">
@@ -27,7 +35,14 @@
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__text">
-            <p>Merry Christmas in  LOMBOK</p>
+            <c:choose>
+                <c:when test="${sessionScope.loginok!=null}">
+                   <p>${sessionScope.myid}님 로그인 중</p>
+                </c:when>
+                <c:otherwise>
+                   <p>이번 겨울은 LOMBOK과 함께</p>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
     <!-- Offcanvas Menu End -->
@@ -39,26 +54,29 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-7">
                         <div class="header__top__left">
-                            <p>Merry Christmas in  LOMBOK</p>
+                            <c:choose>
+                               <c:when test="${sessionScope.loginok!=null}">
+                                  <p>${sessionScope.myid}님 로그인 중</p>
+                               </c:when>
+                               <c:otherwise>
+                                  <p>이번 겨울은 LOMBOK과 함께</p>
+                               </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
                                 <c:choose>
-									<c:when test="${sessionScope.loginok!=null}">
-										<b>${sessionScope.myid}님이 로그인 중입니다</b>
-										<a href="#">My Page</a>
-										<a href="#">Cart</a>
-										<a href="#">FAQs</a>
-										<a href="${root}/login/logoutprocess">Logout</a>
-									</c:when>
-									<c:otherwise>
-										<a href="${root}/login/login">Login</a>
-										<a href="${root}/member/addform">Join</a>
-										<a href="#">FAQs</a>
-									</c:otherwise>
-								</c:choose>
+                                    <c:when test="${sessionScope.loginok!=null}">
+                                       <a style="color: pink;" href="${root}/login/logoutprocess">Sign out</a>
+                                       <a href="#">FAQs</a>
+                                    </c:when>
+                                   <c:otherwise>
+                                       <a style="color: lightgreen;" href="${root}/login/signin">Sign in</a>
+                                       <a href="#">FAQs</a>
+                                    </c:otherwise>
+                              </c:choose>
                             </div>
                         </div>
                     </div>
@@ -75,7 +93,7 @@
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="${root}/">HOME</a></li>
+                            <li><a href="${root}/">HOME</a></li>
                             <li><a href="${root}/shop/list">SHOP</a>
                                 <ul class="dropdown">
                                     <li><a href="#">목록</a></li>

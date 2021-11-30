@@ -14,9 +14,7 @@ public interface MemberMapper {
 	public int getIdCheck(String id);
 	public int getCheckPass(HashMap<String, String> map);
 	public MemberDto getMember(String num);
-	public void updateMember(MemberDto dto);
-	public void deleteMember(String num);
 	
 	public String getName(String id);
-	public int login(HashMap<String, String> map);	
+	public int login(HashMap<String, String> map);
 }

@@ -1,6 +1,7 @@
 package data.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import data.mapper.MemberMapper;
 
@@ -18,7 +20,7 @@ public class LoginController {
 	@Autowired
 	MemberMapper mapper;
 	
-	@GetMapping("/login/login")
+	@GetMapping("/login/signin")
 	public String login(HttpSession session, Model model)
 	{
 		String myid=(String)session.getAttribute("myid");
@@ -34,7 +36,7 @@ public class LoginController {
 		}
 	}
 
-	@PostMapping("/login/loginsuccess")
+	@PostMapping("/login/login")
 	public String loginsuccess(
 			@RequestParam(required=false) String cbsave,
 			@RequestParam String id,
@@ -53,7 +55,7 @@ public class LoginController {
 			session.setAttribute("saveok", cbsave); //체크 안했을 경우 null, 체크했을 경우 on
 			return "redirect:/";
 		}else {
-			return "/member/passfail";
+			return "/login/passfail";
 		}
 	}
 	
@@ -62,6 +64,5 @@ public class LoginController {
 	{
 		session.removeAttribute("loginok");
 		return "redirect:/";
-	}
-
+	}	
 }

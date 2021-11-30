@@ -12,9 +12,20 @@ spring:
 #mysql
   datasource:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/test
+      url: jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Seoul
       username: root
       password: 1234
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: bitcamp.lombok@gmail.com
+    password: bitlombok!
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://database-1.cm6o8dl5mzni.ap-northeast-2.rds.amazonaws.com:3306/mysqlname
@@ -23,9 +34,10 @@ spring:
 #    
 #  jpa:
 #    hibernate:
-#      ddl-auto: update
+#      ddl-auto: update  servlet:    multipart:
+      max-file-size: 10MB              max-request-size: 20MB        
 
 mybatis:
-  type-aliases-package: data.mapper,data.dto
+  type-aliases-package: data.*
   mapper-locations:
   - /mapper/**/*.xml
