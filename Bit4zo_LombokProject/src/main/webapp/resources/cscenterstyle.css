@@ -324,3 +324,10 @@ textarea.form-text {
 .inquiry-layout__right {
   padding-left: 10px;
 }
+
+.summary {
+  margin-top: 40px;
+  display: inline-block;
+}
+
+

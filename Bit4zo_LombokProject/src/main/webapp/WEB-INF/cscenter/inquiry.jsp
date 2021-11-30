@@ -19,14 +19,23 @@
   text-align: center;
 }
 
+a:hover {
+	text-decoration: none;
+}
+
+.email-form__input {
+	padding-top: 2px;
+}
 </style>
 </head>
 <body>
     <!-- CS Center Header -->
+<a href="${root}/cscenter/csmain">
     <section id="csheader">
         <h1 class="header__title__main">LomBok CS center</h1>
         <h1 class="header__title__description">고객님, 궁금하신점을 해결해 드릴게요.</h1>
     </section>
+</a>
     <!-- body , side 보류 -->
 <div class="main-content">
 <div class="main-container main-content__body">
@@ -132,7 +141,7 @@
             <li class="sidebar-menu__item-menu">
                 <p class="menu__title">공지사항</p>
                 <ul class="menu__list">
-                    <li class="menu__item"><a href=""><i class="fas fa-bullhorn"></i>공지사항</a></li>
+                    <li class="menu__item"><a href="${root}/cscenter/noticelist"><i class="fas fa-bullhorn"></i>공지사항</a></li>
                 </ul>
             </li>
         </ul>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.CscenterMapper">
+	<insert id="insertNotice" parameterType="ndto">
+		insert into notice (nsubject,ncontent,noticetype,writeday)
+		values (#{nsubject},#{ncontent},#{noticetype},now()) 
+	</insert>
+	<select id="getTotalCount" resultType="int">
+		select count(*) from notice
+	</select>
+	<select id="getMaxNum" resultType="int">
+		select ifnull(max,(num),0) from notice
+	</select>
+	<select id="noticeList" parameterType="HashMap" resultType="ndto">
+		select * from notice order by num desc limit #{start},#{perpage}
+	</select>
+	
+	<insert id="insertFaq" parameterType="fdto">
+		insert into faq (ftitle,fcontent,faqtype,writeday)
+		values (#{ftitle},#{fcontent},#{faqtype},now())
+	</insert>
+	
+	<select id="getfaqTotalCount" resultType="int">
+		select count(*) from faq
+	</select> 
+	<select id="getfaqMaxNum" resultType="int">
+		select ifnull(max,(num),0) from faq
+	</select>
+	<select id="faqList" parameterType="HashMap" resultType="fdto">
+		select * from faq order by num desc limit #{start},#{perpage}
+	</select>
+</mapper>
