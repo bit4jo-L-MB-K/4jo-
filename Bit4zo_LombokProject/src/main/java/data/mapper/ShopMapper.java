@@ -9,8 +9,6 @@ import data.dto.ProductOpDto;
 @Mapper
 public interface ShopMapper {
 
-
-
   public int getTotalCount();
 
   public int getTotalCountCategory(String pro_sub);
@@ -54,6 +52,12 @@ public interface ShopMapper {
   public void updateOption(ProductOpDto dto);
 
   public void deleteOne(HashMap<String, String> map);
+  
+  public void deleteAll(String idx);
+  
+  public int getTotalCountOption();
+  
+  public int getProIdCheck(String pro_id);
 
 
 }

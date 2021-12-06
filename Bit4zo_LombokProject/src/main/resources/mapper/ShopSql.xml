@@ -10,14 +10,12 @@
     <insert id="insertShopOP" parameterType="podto">
     insert into pro_option (pro_id,color,s,m,l)
     values (#{pro_id},#{color},#{s},#{m},#{l})
-</insert>
+	</insert>
     
     <select id="getTotalCount" resultType="int">
 		select count(*) from product
  	</select>
- 	
- 	
-    
+  
     <select id="getTotalCountCategory" parameterType="String" resultType="int">
 		select count(*) from product where pro_sub=#{pro_sub}
  	</select>
@@ -102,6 +100,21 @@
 <delete id="deleteOne" parameterType="podto">
 DELETE FROM o USING pro_option AS o JOIN product AS p ON p.pro_id = o.pro_id WHERE p.idx=#{idx} AND o.color=#{color}
 </delete>
+
+<delete id="deleteAll" parameterType="String">
+delete from product where idx=#{idx}
+</delete>
+
+<select id="getTotalCountOption" resultType="int">
+		select count(*) from pro_option
+</select>
+
+<select id="getProIdCheck" parameterType="String" resultType="int">
+		select count(*) from product where pro_id=#{pro_id}
+</select>
+
+
+
     <resultMap type="pdto" id="pdto">
 		<result column="idx" property="idx"/>
 		<result column="pro_name" property="pro_name"/>
@@ -124,5 +137,4 @@ DELETE FROM o USING pro_option AS o JOIN product AS p ON p.pro_id = o.pro_id WHE
 	<collection property="joindto" resultMap="pdto"/>
 	</resultMap>
     
- 	
 </mapper>
