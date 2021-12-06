@@ -16,13 +16,13 @@
 			<tr>
 				<th>카테고리</th>
 				<td>
-					<select name="faqtype" class="select" style="height: 30px;">
+					<select name="faqtype" class="select" style="height: 30px;" id="faqtype">
                         <option value="배송">배송</option>
-                        <option value="주문">주문/결제</option>
-                        <option value="취소">취소/반품/교환</option>
-                        <option value="영수증">영수증/세금계산서</option>
-                        <option value="회원정보">회원정보/서비스</option>
-                        <option value="쿠폰">쿠폰/마일리지</option>
+                        <option value="주문/결제">주문/결제</option>
+                        <option value="취소/반품/교환">취소/반품/교환</option>
+                        <option value="영수증/세금계산서">영수증/세금계산서</option>
+                        <option value="회원정보/서비스">회원정보/서비스</option>
+                        <option value="쿠폰/마일리지">쿠폰/마일리지</option>
                         <option value="기타">기타</option>
                     </select>
 				</td>

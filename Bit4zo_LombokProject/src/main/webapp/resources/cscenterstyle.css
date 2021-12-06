@@ -125,7 +125,7 @@ p {
   padding-top: 15px;
 }
 
-.link-list li a {
+.link-list li {
   float: left;
   width: 180px;
   height: 131px;
@@ -134,11 +134,13 @@ p {
   box-sizing: border-box;
   padding: 0 15px;
   background: #fff;
+	
 }
 
-.link-list a:hover {
+.link-list li:hover {
   border: 1px solid var(--color-orange);
   color: black;
+  cursor: pointer;
 }
 .link-list :hover i {
   transform: scale(1.1);
@@ -274,6 +276,7 @@ textarea.form-text {
 .button-inquiry {
   width: 340px;
   margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 .form-button {

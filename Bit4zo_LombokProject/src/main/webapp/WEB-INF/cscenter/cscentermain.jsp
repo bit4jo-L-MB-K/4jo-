@@ -14,7 +14,6 @@
     <script src="https://kit.fontawesome.com/55fa8b84a2.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../resources/cscenterstyle.css">
-    <script src="main.js" defer></script>
 <style type="text/css">
 #csheader {
   background: url("../photo/home-background.png") center/cover no-repeat;
@@ -31,6 +30,16 @@ a:hover {
 }
 
 </style>
+<!-- <div id="create-channel-chat-button"></div> -->
+<!-- <script type="text/javascript">
+  Kakao.Channel.createChatButton({
+    container: '#create-channel-chat-button',
+    channelPublicId: '_xbHdjb',
+  })
+</script> -->
+
+
+
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
@@ -102,7 +111,9 @@ a:hover {
                         <li class="sidebar-menu__item-menu">
                             <p class="menu__title">실시간 채팅</p>
                             <ul class="menu__list">
-                                <li class="menu__item"><a href=""><i class="far fa-comments"></i>실시간 채팅</a></li>
+                                <li class="menu__item">
+                                <a href="#" onClick="window.open('http://pf.kakao.com/_xbHdjb/chat','_blank','width=350,height=520')"><i class="far fa-comments"></i>실시간 채팅</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-menu__item-menu">
@@ -116,10 +127,31 @@ a:hover {
             </div>
         </div> 
     </section>
+<!-- <div
+  id="kakao-talk-channel-chat-button"
+  data-channel-public-id="_xbHdjb"
+  data-title="consult"
+  data-size="small"
+  data-color="yellow"
+  data-shape="pc"
+  data-support-multiple-densities="true"
+></div> -->
     <button type="button" class="btn btn-default" onclick="location.href='noticeadd'">공지사항 쓰기</button>
     <button type="button" class="btn btn-default" onclick="location.href='faqadd'">faq 쓰기</button>
 </body>
-<script type="text/javascript">
-    
-</script>
+<!-- <script>
+  window.kakaoAsyncInit = function() {
+    Kakao.Channel.createChatButton({
+      container: '#kakao-talk-channel-chat-button',
+    });
+  };
+  
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://developers.kakao.com/sdk/js/kakao.channel.min.js';
+    fjs.parentNode.insertBefore(js, fjs);
+  })(document, 'script', 'kakao-js-sdk');
+</script> -->
 </html>

@@ -14,7 +14,16 @@
 	<select id="noticeList" parameterType="HashMap" resultType="ndto">
 		select * from notice order by num desc limit #{start},#{perpage}
 	</select>
-	
+	<select id="getNoticeData" parameterType="String" resultType="ndto">
+		select * from notice where num=#{num}
+	</select>
+	<update id="updateNotice" parameterType="ndto">
+		update notice set noticetype=#{noticetype},nsubject=#{nsubject},ncontent=#{ncontent} where num=#{num}
+	</update>
+	<delete id="deleteNotice" parameterType="String">
+		delete from notice where num=#{num}
+	</delete>
+
 	<insert id="insertFaq" parameterType="fdto">
 		insert into faq (ftitle,fcontent,faqtype,writeday)
 		values (#{ftitle},#{fcontent},#{faqtype},now())
@@ -29,4 +38,39 @@
 	<select id="faqList" parameterType="HashMap" resultType="fdto">
 		select * from faq order by num desc limit #{start},#{perpage}
 	</select>
+	<select id="getfaqData" parameterType="String" resultType="fdto">
+		select * from faq where num=#{num}
+	</select>
+	<update id="updateFaq" parameterType="fdto">
+		update faq set faqtype=#{faqtype},ftitle=#{ftitle},fcontent=#{fcontent} where num=#{num}
+	</update>
+	<delete id="deleteFaq" parameterType="String">
+		delete from faq where num=#{num}
+	</delete>
+	<select id="deliverList" parameterType="HashMap" resultType="fdto">
+		select * from faq where faqtype = '배송' order by num desc limit #{start}, #{perpage} 
+	</select>
+	<select id="orderList" parameterType="HashMap" resultType="fdto">
+		select * from faq where faqtype = '주문/결제' order by num desc limit #{start}, #{perpage} 
+	</select>
+	<select id="cancelList" parameterType="HashMap" resultType="fdto">
+		select * from faq where faqtype = '취소/반품/교환' order by num desc limit #{start}, #{perpage} 
+	</select>
+	<select id="receiptList" parameterType="HashMap" resultType="fdto">
+		select * from faq where faqtype = '영수증/세금계산서' order by num desc limit #{start}, #{perpage} 
+	</select>
+	<select id="meminfoList" parameterType="HashMap" resultType="fdto">
+		select * from faq where faqtype = '회원정보/서비스' order by num desc limit #{start}, #{perpage} 
+	</select>
+	<select id="couponList" parameterType="HashMap" resultType="fdto">
+		select * from faq where faqtype = '쿠폰/마일리지' order by num desc limit #{start}, #{perpage} 
+	</select>
+	<select id="etcList" parameterType="HashMap" resultType="fdto">
+		select * from faq where faqtype = '기타' order by num desc limit #{start}, #{perpage} 
+	</select>
+	
+	<insert id="insertInquiry" parameterType="idto">
+		insert into inquiryboard (myid,name,itype,hp,email,ititle,icontent,uploadfile,writeday) 
+		values (#{myid},#{name},#{itype},#{hp},#{email},#{ititle},#{icontent},#{uploadfile},now())
+	</insert>
 </mapper>
