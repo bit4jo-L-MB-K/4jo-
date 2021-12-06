@@ -154,5 +154,17 @@ public class ShopService {
 
     mapper.deleteOne(map);
   }
+  
+  public void deleteAll(String idx) {
+	  mapper.deleteAll(idx);
+  }
+  
+  public int getTotalCountOption() {
+	  return mapper.getTotalCountOption();
+  }
+  
+  public int getProIdCheck(String pro_id) {
+	  return mapper.getProIdCheck(pro_id);
+  }
 
 }

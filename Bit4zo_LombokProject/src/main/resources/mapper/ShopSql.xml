@@ -8,12 +8,18 @@
 	</insert>
     
     <insert id="insertShopOP" parameterType="podto">
+<<<<<<< HEAD
     	insert into pro_option (pro_id,color,s,m,l) values (#{pro_id},#{color},#{s},#{m},#{l})
+=======
+    insert into pro_option (pro_id,color,s,m,l)
+    values (#{pro_id},#{color},#{s},#{m},#{l})
+>>>>>>> Kmisun-1
 	</insert>
     
     <select id="getTotalCount" resultType="int">
 		select count(*) from product
  	</select>
+<<<<<<< HEAD
 
     <select id="getTotalCountCategory" parameterType="HashMap" resultType="int">
 		select count(*) from product  where pro_sub=#{pro_sub}
@@ -32,6 +38,11 @@
 		<if test="price_n==5">
 			and price_n=5
 		</if>	
+=======
+  
+    <select id="getTotalCountCategory" parameterType="String" resultType="int">
+		select count(*) from product where pro_sub=#{pro_sub}
+>>>>>>> Kmisun-1
  	</select>
      	
  	<select id="getAllLists" parameterType="HashMap" resultType="pdto">
@@ -152,10 +163,31 @@
 		   where o.num=#{num}
 	</update>
 
+<<<<<<< HEAD
 	<delete id="deleteOne" parameterType="podto">
 		DELETE FROM o USING pro_option AS o JOIN product AS p ON p.pro_id = o.pro_id WHERE p.idx=#{idx} AND o.color=#{color}
 	</delete>
     
+=======
+<delete id="deleteOne" parameterType="podto">
+DELETE FROM o USING pro_option AS o JOIN product AS p ON p.pro_id = o.pro_id WHERE p.idx=#{idx} AND o.color=#{color}
+</delete>
+
+<delete id="deleteAll" parameterType="String">
+delete from product where idx=#{idx}
+</delete>
+
+<select id="getTotalCountOption" resultType="int">
+		select count(*) from pro_option
+</select>
+
+<select id="getProIdCheck" parameterType="String" resultType="int">
+		select count(*) from product where pro_id=#{pro_id}
+</select>
+
+
+
+>>>>>>> Kmisun-1
     <resultMap type="pdto" id="pdto">
 		<result column="idx" property="idx"/>
 		<result column="pro_name" property="pro_name"/>
@@ -178,6 +210,12 @@
 	   <result column="s" property="s"/>
 	   <result column="m" property="m"/>
 	   <result column="l" property="l"/>
+<<<<<<< HEAD
 	   <collection property="joindto" resultMap="pdto"/>
 	</resultMap> 	
+=======
+	<collection property="joindto" resultMap="pdto"/>
+	</resultMap>
+    
+>>>>>>> Kmisun-1
 </mapper>

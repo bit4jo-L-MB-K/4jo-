@@ -5,14 +5,19 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import data.dto.ProductDto;
@@ -205,7 +210,7 @@ public class ShopController {
       @RequestParam(value = "currentPage", defaultValue = "1") int currentPage) {
     ModelAndView mview = new ModelAndView();
 
-    int totalCount = service.getTotalCount();
+    int totalCount = service.getTotalCountOption();
 
     // 페이징 처리에 필요한 변수선언
     int perpage = 7;// 한페이지에 보여질 글의 갯수
@@ -248,7 +253,7 @@ public class ShopController {
       @RequestParam(value = "currentPage", defaultValue = "1") int currentPage) {
     ModelAndView mview = new ModelAndView();
 
-    int totalCount = service.getTotalCount();
+    int totalCount = service.getTotalCountOption();
 
     // 페이징 처리에 필요한 변수선언
     int perpage = 99;// 한페이지에 보여질 글의 갯수
@@ -379,18 +384,25 @@ public class ShopController {
 
   @GetMapping("/shop/delete")
   public String delete(String idx, String currentPage, String color, HttpSession session) {
-    // //실제 업로드 폴더의 경로
-    // String path=session.getServletContext().getRealPath("/photo");
-    // System.out.println(path);
-    // //업로드된 파일명
-    // String uploadfile=service.getData(idx).getPro_photo();
-    // //file객체 생성
-    // File file=new File(path+"\\"+uploadfile);
-    // //파일삭제
-    // file.delete();
 
     service.deleteOne(idx, color);
     return "redirect:adminmain?currentPage=" + currentPage;
+  }
+  
+  @GetMapping("/shop/deleteA")
+  public String deleteA(String idx, String currentPage, HttpSession session) {
+	 //실제 업로드 폴더의 경로
+	     String path=session.getServletContext().getRealPath("/photo");
+	     System.out.println(path);
+	     //업로드된 파일명
+	     String uploadfile=service.getData(idx).getPro_photo();
+	     //file객체 생성
+	     File file=new File(path+"\\"+uploadfile);
+	     //파일삭제
+	     file.delete();
+	     
+	     service.deleteAll(idx);
+	     return "redirect:adminmain?currentPage=" + currentPage;
   }
 
 
@@ -403,6 +415,17 @@ public class ShopController {
     service.updateOption(dto);
     return "redirect:adminmain";
   }
+  
+  @RequestMapping("/shop/idcheck")
+	public @ResponseBody Map<String, Integer> ProidCheckProcess(@RequestParam String pro_id) {
+		//id 체크
+		int count=0;
+		
+		Map<String, Integer> map=new HashMap<String, Integer>();
+		count=service.getProIdCheck(pro_id);
+		map.put("cnt", count);//0 or 1
+		return map;
+	}
 
 
 }
