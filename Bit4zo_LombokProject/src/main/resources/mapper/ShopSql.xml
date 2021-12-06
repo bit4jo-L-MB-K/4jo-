@@ -3,25 +3,37 @@
 <mapper namespace="data.mapper.ShopMapper">
    
     <insert id="insertShop" parameterType="pdto">
-       insert into product (pro_id,pro_name,price,stock,pro_sub,pro_photo,pro_content,ipgoday)
-       values (#{pro_id},#{pro_name},#{price},#{stock},#{pro_sub},#{pro_photo},#{pro_content},now())
+        insert into product (pro_id,pro_name,price,stock,pro_sub,pro_photo,pro_content,ipgoday)
+        values (#{pro_id},#{pro_name},#{price},#{stock},#{pro_sub},#{pro_photo},#{pro_content},now())
 	</insert>
     
     <insert id="insertShopOP" parameterType="podto">
-    insert into pro_option (pro_id,color,s,m,l)
-    values (#{pro_id},#{color},#{s},#{m},#{l})
-</insert>
+    	insert into pro_option (pro_id,color,s,m,l) values (#{pro_id},#{color},#{s},#{m},#{l})
+	</insert>
     
     <select id="getTotalCount" resultType="int">
 		select count(*) from product
  	</select>
- 	
- 	
-    
-    <select id="getTotalCountCategory" parameterType="String" resultType="int">
-		select count(*) from product where pro_sub=#{pro_sub}
+
+    <select id="getTotalCountCategory" parameterType="HashMap" resultType="int">
+		select count(*) from product  where pro_sub=#{pro_sub}
+		<if test="price_n==1">
+			and price_n=1
+		</if>
+		<if test="price_n==2">
+			and price_n=2
+		</if>
+		<if test="price_n==3">
+			and price_n=3
+		</if>
+		<if test="price_n==4">
+			and price_n=4
+		</if>
+		<if test="price_n==5">
+			and price_n=5
+		</if>	
  	</select>
- 	
+     	
  	<select id="getAllLists" parameterType="HashMap" resultType="pdto">
  		select * from product order by idx desc limit #{start},#{perpage}
  	</select>
@@ -29,6 +41,7 @@
  	<select id="getAllListsLowPri" parameterType="HashMap" resultType="pdto">
  		select * from product order by price asc limit #{start},#{perpage}
  	</select>
+ 	
  	<select id="getAllCateLowPri" parameterType="HashMap" resultType="pdto">
  		select * from product where  pro_sub=#{pro_sub} order by price asc limit #{start},#{perpage}
  	</select>
@@ -41,21 +54,61 @@
  		select * from product where  pro_sub=#{pro_sub} order by price desc limit #{start},#{perpage}
  	</select>
  	
- 	 <select id="getAllOptions" parameterType="String" resultType="podto">
+ 	<select id="getAllOptions" parameterType="String" resultType="podto">
  		select * from pro_option where pro_id=#{pro_id} order by num desc
  	</select>
  	
  	<select id="getAllOp" parameterType="String" resultType="podto">
- 	select p.pro_id,po.color from product p join pro_option po on p.pro_id=po.pro_id
+ 		select p.pro_id,po.color from product p join pro_option po on p.pro_id=po.pro_id
  	</select>
+ 	
  	<select id="getData" parameterType="String" resultType="pdto">
  		select * from product where idx=#{idx}
  	</select>
  	
- 	<select id="getCategory" parameterType="HashMap" resultType="pdto">
- 		select * from product where  pro_sub=#{pro_sub} order by idx desc limit #{start},#{perpage}
+ 	<select id="getCategory" parameterType="HashMap" resultMap="pdto">
+ 		select 	p.idx,
+ 				p.pro_id,
+ 				p.pro_name,
+ 				p.price,
+ 				p.stock,
+ 				p.pro_sub,
+ 				p.pro_photo,
+ 				p.readcount,
+ 				p.price_n,
+ 				p.color_n,
+ 				po.color
+ 				from product p join pro_option po on 
+ 				p.pro_id=po.pro_id 
+ 				where p.pro_sub=#{pro_sub}
+ 		<if test='price_n=="1"'>
+ 			and <![CDATA[price<=10000]]>
+ 		</if>
+ 		<if test='price_n=="2"'>
+ 			and <![CDATA[10000<price and price<=30000]]>
+ 		</if>
+ 		<if test='price_n=="3"'>
+ 			and <![CDATA[30000<price and price<=50000]]>
+ 		</if>
+ 		<if test='price_n=="4"'>
+ 			and <![CDATA[50000<price and price<=100000]]>
+ 		</if>
+ 		<if test='price_n=="5"'>
+ 			and <![CDATA[price>100000]]>
+ 		</if>
+ 		<if test="'000000'.equals(color)">
+ 			and color="000000"
+ 		</if>
+ 		<if test="'323c73'.equals(color)">
+ 			and color="323c73"
+ 		</if>
+ 		<if test="'0000cd'.equals(color)">
+ 			and color="0000cd"
+ 		</if>
+ 		
+ 		
+ 		 order by p.idx desc limit #{start},#{perpage}
  	</select>
- 	
  	
  	<update id="updateReadCount" parameterType="String">
       	update product set readcount=readcount+1 where idx=#{idx}
@@ -70,38 +123,39 @@
     </select>
     
     <update id="updateProduct" parameterType="pdto">
-   			update product set pro_id=#{pro_id},pro_name=#{pro_name},price=#{price},stock=#{stock},pro_sub=#{pro_sub},pro_content=#{pro_content}
+   		update product set pro_id=#{pro_id},pro_name=#{pro_name},price=#{price},stock=#{stock},pro_sub=#{pro_sub},pro_content=#{pro_content}
    		<if test="pro_photo!=null">
-     		 ,pro_photo=#{pro_photo}
+     	,pro_photo=#{pro_photo}
    		</if>
-   			where idx=#{idx}
+   		where idx=#{idx}
 	</update> 
-
+<!-- ////////////////////////////////////////미선이꺼////////////////////////////////////////////////// -->
 	<select id="getJoinList" parameterType="HashMap" resultMap="podto">
-	SELECT p.idx, o.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
-	FROM product p JOIN pro_option o ON p.pro_id=o.pro_id ORDER BY o.pro_id limit #{start},#{perpage}
+		SELECT p.idx, o.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
+		FROM product p JOIN pro_option o ON p.pro_id=o.pro_id ORDER BY o.pro_id limit #{start},#{perpage}
 	</select>
 	
 	<select id="getJoinListLeft" parameterType="HashMap" resultMap="podto">
-	SELECT p.idx, o.num, p.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
-	FROM product p LEFT JOIN pro_option o ON p.pro_id=o.pro_id ORDER BY o.pro_id limit #{start},#{perpage}
+		SELECT p.idx, o.num, p.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
+		FROM product p LEFT JOIN pro_option o ON p.pro_id=o.pro_id ORDER BY o.pro_id limit #{start},#{perpage}
 	</select>
 	
 	<select id="getJoinNum" parameterType="HashMap" resultMap="podto">
-	SELECT p.idx, o.num, p.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
-	from product p join pro_option o on p.pro_id=o.pro_id where p.idx=#{idx} AND o.color=#{color} order by o.num
+		SELECT p.idx, o.num, p.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
+		from product p join pro_option o on p.pro_id=o.pro_id where p.idx=#{idx} AND o.color=#{color} order by o.num
 	</select>
 	
 	<update id="updateOption" parameterType="podto">
-	   UPDATE pro_option o inner join product p
-	   on o.pro_id=p.pro_id
-	   set o.pro_id=#{pro_id}, o.color=#{color}
-	   where o.num=#{num}
+		   UPDATE pro_option o inner join product p
+		   on o.pro_id=p.pro_id
+		   set o.pro_id=#{pro_id}, o.color=#{color}
+		   where o.num=#{num}
 	</update>
 
-<delete id="deleteOne" parameterType="podto">
-DELETE FROM o USING pro_option AS o JOIN product AS p ON p.pro_id = o.pro_id WHERE p.idx=#{idx} AND o.color=#{color}
-</delete>
+	<delete id="deleteOne" parameterType="podto">
+		DELETE FROM o USING pro_option AS o JOIN product AS p ON p.pro_id = o.pro_id WHERE p.idx=#{idx} AND o.color=#{color}
+	</delete>
+    
     <resultMap type="pdto" id="pdto">
 		<result column="idx" property="idx"/>
 		<result column="pro_name" property="pro_name"/>
@@ -112,6 +166,9 @@ DELETE FROM o USING pro_option AS o JOIN product AS p ON p.pro_id = o.pro_id WHE
 		<result column="pro_photo" property="pro_photo"/>
 		<result column="pro_content" property="pro_content"/>
 		<result column="ipgoday" property="ipgoday"/>
+		<result column="price_n" property="price_n"/>
+		<result column="color_n" property="color_n"/>
+		<collection property="joindto2" resultMap="podto"/>
 	</resultMap>
 
 	<resultMap type="podto" id="podto">
@@ -121,8 +178,6 @@ DELETE FROM o USING pro_option AS o JOIN product AS p ON p.pro_id = o.pro_id WHE
 	   <result column="s" property="s"/>
 	   <result column="m" property="m"/>
 	   <result column="l" property="l"/>
-	<collection property="joindto" resultMap="pdto"/>
-	</resultMap>
-    
- 	
+	   <collection property="joindto" resultMap="pdto"/>
+	</resultMap> 	
 </mapper>

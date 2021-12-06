@@ -8,14 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-$(function(){
-	$("div.product__thumb__pic").on("click",function () {
-		$
-		
-		
-	})
-});
+
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Dokdo&family=Gugi&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -40,25 +33,42 @@ $(function(){
                     <div class="col-lg-3 col-md-3">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                            <c:forTokens var="pp" items="${dto.pro_photo }" delims="," begin="0" end="4" varStatus="sts">                                   	
-                                <a class="nav-link active" data-toggle="tab" href="#tabs-${sts.count }" role="tab">
-                                    <div class="product__thumb__pic set-bg" data-setbg="../photo/${pp}">
-                                    </div> 
-                                </a>
+                            <c:forTokens var="pp" items="${dto.pro_photo }" delims="," begin="0" end="4" varStatus="sts"> 
+                            	<c:choose>    
+                            		<c:when test="${sts.count==1 }">                             	
+                                		 <a class="nav-link active" data-toggle="tab" href="#tabs-${sts.count }" role="tab">
+                                   		 	<div class="product__thumb__pic set-bg" data-setbg="../photo/${pp}"></div> 
+                               	   		 </a>
+                                	</c:when>
+                                	<c:otherwise>
+                                	 	 <a class="nav-link " data-toggle="tab" href="#tabs-${sts.count }" role="tab">
+                                     		<div class="product__thumb__pic set-bg" data-setbg="../photo/${pp}"></div> 
+                               		     </a>
+                                	</c:otherwise>
+                                </c:choose>
                                 <br>
                             </c:forTokens>                           
                         </ul>
                     </div>
                     <div class="col-lg-6 col-md-9">
                         <div class="tab-content">                     
-                           <c:forTokens var="pp" items="${dto.pro_photo }" delims=","  begin="0" end="0" varStatus="sts">
-								
-								<div class="tab-pane active" id="tabs-${sts.count }" role="tabpanel">
-									<div class="product__details__pic__item">
-                                    <img src="../photo/${pp}" alt="">
-                                	</div>                               
-	                            </div>	                                                            
-								                                                           
+                           <c:forTokens var="pp" items="${dto.pro_photo }" delims=","  begin="0" end="4" varStatus="sts">
+							   <c:choose>
+							   		<c:when test="${sts.count==1 }">
+										<div class="tab-pane active" id="tabs-${sts.count }" role="tabpanel">
+											<div class="product__details__pic__item">
+                                    			<img src="../photo/${pp}" alt="">
+                                			</div>                               
+	                            		</div>	
+	                                </c:when>
+		                            <c:otherwise>
+		                            		<div class="tab-pane" id="tabs-${sts.count }" role="tabpanel">
+												<div class="product__details__pic__item">
+	                                    			<img src="../photo/${pp}" alt="">
+	                                			</div>                               
+		                           		    </div>	
+		                            </c:otherwise>
+	                            </c:choose>                                                         
 							</c:forTokens>
                                                                                                         
                         </div>                       

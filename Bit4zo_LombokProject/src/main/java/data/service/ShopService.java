@@ -30,9 +30,14 @@ public class ShopService {
     return mapper.getPriceAllCount();
   }
 
-  public int getTotalCountCategory(String pro_sub) {
-    return mapper.getTotalCountCategory(pro_sub);
+  public int getTotalCountCategory(String pro_sub, String price_n) {
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put("pro_sub", pro_sub);
+    map.put("price_n", price_n);
+    return mapper.getTotalCountCategory(map);
   }
+
+
 
   public ProductDto getData(String idx) {
     return mapper.getData(idx);
@@ -81,11 +86,16 @@ public class ShopService {
 
   }
 
-  public List<ProductDto> getCategory(String pro_sub, int start, int perPage) {
+  public List<ProductDto> getCategory(String pro_sub, int start, int perpage, String price_n,
+      String color) {
     HashMap<String, Object> map = new HashMap<String, Object>();
-    map.put("start", start);
-    map.put("perpage", perPage);
     map.put("pro_sub", pro_sub);
+    map.put("start", start);
+    map.put("perpage", perpage);
+    map.put("price_n", price_n);
+    map.put("color", color);
+
+
     return mapper.getCategory(map);
   }
 

@@ -13,7 +13,9 @@ public interface ShopMapper {
 
   public int getTotalCount();
 
-  public int getTotalCountCategory(String pro_sub);
+  public int getTotalCountCategory(HashMap<String, Object> map);
+
+
 
   public List<ProductDto> getAllLists(HashMap<String, Integer> map);
 

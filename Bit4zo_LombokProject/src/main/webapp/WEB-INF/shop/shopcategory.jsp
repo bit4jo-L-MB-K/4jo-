@@ -105,23 +105,7 @@ $(function () {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseTwo">Branding</a>
-                                    </div>
-                                    <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__brand">
-                                                <ul>
-                                                    <li><a href="#">Louis Vuitton</a></li>
-                                                    <li><a href="#">Chanel</a></li>
-                                                    <li><a href="#">Hermes</a></li>
-                                                    <li><a href="#">Gucci</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="card">
                                     <div class="card-heading">
                                         <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
@@ -247,9 +231,11 @@ $(function () {
                     </div>
                     <!-- /////////////최신순 리스트/////////////// -->
                     <div class="row seltb" id="t1">
-                      <c:forEach var="p" items="${list}">     
+                      <c:forEach var="p" items="${list}">
+                     
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
+                      <c:out value="${p.joindto2.color }"></c:out>
                             	<c:choose>
                             		<c:when test="${fn:substringBefore(p.pro_photo,',') !=''}">
                                 		<div class="product__item__pic set-bg" data-setbg="../photo/${fn:substringBefore(p.pro_photo,',')}">
@@ -284,17 +270,9 @@ $(function () {
                                         <i class="fa fa-star-o"></i>
                                     </div>
                                     <h5><fmt:formatNumber value="${p.price}" pattern="#,###,###"/> ￦ </h5>
-                                    <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>                                
+                                   		<div style="float: left;">
+		                                       			 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${p.joindto2.color}; float: right; margin-right:5px;" ></span>   
+		                                </div>                       
                                 </div>
                             </div>
                         </div>       

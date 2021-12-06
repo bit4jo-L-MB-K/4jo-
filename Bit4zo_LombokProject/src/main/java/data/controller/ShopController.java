@@ -73,18 +73,24 @@ public class ShopController {
     mview.addObject("no", no);
     mview.addObject("currentPage", currentPage);
     mview.addObject("totalCount", totalCount);
+
     mview.setViewName("/shop/shopmain");
     return mview;
   }
 
+
+
   @GetMapping("/shop/category")
   public ModelAndView shopSort(@RequestParam(value = "pro_sub", required = false) String pro_sub,
-      @RequestParam(defaultValue = "1") int currentPage) {
+      @RequestParam(defaultValue = "1") int currentPage,
+      @RequestParam(value = "price_n", required = false) String price_n,
+      @RequestParam(value = "pro_id", required = false) String pro_id,
+      @RequestParam(value = "color", required = false) String color) {
     ModelAndView mview = new ModelAndView();
-    int totalCount = service.getTotalCountCategory(pro_sub);
+    int totalCount = service.getTotalCountCategory(pro_sub, price_n);
 
     // 페이징 처리에 필요한 변수선언
-    int perPage = 3;// 한페이지에 보여질 글의 갯수
+    int perPage = 12;// 한페이지에 보여질 글의 갯수
     int totalPage;// 총 페이지수
     int start;// 각페이지에서 불러올 db의 시작번호
     int perBlock = 5;// 몇개의 페이지번호씩 표현할것인가
@@ -103,7 +109,7 @@ public class ShopController {
 
     // 각 페이지에 출력할 시작번호
     int no = totalCount - (currentPage - 1) * perPage;
-    List<ProductDto> list = service.getCategory(pro_sub, start, perPage);
+    List<ProductDto> list = service.getCategory(pro_sub, start, perPage, price_n, color);
     List<ProductDto> list2 = service.getAllCateLowPri(pro_sub, start, perPage);
     List<ProductDto> list3 = service.getAllCateHigPri(pro_sub, start, perPage);
     mview.addObject("list", list);
@@ -321,8 +327,8 @@ public class ShopController {
   }
 
   @PostMapping("/shop/insert2")
-  public String insert2(@ModelAttribute ProductOpDto odto) {
-    service.insertShopOP(odto);
+  public String insert2(@ModelAttribute ProductOpDto podto) {
+    service.insertShopOP(podto);
 
     // 목록으로 이동
     return "redirect:addform";

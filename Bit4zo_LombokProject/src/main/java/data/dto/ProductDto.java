@@ -19,8 +19,35 @@ public class ProductDto {
   private String pro_content;
   private MultipartFile upload;
   private Timestamp ipgoday;
+  private String price_n;
+  private String color_n;
+  private ProductOpDto joindto2;
 
 
+
+  public ProductOpDto getJoindto2() {
+    return joindto2;
+  }
+
+  public void setJoindto2(ProductOpDto joindto2) {
+    this.joindto2 = joindto2;
+  }
+
+  public String getPrice_n() {
+    return price_n;
+  }
+
+  public void setPrice_n(String price_n) {
+    this.price_n = price_n;
+  }
+
+  public String getColor_n() {
+    return color_n;
+  }
+
+  public void setColor_n(String color_n) {
+    this.color_n = color_n;
+  }
 
   public String getStock() {
     return stock;
