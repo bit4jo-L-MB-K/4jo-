@@ -66,13 +66,17 @@ a:hover {
 		        <h4 class="panel-title">
 		          <a data-toggle="collapse" data-parent="#accordion" href="#collpase${n.num}">[${n.noticetype}] ${n.nsubject} <p style="text-align: right;"><fmt:formatDate value="${n.writeday}" pattern="yyyy-MM-dd"/></p></a>
 		        </h4>
-		        
+		        <button type="button" class="btn btn-info btn-xs"
+				onclick="location.href='noticeupdateform?num=${n.num}'">수정</button>
+					
+				<button type="button" class="btn btn-danger btn-xs del" 
+				onclick="location.href='ndelete?num=${n.num}'">삭제</button>
 		      </div>
 		     <%--  ${fn:length(list)-status.index  --%>
-		     <c:set var="count" value="${length-status.index }"/>
+		     <c:set var="count" value="${length-status.index}"/>
+		  			<%-- <b>${count}:${n.num}</b> --%>
 		      <div id="collpase${count}" class="${count eq n.num?'panel-collapse collapse in':'panel-collapse collapse'}" style="display:none;">
 		        <div class="panel-body">${n.ncontent}</div>
-		  
 		      </div>
 		    </div>
 		</c:forEach>

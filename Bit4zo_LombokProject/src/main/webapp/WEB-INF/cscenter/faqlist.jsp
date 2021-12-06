@@ -14,8 +14,8 @@
     <script src="https://kit.fontawesome.com/55fa8b84a2.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../resources/cscenterstyle.css">
     <script src="main.js" defer></script>
 <style type="text/css">
@@ -31,7 +31,7 @@ a:hover {
 	
 }
 
-.link-list li a{
+.link-list li{
 	height : 70px;
 	line-height: 70px;
 	width: 25%;
@@ -45,6 +45,7 @@ a:hover {
 .faq-contents a {
 	text-decoration: none;
 }
+
 
 /* For below 1044px screen width */
 @media screen and (max-width: 1044px) {
@@ -62,6 +63,57 @@ a:hover {
 		margin: 0 auto;
 	}
 
+}
+
+.tab-content {
+	display: none;
+}
+.tab-content.current {
+	display: inline-block;
+}
+.tab-link a {
+	cursor: pointer;
+}
+
+/* .tab-link a:active {
+	background-color: black;
+	color: white;
+} */
+
+.notext {
+	text-align: center;
+	color: #716f73;
+}
+
+.notext i {
+	font-size: 50px;
+	
+}
+
+/* 아코디언 디자인 */
+.panel-question {
+  margin-bottom: 20px;
+  background-color: #fff;
+  
+}
+
+.panel-heading {
+  font-weight: bold;
+  padding: 5px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+	
+  
+}
+
+.panel-body {
+  padding: 15px;
+  display: none;
+}
+
+.active .panel-body{
+    display: block;
 }
 
 </style>
@@ -83,43 +135,225 @@ a:hover {
                 <div class="main-content__main">
                     <!-- 고객센터 메뉴 링크 -->
                     <div class="customer-link">
-                        <ul class="link-list faq-list">
-                            <li><a href="${root}/cscenter/faqlist">전체</a></li>
-                            <li><a href="">배송</a></li>
-                            <li><a href="">주문/결제</a></li>
-                            <li><a href="">취소/반품/교환</a></li>
-                            <li><a href="">영수증/세금계산서</a></li>
-                            <li><a href="">회원정보/서비스</a></li>
-                            <li><a href="">쿠폰/마일리지</a></li>
-                            <li><a href="">기타</a></li>
+                        <ul class="link-list faq-list tabs">
+                            <li class="tab-link current" data-tab="tab-main"><a href="${root}/cscenter/faqlist">전체</a></li>
+                            <li class="tab-link" data-tab="tab-deliver"><a>배송</a></li>
+                            <li class="tab-link" data-tab="tab-order"><a>주문/결제</a></li>
+                            <li class="tab-link" data-tab="tab-cancel"><a>취소/반품/교환</a></li>
+                            <li class="tab-link" data-tab="tab-receipt"><a>영수증/세금계산서</a></li>
+                            <li class="tab-link" data-tab="tab-meminfo"><a>회원정보/서비스</a></li>
+                            <li class="tab-link" data-tab="tab-coupon"><a>쿠폰/마일리지</a></li>
+                            <li class="tab-link" data-tab="tab-etc"><a>기타</a></li>
                         </ul>
                     </div>
                     
-                    
-                    <div class="summary faq-contents">
+                    <div class="summary faq-contents tab-content current" id="tab-main">
                     <h6 style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px;">전체</h6>
-                    	<div class="panel-group" id="accordion">
-							<c:if test="${totalCount==0}">
-								<h1><b>결과가 없습니다</b></h1>	
-							</c:if>
-						    <c:if test="${totalCount>0}">
-								<c:forEach var="n" items="${list}" varStatus="status">
-									<div class="panel panel-default">
-								      <div class="panel-heading">
-								        <h4 class="panel-title">
-								          <a data-toggle="collapse" data-parent="#accordion" href="#collpase${n.num}">[${n.faqtype}] ${n.ftitle} <p style="text-align: right;"><fmt:formatDate value="${n.writeday}" pattern="yyyy-MM-dd"/></p></a>
-								        </h4>
-								      </div>
-								      <c:set var="count" value="${length-status.index }"/>
-								      <div id="collpase${count}" class="${count eq n.num?'panel-collapse collapse in':'panel-collapse collapse'}" style="display:none;">
-								        <div class="panel-body">${n.fcontent}</div>
-								      </div>
-								    </div>
-								</c:forEach>
-							</c:if> 
-						  </div>
+					<section id="faq">
+						<c:if test="${totalCount==0}">
+							<p class="notext" ><i class="fas fa-exclamation-triangle notext"></i></p>
+							<h2 class="notext">결과가 없습니다</h2>
+						</c:if>
+						<c:if test="${totalCount>0}">
+							<c:forEach var="n" items="${list}">
+								<div class="panel-question">
+						            <div class="panel-heading">
+						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
+						            </div>
+						            <button type="button" class="btn btn-info btn-xs"
+										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
+									<button type="button" class="btn btn-danger btn-xs del" 
+										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+					            <div class="panel-body" id="thisone">
+					            ${n.fcontent}
+				            </div>
+				        </div>
+							</c:forEach>
+						</c:if>
+				      </section>                    	
                     </div>
                     
+                    <!-- 탭메뉴 -->
+                    <div class="summary faq-contents tab-content" id="tab-deliver">
+                    <h6 style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px;">배송</h6>
+                    <section id="faq">
+						<c:if test="${totalCount==0}">
+							<p class="notext" ><i class="fas fa-exclamation-triangle notext"></i></p>
+							<h2 class="notext">결과가 없습니다</h2>
+						</c:if>
+						<c:if test="${totalCount>0}">
+							<c:forEach var="n" items="${deliverlist}">
+								<div class="panel-question">
+						            <div class="panel-heading">
+						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
+						            </div>
+						            <button type="button" class="btn btn-info btn-xs"
+										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
+									<button type="button" class="btn btn-danger btn-xs del" 
+										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+					            <div class="panel-body" id="thisone">
+					            ${n.fcontent}
+				            </div>
+				        </div>
+							</c:forEach>
+						</c:if>
+				      </section>
+                    </div>
+                    
+                    <div class="summary faq-contents tab-content" id="tab-order">
+                    <h6 style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px;">주문/결제</h6>
+                    	<section id="faq">
+						<c:if test="${totalCount==0}">
+							<p class="notext" ><i class="fas fa-exclamation-triangle notext"></i></p>
+							<h2 class="notext">결과가 없습니다</h2>
+						</c:if>
+						<c:if test="${totalCount>0}">
+							<c:forEach var="n" items="${orderlist}">
+								<div class="panel-question">
+						            <div class="panel-heading">
+						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
+						        </div>
+						            <button type="button" class="btn btn-info btn-xs"
+										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
+									<button type="button" class="btn btn-danger btn-xs del" 
+										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+						            <div class="panel-body" id="thisone">
+						            ${n.fcontent}
+					           		</div>
+					        	</div>
+							</c:forEach>
+						</c:if>
+				      </section>
+                    </div>
+                    <div class="summary faq-contents tab-content" id="tab-cancel">
+                    <h6 style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px;">취소/반품/교환</h6>
+                    	<section id="faq">
+						<c:if test="${totalCount==0}">
+							<p class="notext" ><i class="fas fa-exclamation-triangle notext"></i></p>
+							<h2 class="notext">결과가 없습니다</h2>	
+						</c:if>
+						<c:if test="${totalCount>0}">
+							<c:forEach var="n" items="${cancellist}">
+								<div class="panel-question">
+						            <div class="panel-heading">
+						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
+						            </div>
+						            <button type="button" class="btn btn-info btn-xs"
+										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
+									<button type="button" class="btn btn-danger btn-xs del" 
+										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+					            <div class="panel-body" id="thisone">
+					            ${n.fcontent}
+				            </div>
+				        </div>
+							</c:forEach>
+						</c:if>
+				      </section>
+                    </div>
+                    
+                    <div class="summary faq-contents tab-content" id="tab-receipt">
+                    <h6 style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px;">영수증/세금계산서</h6>
+                    	<section id="faq">
+						<c:if test="${totalCount==0}">
+							<p class="notext" ><i class="fas fa-exclamation-triangle notext"></i></p>
+							<h2 class="notext">결과가 없습니다</h2>	
+						</c:if>
+						<c:if test="${totalCount>0}">
+							<c:forEach var="n" items="${receiptlist}">
+								<div class="panel-question">
+						            <div class="panel-heading">
+						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
+						            </div>
+						            <button type="button" class="btn btn-info btn-xs"
+										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
+									<button type="button" class="btn btn-danger btn-xs del" 
+										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+					            <div class="panel-body" id="thisone">
+					            ${n.fcontent}
+				            </div>
+				        </div>
+							</c:forEach>
+						</c:if>
+				      </section>
+                    </div>
+                    
+                    <div class="summary faq-contents tab-content" id="tab-meminfo">
+                    <h6 style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px;">회원정보/서비스</h6>
+                    	<section id="faq">
+						<c:if test="${totalCount==0}">
+							<p class="notext" ><i class="fas fa-exclamation-triangle notext"></i></p>
+							<h2 class="notext">결과가 없습니다</h2>
+						</c:if>
+						<c:if test="${totalCount>0}">
+							<c:forEach var="n" items="${meminfolist}">
+								<div class="panel-question">
+						            <div class="panel-heading">
+						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
+						            </div>
+						            <button type="button" class="btn btn-info btn-xs"
+										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
+									<button type="button" class="btn btn-danger btn-xs del" 
+										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+					            <div class="panel-body" id="thisone">
+					            ${n.fcontent}
+				            </div>
+				        </div>
+							</c:forEach>
+						</c:if>
+				      </section>
+                    </div>
+                    
+                    <div class="summary faq-contents tab-content" id="tab-coupon">
+                    <h6 style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px;">쿠폰/마일리지</h6>
+                    	<section id="faq">
+						<c:if test="${totalCount==0}">
+							<p class="notext" ><i class="fas fa-exclamation-triangle notext"></i></p>
+							<h2 class="notext">결과가 없습니다</h2>	
+						</c:if>
+						<c:if test="${totalCount>0}">
+							<c:forEach var="n" items="${couponlist}">
+								<div class="panel-question">
+						            <div class="panel-heading">
+						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
+						            </div>
+						            <button type="button" class="btn btn-info btn-xs"
+										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
+									<button type="button" class="btn btn-danger btn-xs del" 
+										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+					            <div class="panel-body" id="thisone">
+					            ${n.fcontent}
+				            </div>
+				        </div>
+							</c:forEach>
+						</c:if>
+				      </section>
+                    </div>
+                    
+                    <div class="summary faq-contents tab-content" id="tab-etc">
+                    <h6 style="border-bottom: 1px solid black; margin-bottom: 20px; padding-bottom: 10px;">기타</h6>
+                    	<section id="faq">
+						<c:if test="${totalCount==0}">
+							<p class="notext" ><i class="fas fa-exclamation-triangle notext"></i></p>
+							<h2 class="notext">결과가 없습니다</h2>	
+						</c:if>
+						<c:if test="${totalCount>0}">
+							<c:forEach var="n" items="${etclist}">
+								<div class="panel-question">
+						            <div class="panel-heading">
+						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
+						            </div>
+						            <button type="button" class="btn btn-info btn-xs"
+										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
+									<button type="button" class="btn btn-danger btn-xs del" 
+										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+					            <div class="panel-body" id="thisone">
+					            ${n.fcontent}
+				            </div>
+				        </div>
+							</c:forEach>
+						</c:if>
+				      </section>
+                    </div>
                     
 <!-- 페이징 -->
 	<c:if test="${totalCount>0}">
@@ -127,20 +361,20 @@ a:hover {
 			<ul class="pagination">
 			<!-- 이전 -->
 			<c:if test="${startPage>1}">
-				<li><a href="list?currentPage=${startPage-1}">이전</a></li>
+				<li><a href="faqlist?currentPage=${startPage-1}">이전</a></li>
 			</c:if>
 			<c:forEach var="pp" begin="${startPage}" end="${endPage}">
 				<c:if test="${currentPage==pp}">
-					<li class="active"><a href="list?currentPage=${pp}">${pp}</a></li>
+					<li class="active"><a href="faqlist?currentPage=${pp}">${pp}</a></li>
 				</c:if>
 				<c:if test="${currentPage!=pp}">
-					<li><a href="list?currentPage=${pp}">${pp}</a></li>
+					<li><a href="faqlist?currentPage=${pp}">${pp}</a></li>
 				</c:if>
 			</c:forEach>
 			
 			<!-- 다음 -->
 			<c:if test="${endPage<totalPage}">
-				<li><a href="list?currentPage=${endPage+1}">다음</a></li>
+				<li><a href="faqlist?currentPage=${endPage+1}">다음</a></li>
 			</c:if>
 			</ul>
 		</div>
@@ -189,6 +423,46 @@ a:hover {
     
 </body>
 <script type="text/javascript">
-    
+	$(document).ready(function(){
+		$('ul.tabs li').click(function(){
+			var tab_id = $(this).attr('data-tab');
+			$('.tab-content').removeClass('current');
+			
+			$(this).addClass('current');
+			$("#"+tab_id).addClass('current');  
+					
+			
+			
+		});
+		
+		$('ul.tabs li').click(function(e){ 
+			e.preventDefault();
+			//클릭했을 때 배경 검은색 글씨 흰색 유지, 다른거 클릭시 해제, 현재 active만 적용됌
+			//$(this).css({'background':'black','color':'white'}); 
+			/* $(this).child().css({'background:':'black','color':'white'}); */
+			/* $(this).siblings().removeClass("test"); */
+			
+		});
+		
+		
+	});
+	
+	var panelQuestion = document.querySelectorAll('.panel-question');
+	
+	for(var i=0; i<panelQuestion.length; i++){
+		panelQuestion[i].addEventListener('click',function(){
+
+	    //closeAll();
+	    //this.classList.add('active');
+	    this.classList.toggle('active');
+	    });
+
+	}
+	
+	function closeAll(){
+	    for(var x=0; x< panelQuestion.length; x++){
+			panelQuestion[x].classList.remove('active');
+	    }
+	}
 </script>
 </html>

@@ -27,6 +27,30 @@ a:hover {
 	padding-top: 2px;
 }
 </style>
+<script type="text/javascript">
+	$(function(){
+		$("i.photo").click(function(){
+			$("#photo").trigger("click");
+		});
+	});
+	
+	/* 이미지 미리보기 함수 */
+	function setDetailImage(event){
+		for(var image of event.target.files){
+			var reader =new FileReader();
+			
+			reader.onload = function(event){
+				var img = document.createElement("img");
+				img.setAttribute("src",event.target.result);
+				img.setAttribute("class","inquiry-photo");
+				document.querySelector("div#images_container").appendChild(img).style.margin='0 5px';
+			};
+			
+			console.log(image);
+			reader.readAsDataURL(image);
+		}
+	}
+</script>
 </head>
 <body>
     <!-- CS Center Header -->
@@ -36,7 +60,7 @@ a:hover {
         <h1 class="header__title__description">고객님, 궁금하신점을 해결해 드릴게요.</h1>
     </section>
 </a>
-    <!-- body , side 보류 -->
+    
 <div class="main-content">
 <div class="main-container main-content__body">
     <div class="main-content__main main-content__main__inquiry">
@@ -44,20 +68,20 @@ a:hover {
             <h3 class="main-conent__title">1:1 문의</h3>
         </div>
         <div class="inquiry-wrap">
-            <form action="/inquiry/add" id="registrationForm" method="post">
+            <form action="qinsert" id="registrationForm" method="post" enctype="multipart/form-data">
                 <div class="inquiry-layout">
                     <div class="inquiry-layout__left">
                         <h3 class="form-title">문의 유형<span class="form-title__required">*</span></h3>
                         <div class="type-form">
                             <span class="type-form__state form-select">
-                                <select name="inquiryTypeId" class="select">
-                                    <option value="">회원정보</option>
-                                    <option value="">상품</option>
-                                    <option value="">주문/결제</option>
-                                    <option value="">배송</option>
-                                    <option value="">취소/반품</option>
-                                    <option value="">마일리지</option>
-                                    <option value="">매장재고/상품예약</option>
+                                <select name="itype" class="select">
+                                    <option value="회원정보">회원정보</option>
+                                    <option value="상품">상품</option>
+                                    <option value="주문/결제">주문/결제</option>
+                                    <option value="배송">배송</option>
+                                    <option value="취소/반품">취소/반품</option>
+                                    <option value="쿠폰/마일리지">쿠폰/마일리지</option>
+                                    <option value="매장재고/상품예약">매장재고/상품예약</option>
                                 </select>
                                 <!-- <i class="fas fa-angle-down"></i> -->
                             </span>
@@ -65,7 +89,7 @@ a:hover {
                         <h3 class="form-title">작성자<span class="form-title__required">*</span></h3>
                         <div class="write-name">
                             <div class="write-name__input input-block">
-                                <input type="text" class="form-text" name="writer">
+                                <input type="text" class="form-text" name="myid">
                             </div>
                         </div>
                     </div>
@@ -73,13 +97,13 @@ a:hover {
                         <h3 class="form-title">휴대전화<span class="form-title__required">*</span></h3>
                         <div class="phone-form">
                             <div class="phone-form__input input-block">
-                                <input type="text" name="phoneNumber" value="" placeholder="-없이 숫자만 입력해 주세요" class="form-text">
+                                <input type="text" name="hp" value="" placeholder="-없이 숫자만 입력해 주세요" class="form-text">
                             </div>
                         </div>
                         <h3 class="form-title">이메일<span class="form-title__required">*</span></h3>
                         <div class="email-form">
                             <div class="email-form__input input-block">
-                                <input type="text" name="emailAddress" value="" placeholder="이메일" class="form-text">
+                                <input type="text" name="email" value="" placeholder="이메일" class="form-text">
                             </div>
                         </div>
                     </div>
@@ -89,23 +113,32 @@ a:hover {
                         <span class="form-title__required">*</span>
                     </h3>
                     <div class="input-block">
-                        <input type="text" name="title" id="inquiryTitle" onfocus="textCheck('#inquiryTitle',30);" class="form-text">
-                        
+                        <input type="text" name="ititle" id="inquiryTitle" onfocus="textCheck('#inquiryTitle',30);" class="form-text">
                     </div>
                 </div>
                 <div class="inquiry-content">
                     <h3 class="form-title">내용<span class="form-title__required">*</span></h3>
-                    <textarea id="inquiryContent" name="content" cols="40" row="5" placeholder="접수하신 문의 내용에 계좌번호 등의 개인정보가 포함된 경우, 임의 삭제될 수 있습니다." onfocus="textCheck('#inquiryContent',2000);" class="form-text"></textarea>
-                    
+                    <textarea id="inquiryContent" name="icontent" cols="40" row="5" placeholder="접수하신 문의 내용에 계좌번호 등의 개인정보가 포함된 경우, 임의 삭제될 수 있습니다." onfocus="textCheck('#inquiryContent',2000);" class="form-text"></textarea>
                 </div>
+				<div class="inquiry-photo" style="margin: 10px 0;">
+					<input type="file" name="upload" id="photo" multiple="multiple" style="visibility: hidden; display: none;" onchange="setDetailImage(event)">
+					<i class="fas fa-plus-square photo" style="display:flex; font-size: 90px; color: #bdbdbd; cursor: pointer;">
+						<!-- 이미지 미리보기  -->
+						<div id="images_container" style="min-width: 90px; min-height: 90px; max-width:90px; max-height:90px; display: flex;" ></div>
+					</i>
+					<!-- 이미지 미리보기할 위치 -->
+    				<!-- <img id="showimg" style="width: 70px; height: 70px; position: absolute; margin-left: 20px; margin-top: 14px; visibility: hidden;"> -->
+					<!-- <div id="images_container" style="width: 100px; height: 100px; display: flex; margin-bottom: 10px;"></div> -->
+				</div>                
+                
                 <div class="inquiry-agreement">
                     <label class="form-checkbox">
-                        <input type="checkbox" autocomplete="off" class="checkbox">
+                        <input type="checkbox" autocomplete="off" class="checkbox" required="required">
                         <span class="name">1:1문의 상담을 위한 개인정보 수집이용에 동의합니다.</span>
                     </label>
                 </div>
                 <div class="button-inquiry">
-                    <button type="button" disabled="disabled" class="form-button">1:1 문의하기</button>
+                    <button type="submit" class="form-button">1:1 문의하기</button>
                 </div>
             </form>
         </div>
