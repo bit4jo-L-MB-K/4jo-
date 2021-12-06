@@ -19,7 +19,7 @@
 				$("#email2").val($(this).val());
 			}
 		});
-		
+
 		//아이디 입력후 포커스가 벗어날때 체크
 		$("#id").blur(function(){
 			var id=$(this).val().trim();//입력값 앞뒤 공백 제거
@@ -72,7 +72,8 @@
 #formposition{
 	display: inline-block;
 	border-style: solid;
-   	border-width: thin 0px;
+   	border-width: thin 0px; 
+
 }
 
 </style>
@@ -80,48 +81,52 @@
 <body>
 <div align="center">
 	<h6 style="font-family: Rubik; font-size: 20pt; margin-top: 50px;">Join Lombok</h6>
-	<form action="insert" method="post" class="form-inline" name="memberfrm" style=" margin-top: 50px; margin-bottom: 50px;" onsubmit="return check(this)" id="formposition">
+	<form action="member/addform.jsp" method="post" class="form-inline"
+		name="memberfrm" style=" margin-top: 50px;"
+		onsubmit="return check(this)" id="formposition">
 		<table class="table" style="width: 900px;">
 			<tr>
 				<th width="100" bgcolor="#ffffff" style="font-size: 10pt;">아이디</th>
-				<td>
-					<input type="text" name="id" id="id" maxlength="15" class="form-control" required="required" style="width: 150px;">
-					<b class="idmsg"></b>
-				</td>
-			</tr>
+					<td><input type="text" name="id" id="id" maxlength="8"
+						class="form-control" required="required" style="width: 120px;">
+						<b class="idmsg"></b></td>
+				</tr>
 			<tr>
 				<th width="100" bgcolor="#ffffff" style="font-size: 10pt;">비밀번호</th>
 				<td>
-					<input type="password" name="pass" class="form-control" required="required" style="width: 150px;" placeholder="비밀번호">
+					<input type="password" name="pass" class="form-control"
+						required="required" style="width: 120px;">
 				</td>
 			</tr>
 			<tr>
 				<th width="100" bgcolor="#ffffff" style="font-size: 10pt;">비밀번호 확인</th>
 				<td>
-					<input type="password" name="pass2" class="form-control" required="required" style="width: 150px;" placeholder="비밀번호 확인">
+					<input type="password" name="pass2" class="form-control"
+						required="required" style="width: 120px;">
 				</td>
 			</tr>
 			<tr>
 				<th width="100" bgcolor="#ffffff" style="font-size: 10pt;">이름</th>
 				<td>
-					<input type="text" name="name" class="form-control" required="required" style="width: 150px;">
+					<input type="text" name="name"  class="form-control"
+						required="required" style="width: 120px;">			
 				</td>
 			</tr>
 			<tr>
 				<th width="120" style="font-size: 10pt;">주소</th>
 				<td>
-					<input type="text" name="addrnum" id="userZipcode" placeholder="" readonly class='box'  style="width: 100px;"/>
+					<input type="text" name="addressName" id="userZipcode" placeholder="" readonly class='box'  style="width: 100px;"/>
                     <input type="button" value="우편 번호" onclick="findAddr()" style="height: 25px; line-height: 25px; vertical-align: top; padding:0"><br>
 					
-					<input type="text" name="addr" id="addr1" placeholder="주소를 입력하세요" readonly class='box' style="width: 300px;"/><br>
-					<input type="text" name="addrdetail" id="addr2" placeholder="상세 주소를 입력하세요" style="width: 500px;"/><br>
+					<input type="text" name="addressName1" id="addr1" placeholder="주소를 입력하세요" readonly class='box' style="width: 300px;"/> <br>
+					<input type="text" name="addressName2" id="addr2" placeholder="상세 주소를 입력하세요" style="width: 500px;"/> <br>
 				</td>
 			</tr>
 			<tr>
 				<th width="100" bgcolor="#ffffff" style="font-size: 10pt;">성별</th>
 				<td>
-					<select id="selegender" class="form-control" name="selegender">
-						<option value="x">선택안함</option>
+					<select id="selegender" class="form-control">
+						<option value="noselect">선택안함</option>
 						<option value="man">남성</option>
 						<option value="woman">여성</option>
 					</select>			
@@ -130,59 +135,61 @@
 			<tr>
 				<th width="100" bgcolor="#ffffff" style="font-size: 10pt;">생년월일</th>
 				<td>
-					<input type="date" name="birth" class="form-control" required="required" style="width: 200px;">
+					<input type="text" name="birth"  class="form-control"
+						required="required" style="width: 200px;">			
 				</td>
 			</tr>
 			<tr>
 				<th width="100" bgcolor="#ffffff" style="font-size: 10pt;">핸드폰</th>
 				<td>
-					<select id="hp" class="form-control" name="hp1">
+					<select id="hp" class="form-control">
 						<option value="010">010</option>
 						<option value="011">011</option>
 						<option value="017">017</option>
 						<option value="018">018</option>
 						<option value="019">019</option>
 					</select>
+					<b>-<b>
+					<input type="text" name="hp2"  class="form-control"
+						required="required" style="width: 80px;">
 					<b>-</b>
-					<input type="text" name="hp2"  class="form-control" required="required" style="width: 80px;">
-					<b>-</b>
-					<input type="text" name="hp3"  class="form-control" required="required" style="width: 80px;">			
+					<input type="text" name="hp3"  class="form-control"
+					required="required" style="width: 80px;">			
 				</td>
 			</tr>
 			<tr>
 				<th width="100" bgcolor="#ffffff" style="font-size: 10pt;">키/몸무게(cm/kg)</th>
 				<td>
-					<input type="text" name="height" class="form-control"
-					required="required" style="width: 80px;">
-					<input type="text" name="weight" class="form-control"
-					required="required" style="width: 80px;">		
+						<input type="text" name="height"  class="form-control"
+						required="required" style="width: 80px;">
+						<input type="text" name="weight"  class="form-control"
+						required="required" style="width: 80px;">		
 				</td>
 			</tr>
 			<tr>
 				<th width="100" bgcolor="#ffffff" style="font-size: 10pt;">이메일</th>
 				<td>
-					<input type="text" name="email1"  class="form-control" required="required" style="width: 80px;">	
+					<input type="text" name="email1"  class="form-control"
+						required="required" style="width: 80px;">	
 					<b>@</b>
-					<input type="text" name="email2" id="email2" class="form-control" required="required" style="width: 150px;">	
+					<input type="text" name="email2" id="email2" class="form-control"
+						required="required" style="width: 150px;">
 					<select id="selemail" class="form-control">
 						<option value="-">직접입력</option>
 						<option value="naver.com">네이버</option>
 						<option value="nate.com">네이트</option>
 						<option value="gmail.com">구글</option>
-						<option value="hanmail.net">다음</option>
+						<option value="hanmail.net">다음</option>				
 					</select>	
 				</td>
-			</tr>
-			<tr>
-				<td align="center" colspan="2">
-					<button type="submit" class="btn btn-success"
-					style="width: 100px;">회원가입</button>
-				</td>		
 			</tr>
 		</table>
 	</form>
 </div>
-
+<div align="center">
+		<button type="submit" class="btn btn-default"
+		style="width: 100px;">수정하기</button>
+</div>
 	
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
