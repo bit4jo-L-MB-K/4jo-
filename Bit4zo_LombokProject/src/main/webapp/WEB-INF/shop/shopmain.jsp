@@ -322,17 +322,12 @@ $(function () {
                                     
                                     <c:forEach var="c" items="${list5}">
                                     
-		                                    <!--  class="product__color__select" -->
-		                                    	<c:if test="${p.pro_id==c.pro_id}">
-		                                    		<div style="float: left;">
-<<<<<<< HEAD
-		                                       			 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${c.color}; float: right; margin-right:5px;" ></span>   
-		                                    		</div> 
-=======
-		                                       			 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  ${c.color}; float: right; margin-right:5px;" ></span>   
-		                                    		</div>
->>>>>>> Kmisun-1
-		                                   	    </c:if>
+                              <!--  class="product__color__select" -->
+                              	<c:if test="${p.pro_id==c.pro_id}">
+                              		<div style="float: left;">
+                                 			 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${c.color}; float: right; margin-right:5px;" ></span>   
+                              		</div> 	
+                             	    </c:if>
 		                                    
                                     </c:forEach> 
                                                                  
