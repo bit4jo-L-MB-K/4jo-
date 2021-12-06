@@ -249,6 +249,8 @@ $(function () {
                                 	</c:when>
                                 	<c:otherwise>
                                 		<div class="product__item__pic set-bg" data-setbg="../photo/${p.pro_photo}">
+              
+              
                                     		<ul class="product__hover">
                                         		<li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
                                         		<li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>

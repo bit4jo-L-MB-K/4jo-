@@ -41,6 +41,7 @@ public interface ShopMapper {
 
   public void insertShop(ProductDto dto);
 
+
   public void insertShopOP(ProductOpDto dto);
 
   public List<ProductOpDto> getJoinList(HashMap<String, Integer> map);
@@ -54,11 +55,11 @@ public interface ShopMapper {
   public void updateOption(ProductOpDto dto);
 
   public void deleteOne(HashMap<String, String> map);
-  
+
   public void deleteAll(String idx);
-  
+
   public int getTotalCountOption();
-  
+
   public int getProIdCheck(String pro_id);
 
 

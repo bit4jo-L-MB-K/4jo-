@@ -13,6 +13,8 @@ function checkboxArr() {
 		checkArr.push($(this).val());
 	}
 	
+	
+	
 	$.ajax({
 		url:'test_check',
 		type:'post',

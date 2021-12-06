@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -96,6 +95,8 @@ public class ShopController {
 
     // 페이징 처리에 필요한 변수선언
     int perPage = 12;// 한페이지에 보여질 글의 갯수
+
+
     int totalPage;// 총 페이지수
     int start;// 각페이지에서 불러올 db의 시작번호
     int perBlock = 5;// 몇개의 페이지번호씩 표현할것인가
@@ -388,21 +389,21 @@ public class ShopController {
     service.deleteOne(idx, color);
     return "redirect:adminmain?currentPage=" + currentPage;
   }
-  
+
   @GetMapping("/shop/deleteA")
   public String deleteA(String idx, String currentPage, HttpSession session) {
-	 //실제 업로드 폴더의 경로
-	     String path=session.getServletContext().getRealPath("/photo");
-	     System.out.println(path);
-	     //업로드된 파일명
-	     String uploadfile=service.getData(idx).getPro_photo();
-	     //file객체 생성
-	     File file=new File(path+"\\"+uploadfile);
-	     //파일삭제
-	     file.delete();
-	     
-	     service.deleteAll(idx);
-	     return "redirect:adminmain?currentPage=" + currentPage;
+    // 실제 업로드 폴더의 경로
+    String path = session.getServletContext().getRealPath("/photo");
+    System.out.println(path);
+    // 업로드된 파일명
+    String uploadfile = service.getData(idx).getPro_photo();
+    // file객체 생성
+    File file = new File(path + "\\" + uploadfile);
+    // 파일삭제
+    file.delete();
+
+    service.deleteAll(idx);
+    return "redirect:adminmain?currentPage=" + currentPage;
   }
 
 
@@ -415,17 +416,17 @@ public class ShopController {
     service.updateOption(dto);
     return "redirect:adminmain";
   }
-  
+
   @RequestMapping("/shop/idcheck")
-	public @ResponseBody Map<String, Integer> ProidCheckProcess(@RequestParam String pro_id) {
-		//id 체크
-		int count=0;
-		
-		Map<String, Integer> map=new HashMap<String, Integer>();
-		count=service.getProIdCheck(pro_id);
-		map.put("cnt", count);//0 or 1
-		return map;
-	}
+  public @ResponseBody Map<String, Integer> ProidCheckProcess(@RequestParam String pro_id) {
+    // id 체크
+    int count = 0;
+
+    Map<String, Integer> map = new HashMap<String, Integer>();
+    count = service.getProIdCheck(pro_id);
+    map.put("cnt", count);// 0 or 1
+    return map;
+  }
 
 
 }

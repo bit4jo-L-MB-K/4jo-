@@ -120,6 +120,8 @@
                                     	<c:forEach var="po" items="${list2}">
                                     		<span id="colorbox" style="border:3px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${po.color}; float: right; margrin-right:5px;" >
                            						        			 
+              
+              
                                 			</span>
                             			</c:forEach>
                                 </div>
