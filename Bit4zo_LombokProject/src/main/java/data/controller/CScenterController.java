@@ -35,13 +35,8 @@ public class CScenterController {
 	CscenterService service;
 	
 	@Autowired
-	InquiryAnswerService aservice;
-	
-	@Autowired
 	MemberMapper memMapper;
 	
-	@Autowired
-	InquiryAnswerMapper aMapper;
 	
 	@GetMapping("/cscenter/csmain")
 	public ModelAndView csmain(@RequestParam(defaultValue = "1") int currentPage) {
