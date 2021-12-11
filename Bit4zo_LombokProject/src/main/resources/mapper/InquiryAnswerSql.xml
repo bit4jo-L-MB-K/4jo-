@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.InquiryAnswerMapper">
+	<insert id="insertAnswer" parameterType="iadto">
+		insert into inqanswer (num,name,myid,content,writeday) values 
+		(#{num},#{name},#{myid},#{content},now())
+	</insert>
+	<select id="getAllAnswer" parameterType="String" resultType="iadto">
+		select * from inqanswer where num=#{num} order by idx desc
+	</select>
+	<select id="getAnswer" parameterType="String" resultType="iadto">
+		select * from inqanswer where idx=#{idx}
+	</select>
+	<update id="updateAnswer" parameterType="iadto">
+		update inqanswer set content=#{content} where idx=#{idx}
+	</update>
+	<delete id="deleteAnswer" parameterType="String">
+		delete from inqanswer where idx=#{idx}
+	</delete>
+</mapper>
