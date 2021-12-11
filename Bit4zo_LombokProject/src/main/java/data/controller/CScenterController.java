@@ -1,6 +1,5 @@
 package data.controller;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -20,16 +19,29 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import data.dto.FaqDto;
+import data.dto.InquiryAnswerDto;
 import data.dto.InquiryDto;
+import data.dto.MemberDto;
 import data.dto.NoticeDto;
+import data.mapper.InquiryAnswerMapper;
+import data.mapper.MemberMapper;
 import data.service.CscenterService;
-
+import data.service.InquiryAnswerService;
 
 @Controller
 public class CScenterController {
 	
 	@Autowired
 	CscenterService service;
+	
+	@Autowired
+	InquiryAnswerService aservice;
+	
+	@Autowired
+	MemberMapper memMapper;
+	
+	@Autowired
+	InquiryAnswerMapper aMapper;
 	
 	@GetMapping("/cscenter/csmain")
 	public ModelAndView csmain(@RequestParam(defaultValue = "1") int currentPage) {
@@ -38,7 +50,7 @@ public class CScenterController {
 		int totalCount = service.getTotalCount();
 		
 		//페이징처리에 필요한 변수선언
-		int perPage=10; //한페이지에 보여질 글의 갯수
+		int perPage=5; //한페이지에 보여질 글의 갯수
 		int totalPage; //총페이지수
 		int start; // 각페이지에서 불러올 db의 시작번호
 		int perBlock=5; //몇개의 페이지 번호씩 표현할 것인가
@@ -56,12 +68,15 @@ public class CScenterController {
 		start=(currentPage-1)*perPage;
 		//각페이지에서 필요한 게시글 가져오기
 		List<NoticeDto> list=service.noticeList(start, perPage);
+		List<FaqDto> flist=service.FaqList(startPage, perPage);
 		
 		//각페이지에 출력할 시작번호
 		int no=totalCount-(currentPage-1)*perPage;
 
 		//출력에 필요한 변수들을 request에 저장
 		mview.addObject("list",list);
+		mview.addObject("flist",flist);
+		
 		mview.addObject("startPage",startPage);
 		mview.addObject("endPage",endPage);
 		mview.addObject("totalPage", totalPage);
@@ -73,8 +88,6 @@ public class CScenterController {
 		return mview;
 	}
 	
-	
-	
 	//공지사항
 	@GetMapping("/cscenter/noticeadd")
 	public String noticeAddForm() {
@@ -83,10 +96,8 @@ public class CScenterController {
 	
 	@PostMapping("/cscenter/ninsert")
 	public String ninsert(@ModelAttribute NoticeDto dto) {
-		//세션 추가 할것
-
 		service.insertNotice(dto);
-		return "redirect:csmain";
+		return "redirect:noticelist";
 	}
 	
 	@GetMapping("/cscenter/noticelist")
@@ -156,7 +167,6 @@ public class CScenterController {
 		//세션
 		service.deleteNotice(num);
 		
-		
 		return "redirect:noticelist";
 	}
 	
@@ -196,7 +206,7 @@ public class CScenterController {
 		//각 페이지에서 불러올 시작번호
 		start=(currentPage-1)*perPage;
 		//각페이지에서 필요한 게시글 가져오기
-		List<FaqDto> list=service.FaqList(start, perPage);
+		List<FaqDto> flist=service.FaqList(start, perPage);
 		
 		//탭메뉴
 		List<FaqDto> deliverlist = service.deliverList(start,perPage);
@@ -211,7 +221,7 @@ public class CScenterController {
 		int no=totalCount-(currentPage-1)*perPage;
 
 		//출력에 필요한 변수들을 request에 저장
-		mview.addObject("list",list);
+		mview.addObject("flist",flist);
 		
 		//탭
 		mview.addObject("deliverlist",deliverlist);
@@ -229,7 +239,7 @@ public class CScenterController {
 		mview.addObject("currentPage",currentPage);
 		
 		mview.addObject("totalCount",totalCount);
-		mview.addObject("length",list.size());
+		mview.addObject("length",flist.size());
 		mview.setViewName("/cscenter/faqlist");
 		return mview;
 	}
@@ -260,21 +270,18 @@ public class CScenterController {
 		return "redirect:faqlist?currentPage="+currentPage;
 	}
 	
-	
 	//1대1 문의
 	@GetMapping("/cscenter/inquiry")
 	public String inquiryForm() {
+		
 		return "/cscenter/inquiry";
 	}
 	
 	@PostMapping("/cscenter/qinsert")
 	public String qinsert(@ModelAttribute InquiryDto idto, HttpSession session,
-			@RequestParam ArrayList<MultipartFile> upload) {
+			@RequestParam ArrayList<MultipartFile> upload, @ModelAttribute InquiryAnswerDto dto) {
 		//세션 추가 할것
-		/*
-		 * String loginok=(String)session.getAttribute("loginok"); if(loginok==null) {
-		 * return "/member/login"; }
-		 */
+		String loginok=(String)session.getAttribute("loginok"); 
 		 
 		//업로드 실제경로 
 		String path = session.getServletContext().getRealPath("/photo");
@@ -304,29 +311,93 @@ public class CScenterController {
 		}
 		
 		//세션에서 아이디를 얻어서 idto에 저장
-		//String myid = (String)session.getAttribute("myid");
-		//idto.setMyid(myid);
+		String myid = (String)session.getAttribute("myid");
+		idto.setMyid(myid);
+		//idto.setName(myid);
+		
 		
 		idto.setUploadfile(photo);
 		//insert
 		service.insertInquiry(idto);
-		return "redirect:csmain";
+		//service.updateiqName(idto);
+		return "redirect:inqlist";
 	}
 	
-	/*
-	 * @GetMapping("/inquiry/content") public ModelAndView content(@RequestParam
-	 * String num,
-	 * 
-	 * @RequestParam(defaultValue = "1") int currentPage,
-	 * 
-	 * @RequestParam(required = false) String key) {
-	 * 
-	 * ModelAndView mview = new ModelAndView();
-	 * 
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
+	@GetMapping("/cscenter/inqlist")
+	public ModelAndView inqlist(@RequestParam(defaultValue = "1") int currentPage,String num) {
+		ModelAndView mview = new ModelAndView();
+		
+		int totalCount = service.getInqTotalCount();
+		
+		//페이징처리에 필요한 변수선언
+		int perPage=10; //한페이지에 보여질 글의 갯수
+		int totalPage; //총페이지수
+		int start; // 각페이지에서 불러올 db의 시작번호
+		int perBlock=5; //몇개의 페이지 번호씩 표현할 것인가
+		int startPage; //각 블럭에 표시할 시작페이지
+		int endPage; //각 블럭에 표시할 마지막 페이지
+
+		//총 페이지 갯수 구하기
+		totalPage=totalCount/perPage+(totalCount%perPage==0?0:1); 
+		//각 블럭의 시작페이지
+		startPage=(currentPage-1)/perBlock*perBlock+1;
+		endPage=startPage+perBlock-1;
+		if(endPage>totalPage)
+			endPage=totalPage;
+		//각 페이지에서 불러올 시작번호
+		start=(currentPage-1)*perPage;
+		
+		//각페이지에서 필요한 게시글 가져오기
+		List<InquiryDto> list = service.getInqList(start,perPage);
+		
+		//list에 각 글에 대한 작성자 추가하기
+//		for(InquiryDto d:list) {
+//			String name = memMapper.getName(d.getMyid());
+//			d.setName(name);
+//		}
+		
+		//각페이지에 출력할 시작번호
+		int no=totalCount-(currentPage-1)*perPage;
+		
+		mview.addObject("list",list);
+		mview.addObject("startPage",startPage);
+		mview.addObject("endPage",endPage);
+		mview.addObject("totalPage", totalPage);
+		mview.addObject("no",no);
+		mview.addObject("currentPage",currentPage);
+		mview.addObject("totalCount",totalCount);
+		mview.setViewName("/cscenter/inquirylist");
+		return mview;
+				
+	}
+	
+	@GetMapping("/cscenter/content") 
+	public ModelAndView content(
+			@RequestParam String num,
+			@RequestParam(defaultValue = "1") int currentPage,
+			@RequestParam(required = false) String key) {
+	 
+	ModelAndView mview = new ModelAndView();
+	 
+	InquiryDto idto = service.getInqData(num);
+			
+	//dto의 name에 작성자 이름 넣기
+	//String name=memMapper.getName(idto.getMyid());
+	//idto.setName(name);
+			
+	//업로드파일의 확장자 얻기
+	int dotLoc = idto.getUploadfile().lastIndexOf('.'); //마지막 .의 위치
+	String ext = idto.getUploadfile().substring(dotLoc+1); //.다음 글자부터 끝까지 추출
+	if(ext.equalsIgnoreCase("jpg")||ext.equalsIgnoreCase("gif")||
+			ext.equalsIgnoreCase("png")||ext.equalsIgnoreCase("jpeg"))
+		mview.addObject("bupload",true);
+	else
+		mview.addObject("bupload",false);
+	mview.addObject("idto",idto);
+	mview.addObject("currentPage",currentPage);
+	mview.setViewName("/cscenter/inquirycontent");
+	return mview; 
+	
+	}
 	
 }

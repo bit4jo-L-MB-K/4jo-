@@ -49,7 +49,7 @@ a:hover {
 
 /* For below 1044px screen width */
 @media screen and (max-width: 1044px) {
-	.link-list li a{
+	.link-list li{
 		height : 70px;
 		line-height: 70px;
 		width: 50%;
@@ -95,21 +95,27 @@ a:hover {
   margin-bottom: 20px;
   background-color: #fff;
   
+  
 }
 
 .panel-heading {
   font-weight: bold;
   padding: 5px;
-  background-color: #333;
-  color: #fff;
+  /* background-color: #333;
+  color: #fff; */
+  background-color: white;
+  color:#4f4f4f;
+  border-bottom: 1px solid gray;
+  padding-bottom: 30px;
   cursor: pointer;
-	
   
 }
 
 .panel-body {
   padding: 15px;
   display: none;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid gray;
 }
 
 .active .panel-body{
@@ -127,7 +133,10 @@ a:hover {
         <h1 class="header__title__description">고객님, 궁금하신점을 해결해 드릴게요.</h1>
     </section>
     </a>
-
+	<c:if test="${sessionScope.loginok!=null && myid=='admin'}">
+		<button type="button" class="btn btn-default" style="margin-left: 360px;" onclick="location.href='noticeadd'">공지사항 쓰기</button>
+    	<button type="button" class="btn btn-default" onclick="location.href='faqadd'">faq 쓰기</button>
+    </c:if>
     <!-- CS Center Main Content -->
     <section id="main" class="section">
         <div class="main-content">
@@ -155,19 +164,21 @@ a:hover {
 							<h2 class="notext">결과가 없습니다</h2>
 						</c:if>
 						<c:if test="${totalCount>0}">
-							<c:forEach var="n" items="${list}">
+							<c:forEach var="n" items="${flist}">
 								<div class="panel-question">
 						            <div class="panel-heading">
 						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
 						            </div>
+						            <c:if test="${sessionScope.loginok!=null && myid=='admin'}">
 						            <button type="button" class="btn btn-info btn-xs"
 										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
 									<button type="button" class="btn btn-danger btn-xs del" 
 										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
-					            <div class="panel-body" id="thisone">
-					            ${n.fcontent}
-				            </div>
-				        </div>
+									</c:if>
+						            <div class="panel-body" id="thisone">
+							            <pre style="border: 0px;">${n.fcontent}</pre>
+						            </div>
+				       			 </div>
 							</c:forEach>
 						</c:if>
 				      </section>                    	
@@ -187,12 +198,14 @@ a:hover {
 						            <div class="panel-heading">
 						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
 						            </div>
+						            <c:if test="${sessionScope.loginok!=null && myid=='admin'}">
 						            <button type="button" class="btn btn-info btn-xs"
 										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
 									<button type="button" class="btn btn-danger btn-xs del" 
 										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+									</c:if>
 					            <div class="panel-body" id="thisone">
-					            ${n.fcontent}
+					           <pre style="border: 0px;">${n.fcontent}</pre>
 				            </div>
 				        </div>
 							</c:forEach>
@@ -213,12 +226,14 @@ a:hover {
 						            <div class="panel-heading">
 						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
 						        </div>
+						        <c:if test="${sessionScope.loginok!=null && myid=='admin'}">
 						            <button type="button" class="btn btn-info btn-xs"
 										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
 									<button type="button" class="btn btn-danger btn-xs del" 
 										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+								</c:if>
 						            <div class="panel-body" id="thisone">
-						            ${n.fcontent}
+						            <pre style="border: 0px;">${n.fcontent}</pre>
 					           		</div>
 					        	</div>
 							</c:forEach>
@@ -238,12 +253,14 @@ a:hover {
 						            <div class="panel-heading">
 						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
 						            </div>
+						            <c:if test="${sessionScope.loginok!=null && myid=='admin'}">
 						            <button type="button" class="btn btn-info btn-xs"
 										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
 									<button type="button" class="btn btn-danger btn-xs del" 
 										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+									</c:if>
 					            <div class="panel-body" id="thisone">
-					            ${n.fcontent}
+					           <pre style="border: 0px;">${n.fcontent}</pre>
 				            </div>
 				        </div>
 							</c:forEach>
@@ -264,12 +281,14 @@ a:hover {
 						            <div class="panel-heading">
 						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
 						            </div>
+						            <c:if test="${sessionScope.loginok!=null && myid=='admin'}">
 						            <button type="button" class="btn btn-info btn-xs"
 										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
 									<button type="button" class="btn btn-danger btn-xs del" 
 										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+									</c:if>
 					            <div class="panel-body" id="thisone">
-					            ${n.fcontent}
+					           <pre style="border: 0px;">${n.fcontent}</pre>
 				            </div>
 				        </div>
 							</c:forEach>
@@ -290,12 +309,14 @@ a:hover {
 						            <div class="panel-heading">
 						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
 						            </div>
+						            <c:if test="${sessionScope.loginok!=null && myid=='admin'}">
 						            <button type="button" class="btn btn-info btn-xs"
 										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
 									<button type="button" class="btn btn-danger btn-xs del" 
 										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+									</c:if>
 					            <div class="panel-body" id="thisone">
-					            ${n.fcontent}
+					           <pre style="border: 0px;">${n.fcontent}</pre>
 				            </div>
 				        </div>
 							</c:forEach>
@@ -316,12 +337,14 @@ a:hover {
 						            <div class="panel-heading">
 						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
 						            </div>
+						            <c:if test="${sessionScope.loginok!=null && myid=='admin'}">
 						            <button type="button" class="btn btn-info btn-xs"
 										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
 									<button type="button" class="btn btn-danger btn-xs del" 
 										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+									</c:if>
 					            <div class="panel-body" id="thisone">
-					            ${n.fcontent}
+					            <pre style="border: 0px;">${n.fcontent}</pre>
 				            </div>
 				        </div>
 							</c:forEach>
@@ -342,12 +365,14 @@ a:hover {
 						            <div class="panel-heading">
 						            + <span style="color:orange; margin-right: 10px;">[${n.faqtype}]</span> ${n.ftitle}
 						            </div>
+						            <c:if test="${sessionScope.loginok!=null && myid=='admin'}">
 						            <button type="button" class="btn btn-info btn-xs"
 										onclick="location.href='faqupdateform?num=${n.num}'">수정</button>
 									<button type="button" class="btn btn-danger btn-xs del" 
 										onclick="location.href='fdelete?num=${n.num}&currentPage=${currentPage}'">삭제</button>
+									</c:if>
 					            <div class="panel-body" id="thisone">
-					            ${n.fcontent}
+					            <pre style="border: 0px;">${n.fcontent}</pre>
 				            </div>
 				        </div>
 							</c:forEach>
@@ -356,7 +381,7 @@ a:hover {
                     </div>
                     
 <!-- 페이징 -->
-	<c:if test="${totalCount>0}">
+<%-- 	<c:if test="${totalCount>0}">
 		<div style="width: 800px; text-align: center;">
 			<ul class="pagination">
 			<!-- 이전 -->
@@ -378,7 +403,7 @@ a:hover {
 			</c:if>
 			</ul>
 		</div>
-	</c:if>
+	</c:if> --%>
                 </div>
                 
                 <!-- FAQ Menu side -->
@@ -388,25 +413,47 @@ a:hover {
                         <li class="sidebar-menu__item-menu">
                             <p class="menu__title"><a href="${root}/cscenter/faqlist">FAQ<a></a></p>
                             <ul class="menu__list">
-                                <li class="menu__item"><a href=""><i class="fas fa-truck"></i>배송</a></li>
-                                <li class="menu__item"><a href=""><i class="far fa-credit-card"></i>주문/결제</a></li>
-                                <li class="menu__item"><a href=""><i class="fas fa-retweet"></i>취소/반품/교환</a></li>
-                                <li class="menu__item"><a href=""><i class="far fa-file-alt"></i>영수증/세금계산서</a></li>
-                                <li class="menu__item"><a href=""><i class="far fa-user"></i>회원정보/서비스</a></li>
-                                <li class="menu__item"><a href=""><i class="fas fa-ticket-alt"></i>쿠폰/마일리지</a></li>
-                                <li class="menu__item"><a href=""><i class="far fa-question-circle"></i>기타</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="fas fa-truck"></i>배송</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="far fa-credit-card"></i>주문/결제</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="fas fa-retweet"></i>취소/반품/교환</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="far fa-file-alt"></i>영수증/세금계산서</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="far fa-user"></i>회원정보/서비스</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="fas fa-ticket-alt"></i>쿠폰/마일리지</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="far fa-question-circle"></i>기타</a></li>
                             </ul>
                         </li>
                         <li class="sidebar-menu__item-menu">
                             <p class="menu__title">1:1 문의</p>
                             <ul class="menu__list">
-                                <li class="menu__item"><a href="${root}/cscenter/inquiry"><i class="fas fa-envelope-open-text"></i>1:1 문의</a></li>
+                                <li class="menu__item">
+                                <c:choose>
+                                	<c:when test="${sessionScope.loginok!=null}">
+                               			 <a href="${root}/cscenter/inquiry"><i class="fas fa-envelope-open-text"></i>1:1 문의</a>
+                                	</c:when>
+                                	<c:otherwise>
+                                		<a href="${root}/login/signin"><i class="fas fa-envelope-open-text"></i>1:1 문의</a>
+                                	</c:otherwise>
+                                </c:choose>
+                                </li>
+                                <li class="menu__item">
+                                <c:choose>
+                                	<c:when test="${sessionScope.loginok!=null}">
+                                		<a href="${root}/cscenter/inqlist"><i class="far fa-envelope"></i>나의 질문</a>
+                                	</c:when>
+                                	<c:otherwise>
+                                		<a href="${root}/login/signin"><i class="far fa-envelope"></i>나의 질문</a>
+                                	</c:otherwise>
+                                </c:choose>
+                                
+                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-menu__item-menu">
                             <p class="menu__title">실시간 채팅</p>
                             <ul class="menu__list">
-                                <li class="menu__item"><a href=""><i class="far fa-comments"></i>실시간 채팅</a></li>
+                                <li class="menu__item">
+                                <a href="#" onClick="window.open('http://pf.kakao.com/_xbHdjb/chat','_blank','width=350,height=520')"><i class="far fa-comments"></i>실시간 채팅</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-menu__item-menu">
@@ -430,20 +477,7 @@ a:hover {
 			
 			$(this).addClass('current');
 			$("#"+tab_id).addClass('current');  
-					
-			
-			
 		});
-		
-		$('ul.tabs li').click(function(e){ 
-			e.preventDefault();
-			//클릭했을 때 배경 검은색 글씨 흰색 유지, 다른거 클릭시 해제, 현재 active만 적용됌
-			//$(this).css({'background':'black','color':'white'}); 
-			/* $(this).child().css({'background:':'black','color':'white'}); */
-			/* $(this).siblings().removeClass("test"); */
-			
-		});
-		
 		
 	});
 	

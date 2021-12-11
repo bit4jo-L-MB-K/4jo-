@@ -83,7 +83,6 @@ a:hover {
                                     <option value="쿠폰/마일리지">쿠폰/마일리지</option>
                                     <option value="매장재고/상품예약">매장재고/상품예약</option>
                                 </select>
-                                <!-- <i class="fas fa-angle-down"></i> -->
                             </span>
                         </div>
                         <h3 class="form-title">작성자<span class="form-title__required">*</span></h3>
@@ -126,9 +125,6 @@ a:hover {
 						<!-- 이미지 미리보기  -->
 						<div id="images_container" style="min-width: 90px; min-height: 90px; max-width:90px; max-height:90px; display: flex;" ></div>
 					</i>
-					<!-- 이미지 미리보기할 위치 -->
-    				<!-- <img id="showimg" style="width: 70px; height: 70px; position: absolute; margin-left: 20px; margin-top: 14px; visibility: hidden;"> -->
-					<!-- <div id="images_container" style="width: 100px; height: 100px; display: flex; margin-bottom: 10px;"></div> -->
 				</div>                
                 
                 <div class="inquiry-agreement">
@@ -143,42 +139,58 @@ a:hover {
             </form>
         </div>
     </div>
-    <!-- FAQ Menu side -->
-    <div class="main__content__aside">
-        <!-- Menu -->
-        <ul class="sidebar-menu">
-            <li class="sidebar-menu__item-menu">
-                <p class="menu__title">FAQ</p>
-                <ul class="menu__list">
-                    <li class="menu__item"><a href=""><i class="fas fa-truck"></i>배송</a></li>
-                    <li class="menu__item"><a href=""><i class="far fa-credit-card"></i>주문/결제</a></li>
-                    <li class="menu__item"><a href=""><i class="fas fa-retweet"></i>취소/반품/교환</a></li>
-                    <li class="menu__item"><a href=""><i class="far fa-file-alt"></i>영수증/세금계산서</a></li>
-                    <li class="menu__item"><a href=""><i class="far fa-user"></i>회원정보/서비스</a></li>
-                    <li class="menu__item"><a href=""><i class="fas fa-ticket-alt"></i>쿠폰/마일리지</a></li>
-                    <li class="menu__item"><a href=""><i class="far fa-question-circle"></i>기타</a></li>
-                </ul>
-            </li>
-            <li class="sidebar-menu__item-menu">
-                <p class="menu__title">1:1 문의</p>
-                <ul class="menu__list">
-                    <li class="menu__item"><a href=""><i class="fas fa-envelope-open-text"></i>1:1 문의</a></li>
-                </ul>
-            </li>
-            <li class="sidebar-menu__item-menu">
-                <p class="menu__title">실시간 채팅</p>
-                <ul class="menu__list">
-                    <li class="menu__item"><a href=""><i class="far fa-comments"></i>실시간 채팅</a></li>
-                </ul>
-            </li>
-            <li class="sidebar-menu__item-menu">
-                <p class="menu__title">공지사항</p>
-                <ul class="menu__list">
-                    <li class="menu__item"><a href="${root}/cscenter/noticelist"><i class="fas fa-bullhorn"></i>공지사항</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+<!-- FAQ Menu side -->
+                <div class="main__content__aside">
+                    <!-- Menu -->
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-menu__item-menu">
+                            <p class="menu__title"><a href="${root}/cscenter/faqlist">FAQ<a></a></p>
+                            <ul class="menu__list">
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="fas fa-truck"></i>배송</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="far fa-credit-card"></i>주문/결제</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="fas fa-retweet"></i>취소/반품/교환</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="far fa-file-alt"></i>영수증/세금계산서</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="far fa-user"></i>회원정보/서비스</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="fas fa-ticket-alt"></i>쿠폰/마일리지</a></li>
+                                <li class="menu__item"><a href="${root}/cscenter/faqlist"><i class="far fa-question-circle"></i>기타</a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-menu__item-menu">
+                            <p class="menu__title">1:1 문의</p>
+                            <ul class="menu__list">
+                                <li class="menu__item">
+                                <c:choose>
+                                	<c:when test="${sessionScope.loginok!=null}">
+                               			 <a href="${root}/cscenter/inquiry"><i class="fas fa-envelope-open-text"></i>1:1 문의</a>
+                                	</c:when>
+                                </c:choose>
+                                </li>
+                                <li class="menu__item">
+                                <c:choose>
+                                	<c:when test="${sessionScope.loginok!=null}">
+                                		<a href="${root}/cscenter/inqlist"><i class="far fa-envelope"></i>나의 질문</a>
+                                	</c:when>
+                                </c:choose>
+                                
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-menu__item-menu">
+                            <p class="menu__title">실시간 채팅</p>
+                            <ul class="menu__list">
+                                <li class="menu__item">
+                                <a href="#" onClick="window.open('http://pf.kakao.com/_xbHdjb/chat','_blank','width=350,height=520')"><i class="far fa-comments"></i>실시간 채팅</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-menu__item-menu">
+                            <p class="menu__title">공지사항</p>
+                            <ul class="menu__list">
+                                <li class="menu__item"><a href="${root}/cscenter/noticelist"><i class="fas fa-bullhorn"></i>공지사항</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
 </div>
 </div>
 </body>

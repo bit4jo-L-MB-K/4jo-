@@ -73,4 +73,19 @@
 		insert into inquiryboard (myid,name,itype,hp,email,ititle,icontent,uploadfile,writeday) 
 		values (#{myid},#{name},#{itype},#{hp},#{email},#{ititle},#{icontent},#{uploadfile},now())
 	</insert>
+	<select id="getInqTotalCount" resultType="int">
+		select count(*) from inquiryboard
+	</select>
+	<select id="getInqMaxNum" resultType="int">
+		select ifnull(max(num),0) from inquiryboard
+	</select>
+	<select id="getInqList" parameterType="HashMap" resultType="idto">
+		select * from inquiryboard order by num desc limit #{start},#{perpage}
+	</select>
+	<select id="getInqData" parameterType="String" resultType="idto">
+		select * from inquiryboard where num=#{num}
+	</select>
+	<update id="updateAcount" parameterType="idto">
+		update inquiryboard set acount=acount+1 where num=#{num}
+	</update>
 </mapper>
