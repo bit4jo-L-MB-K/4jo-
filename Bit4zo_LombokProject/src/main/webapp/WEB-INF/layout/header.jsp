@@ -18,11 +18,12 @@
                 <c:choose>
                <c:when test="${sessionScope.loginok!=null}">
                   <a href="${root}/login/logoutprocess">Sign out</a>
-                  <a href="#">FAQs</a>
+                  <a href="${root}/cscenter/csmain">FAQs</a>
+                  
                </c:when>
                <c:otherwise>
                   <a href="${root}/login/signin">Sign in</a>
-                  <a href="#">FAQs</a>
+                  <a href="${root}/cscenter/csmain">FAQs</a>
                </c:otherwise>
             </c:choose>
             </div>
@@ -70,11 +71,12 @@
                                 <c:choose>
                                     <c:when test="${sessionScope.loginok!=null}">
                                        <a style="color: pink;" href="${root}/login/logoutprocess">Sign out</a>
-                                       <a href="#">FAQs</a>
+                                       <a href="${root}/cscenter/csmain">FAQs</a>
+                                       <a href="${root}/member/mypage">MyPage</a>
                                     </c:when>
                                    <c:otherwise>
                                        <a style="color: lightgreen;" href="${root}/login/signin">Sign in</a>
-                                       <a href="#">FAQs</a>
+                                       <a href="${root}/cscenter/csmain">FAQs</a>
                                     </c:otherwise>
                               </c:choose>
                             </div>
@@ -95,28 +97,36 @@
                         <ul>
                             <li><a href="${root}/">HOME</a></li>
                             <li><a href="${root}/shop/list">SHOP</a>
-                                <ul class="dropdown">
-                                    <li><a href="#">목록</a></li>
-                                    <li><a href="#">여기</a></li>
-                                    <li><a href="#">입력</a></li>
-                                    <li><a href="#">하기</a></li>
-                                    <li><a href="#">!!!!</a></li>
+                                <ul class="dropdown" style="text-align: center;">
+                                    <li><a href="#">전체</a></li>
+                                    <li><a href="#">반팔</a></li>
+                                    <li><a href="#">긴팔</a></li>
+                                    <li><a href="#">스커트</a></li>
+                                    <li><a href="#">바지</a></li>
+                                    <li><a href="#">패딩</a></li>
+                                    <li><a href="#">코트</a></li>
+                                    <li><a href="#">신발</a></li>
+                                    
                                 </ul>
                             </li>
-                            <li><a href="${root}/shop/adminmain">LOOK BOOK</a></li>
+                            <li><a href="#">LOOK BOOK</a></li>
                             <li><a href="#">EVENT</a>
                                 <ul class="dropdown">
                                     <li><a href="#">진행중인 이벤트</a></li>
                                     <li><a href="#">지난 이벤트</a></li>
                                 </ul>
                             </li>
-                           
+                             <c:if test="${sessionScope.loginok!=null && sessionScope.myid.equals('admin')}">
+                                <li><a href="${root}/shop/adminmain">ADMIN</a></li>
+                               </c:if>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
+                    
                         <a href="#" class="search-switch"><img src="${root}/img/icon/search.png" alt=""></a>
+                        
                         <a href="#"><img src="${root}/img/icon/heart.png" alt=""></a>
                         <a href="#"><img src="${root}/img/icon/cart.png" alt=""> <span>0</span></a>
                         <div class="price">$0.00</div>

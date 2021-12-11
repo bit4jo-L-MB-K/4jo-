@@ -20,7 +20,6 @@ public class ProductDto {
   private MultipartFile upload;
   private Timestamp ipgoday;
   private String price_n;
-  private String color_n;
   private ProductOpDto joindto2;
 
 
@@ -41,13 +40,7 @@ public class ProductDto {
     this.price_n = price_n;
   }
 
-  public String getColor_n() {
-    return color_n;
-  }
 
-  public void setColor_n(String color_n) {
-    this.color_n = color_n;
-  }
 
   public String getStock() {
     return stock;

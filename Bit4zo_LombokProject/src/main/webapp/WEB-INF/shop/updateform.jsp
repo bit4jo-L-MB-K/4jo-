@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,16 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+<style>
+   .radion{
+   display:none;
+   }
+   
+   .radion2{
+   display:none;
+   }
+   
+</style>
 <script type="text/javascript">
 //아이디 체크여부 확인 (아이디 중복일 경우 = 0 , 중복이 아닐경우 = 1 )
 var idck = 0;
@@ -34,7 +45,7 @@ $("#idck").click(function() {
                 alert("상품번호가 존재합니다. 다른 상품번호를 입력해주세요.");
                 $("#pro_id").val("");    
             } else if(pro_id.length==0){
-                 alert("필수 정보입니다.");
+                alert("필수 정보입니다.");
             } else {
                 alert("사용가능한 상품번호입니다.");
                 //아이디가 중복하지 않으면  idck = 1 
@@ -44,6 +55,52 @@ $("#idck").click(function() {
     })
 });
 });
+</script>
+
+
+<script type="text/javascript">
+$(function() {
+$(".All").mouseover(function(){
+	var price=$(this).val().trim();//입력값 앞뒤 공백 제거
+	
+	if(parseInt(price)<=10000){
+		$("input[name='price_n'][value='1']").prop("checked",true);
+	}else if(parseInt(price)>10000&&parseInt(price)<=30000){
+		$("input[name='price_n'][value='2']").prop("checked",true);
+	}else if(parseInt(price)>30000&&parseInt(price)<=50000){
+		$("input[name='price_n'][value='3']").prop("checked",true);
+	}else if(parseInt(price)>50000&&parseInt(price)<=100000){
+		$("input[name='price_n'][value='4']").prop("checked",true);
+	}else if(parseInt(price)>100000){
+		$("input[name='price_n'][value='5']").prop("checked",true);
+	}
+	});
+
+$("#color").change(function(){
+	var color = $("select[name='color'] option:selected" ).val();
+
+	if(color=="202020"){
+		$("input[name='color_name'][value='검정']").prop("checked",true);
+	}else if(color=="F6F6F6"){
+		$("input[name='color_name'][value='하양']").prop("checked",true);
+	}else if(color=="F5F5DC"){
+		$("input[name='color_name'][value='베이지']").prop("checked",true);
+	}else if(color=="501331"){
+		$("input[name='color_name'][value='빨강']").prop("checked",true);
+	}else if(color=="171350"){
+		$("input[name='color_name'][value='남색']").prop("checked",true);
+	}else if(color=="006400"){
+		$("input[name='color_name'][value='초록']").prop("checked",true);
+	}else if(color=="aaaaa"){
+		$("input[name='color_name'][value='회색']").prop("checked",true);
+	}else if(color=="505050"){
+		$("input[name='color_name'][value='차콜']").prop("checked",true);
+	}else if(color=="none"){
+		$("input[name='color_name'][value='']").prop("checked",true);
+	}
+});
+});
+
 </script>
 <script type="text/javascript">
 ////
@@ -146,8 +203,27 @@ function previewImage(targetObj, View_area) {
 }
 
 </script>
+
 <body>
-<div class="well" style="width:550px; margin-left: 10px;">
+<div>
+<section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>ProductEdit</h4>
+                        <div class="breadcrumb__links">
+                            <a href="${root}/shop/adminmain">AdminMain</a>
+                            <span>ProductEdit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+ <div class="col-lg-4">
+<div class="well All" style="width:550px; margin-left: 20%; margin-top: 20px;">
 <form action="update" method="post" enctype="multipart/form-data">
 	<caption><b>상품정보수정</b></caption>
 
@@ -161,11 +237,7 @@ function previewImage(targetObj, View_area) {
 		<tr>
 			<th bgcolor="#ddd" width="120">상품코드</th>
 			<td>
-				<input type="text" name="pro_id" class="form-control" id="pro_id"
-				style="width:200px; float:left;" required="required" value="${a.pro_id}">
-				<button type="button" class="btn btn-dark" id="idck" style="margin-left: 3px;">중복확인</button>
-				<br>
-				<b style="font-size: 0.8em; color:red; margin-left: 5px;">*상품코드 변경시에만 중복확인</b>
+				${a.pro_id}
 			</td>			
 		</tr>
 		<tr>
@@ -178,15 +250,8 @@ function previewImage(targetObj, View_area) {
 		<tr>
 			<th bgcolor="#ddd" width="120">가 격</th>
 			<td>
-				<input type="text" name="price" class="form-control"
+				<input type="text" name="price" id="price" class="form-control"
 				style="width:200px;" required="required" value="${a.joindto.price}">
-			</td>			
-		</tr>
-		<tr>
-			<th bgcolor="#ddd" width="120">재고</th>
-			<td>
-				<input type="text" name="stock" class="form-control"
-				style="width:200px;" required="required" value="${a.joindto.stock}">
 			</td>			
 		</tr>
 		<tr>
@@ -201,6 +266,7 @@ function previewImage(targetObj, View_area) {
           </select>
 			</td>			
 		</tr>
+		<tr>
 		<th bgcolor="#ddd" width="120">상품사진</th>
             <td>
 				<label for="img_upload">
@@ -208,7 +274,12 @@ function previewImage(targetObj, View_area) {
 				<input type="file" name="upload" id="img_upload" onchange="previewImage(this,'View_area')" style="display: none;" multiple>
 				<span id='View_area' style='position:relative; color: black; border: 0px solid black;'>
 				</span>
-				
+
+<!--<div class="inputArea">
+ <input type="file" id="photo" name="upload" />
+ <div class="select_img">
+ <img src="${a.joindto.pro_photo}" />-->
+
 			</tr>
 		<tr>
 			<th bgcolor="#ddd" width="120">상품설명</th>
@@ -224,55 +295,92 @@ function previewImage(targetObj, View_area) {
 			style="width: 100px;">수정</button>
 			<button type="button" class="btn btn-default"
 				style="width:100px;" onclick="history.back()">이전</button>
-			<button type="submit" class="btn btn-secondary"
-			style="width: 100px;" onclick="location.href='adminmain?currentPage=${currentPage}'">관리자목록</button>
+			<button type="button" class="btn btn-secondary"
+			style="width: 150px;" onclick="location.href='adminmain?currentPage=${currentPage}'">관리자목록</button>
 			</td>
 		</tr>
+		<input type="radio" name="price_n" value="1" class="radion"/>
+        <input type="radio" name="price_n" value="2" class="radion"/>
+        <input type="radio" name="price_n" value="3" class="radion"/>
+        <input type="radio" name="price_n" value="4" class="radion"/>
+        <input type="radio" name="price_n" value="5" class="radion"/>
 	</table>
 </form>
+		<p style="clear: both;"></p>
 	  </div>
-
-	
-	
-		<div class="container-fluid">
-		<div style="margin: 10px;">
-			<button data-toggle="collapse" href="#collapseExample2"
-				aria-controls="collapseExample2"
-				class="btn btn-large-warning">>상품 옵션(색상) 입력</button>
 		</div>
-		<div class="collapse" id="collapseExample2" style="width: 550px;">
-			<div class="well">
-				<form action="update2" method="post" enctype="multipart/form-data">
-					<b>색상 옵션 추가</b>
-					<input type="hidden" name="currentPage" value="${currentPage}">
-					<table class="table table-bordered" style="width: 500px;">
-					
-				<c:forEach var="j" items="${list}">
-					<input type="hidden" name="idx" value="${j.num}">
-						<tr>
-							<th bgcolor="#ddd" width="120">상품아이디</th>
-							<td>
-									<select name="pro_id" required="required" class="form">
-											<option value="${j.pro_id}">${j.pro_id}</option>
-									</select>
-								</td>
-						</tr>
-						
-						<tr>
-							<th bgcolor="#ddd" width="120">색상</th>
-							<td><input type="text" name="color" class="form-control"
-								style="width: 200px;" required="required" value="${j.color}"></td>
-						</tr>
-					</c:forEach>
-						<tr>
-							<td colspan="2" align="center">
-						<button type="submit" class="btn btn-dark" style="width: 100px;">수정</button>
+		
+   <div class="col-lg-5" style="margin-left: 180px;">
+      <div>
+      </div>
+      <div style="width: 550px;  margin-top: 20px;">
+         <div class="well">
+          <form action="update2" method="post" enctype="multipart/form-data">
+               <b>색상 옵션 추가</b>
+               <input type="hidden" name="currentPage" value="${currentPage}">
+               <table class="table table-bordered" style="width: 500px;">
+               
+            <c:forEach var="j" items="${list}">
+               <input type="hidden" name="num" value="${j.num}">
+					<tr>
+                     <th bgcolor="#ddd" width="120">상품아이디</th>
+                     <td>
+                           <select name="pro_id" required="required" class="form">
+                                 <option value="${j.pro_id}">${j.pro_id}</option>
+                           </select>
+                        </td>
+                  </tr>
+                  <tr>
+                     <th bgcolor="#ddd" width="120">색상</th>
+                     <td><select name="color" id="color" required="required"
+               style="width: 200px;">
+                  <option value="none">==색상선택==</option>
+                  <option value="202020">검정</option>
+                  <option value="F6F6F6">하양</option>
+                  <option value="F5F5DC">베이지</option>
+                  <option value="501331">빨강</option>
+                  <option value="171350">남색</option>
+                  <option value="006400">초록</option>
+                  <option value="aaaaaa">회색</option>
+                  <option value="505050">차콜</option>
+            </select></td>
+         </tr>
+         <tr>
+            <th bgcolor="#ddd" width="120">사이즈</th>
+            <td><select name="c_size" required="required"
+               style="width: 200px;">
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+            </select></td>
+         </tr>
+         <tr>
+            <th bgcolor="#ddd" width="120">수량</th>
+            <td><input type="text" name="su" class="form-control" value="${j.su}"
+               style="width: 80px;" required="required" class="form"></td>
+         </tr>
+              </c:forEach>
+            <tr>
+               <td colspan="2" align="center">
+                  <button type="submit" class="btn btn-dark" style="width: 100px;">수정</button>
+                  <button type="button" class="btn btn-secondary"
+			style="width: 150px;" onclick="location.href='adminmain?currentPage=${currentPage}'">관리자목록</button>
+                  
+      <input type="radio" name="color_name" value="검정" class="radion2"/>
+        <input type="radio" name="color_name" value="하양" class="radion2"/>
+        <input type="radio" name="color_name" value="베이지" class="radion2"/>
+        <input type="radio" name="color_name" value="빨강" class="radion2"/>
+        <input type="radio" name="color_name" value="남색" class="radion2"/>
+        <input type="radio" name="color_name" value="초록" class="radion2"/>
+        <input type="radio" name="color_name" value="회색" class="radion2"/>
+        <input type="radio" name="color_name" value="차콜" class="radion2"/>
+        <input type="radio" name="color_name" value="" class="radion2"/>
+               </table>
+            </form>
 
-					</table>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+         </div>
+      </div>
+   </div>
+	<p style="clear: both;"></p>
 </body>
 </html>

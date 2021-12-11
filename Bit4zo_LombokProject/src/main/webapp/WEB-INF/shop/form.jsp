@@ -33,7 +33,7 @@ $("#idck").click(function() {
                 alert("상품번호가 존재합니다. 다른 상품번호를 입력해주세요.");
                 $("#pro_id").val("");    
             } else if(pro_id.length==0){
-                 alert("필수 정보입니다.");
+                alert("필수 정보입니다.");
             } else {
                 alert("사용가능한 상품번호입니다.");
                 //아이디가 중복하지 않으면  idck = 1 
@@ -42,9 +42,56 @@ $("#idck").click(function() {
         }
     })
 });
+
+
 });
 </script>
 
+
+<script type="text/javascript">
+$(function() {
+$("#price").change(function(){
+	var price=$(this).val().trim();//입력값 앞뒤 공백 제거
+	
+	if(parseInt(price)<=10000){
+		$("input[name='price_n'][value='1']").prop("checked",true);
+	}else if(parseInt(price)>10000&&parseInt(price)<=30000){
+		$("input[name='price_n'][value='2']").prop("checked",true);
+	}else if(parseInt(price)>30000&&parseInt(price)<=50000){
+		$("input[name='price_n'][value='3']").prop("checked",true);
+	}else if(parseInt(price)>50000&&parseInt(price)<=100000){
+		$("input[name='price_n'][value='4']").prop("checked",true);
+	}else if(parseInt(price)>100000){
+		$("input[name='price_n'][value='5']").prop("checked",true);
+	}
+	});
+
+$("#color").change(function(){
+	var color = $("select[name='color'] option:selected" ).val();
+
+	if(color=="202020"){
+		$("input[name='color_name'][value='검정']").prop("checked",true);
+	}else if(color=="F6F6F6"){
+		$("input[name='color_name'][value='하양']").prop("checked",true);
+	}else if(color=="F5F5DC"){
+		$("input[name='color_name'][value='베이지']").prop("checked",true);
+	}else if(color=="501331"){
+		$("input[name='color_name'][value='빨강']").prop("checked",true);
+	}else if(color=="171350"){
+		$("input[name='color_name'][value='남색']").prop("checked",true);
+	}else if(color=="006400"){
+		$("input[name='color_name'][value='초록']").prop("checked",true);
+	}else if(color=="aaaaa"){
+		$("input[name='color_name'][value='회색']").prop("checked",true);
+	}else if(color=="505050"){
+		$("input[name='color_name'][value='차콜']").prop("checked",true);
+	}else if(color=="none"){
+		$("input[name='color_name'][value='']").prop("checked",true);
+	}
+});
+});
+
+</script>
 
 <script type="text/javascript">
 ////
@@ -151,14 +198,18 @@ function previewImage(targetObj, View_area) {
 <style>
  .mydiv {
         border: 0px solid #735e5e;
-        width: 750px;
-        height:500px;
+       
         overflow:scroll;
    }
    
-   .msg{
-		font-size: 8pt;
-	}
+   .radion{
+   display:none;
+   }
+   .radion2{
+   display:none;
+   }
+
+
    
 </style>
 <body>
@@ -166,7 +217,7 @@ function previewImage(targetObj, View_area) {
   <section class="breadcrumb-option">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="breadcrumb__text">
                         <h4>AddProduct</h4>
                         <div class="breadcrumb__links">
@@ -178,7 +229,8 @@ function previewImage(targetObj, View_area) {
             </div>
         </div>
     </section>
-    	<div class="col-lg-5">
+    <div class="outer">
+   <div class="col-lg-5">
 <div style="float:left;">
 <div class="container-fluid" style="width: 700px;">
 <div style="margin-left:50px; margin-top: 30px;">
@@ -203,22 +255,20 @@ class="btn btn-large-warning">>상품 정보 입력</button>
 			</tr>
 			<tr>
 				<th bgcolor="#ddd" width="120">가 격</th>
-				<td><input type="text" name="price"
-					style="width: 200px;" required="required" class="form-control"></td>
-			</tr>
-			<tr>
-				<th bgcolor="#ddd" width="120">재고</th>
-				<td><input type="text" name="stock"
+				<td><input type="text" name="price" id="price"
 					style="width: 200px;" required="required" class="form-control"></td>
 			</tr>
 			<tr>
 				<th bgcolor="#ddd" width="120">상품분류</th>
 				<td><select name="pro_sub" required="required"
 					style="width: 200px;">
-						<option value="반팔">반팔</option>
 						<option value="긴팔">긴팔</option>
-						<option value="패딩">패딩</option>
+						<option value="반팔">반팔</option>
 						<option value="바지">바지</option>
+						<option value="스커트">스커트</option>
+						<option value="패딩">패딩</option>
+						<option value="코트">코트</option>
+						<option value="신발">신발</option>
 				</select></td>
 			</tr>
 			<tr>
@@ -243,10 +293,19 @@ class="btn btn-large-warning">>상품 정보 입력</button>
 			<tr>
 				<td colspan="2" align="center">
 					<button type="submit" class="btn btn-dark" style="width: 100px;">저장</button>
-					<button type="submit" class="btn btn-dark" style="width: 150px;"
+					<button type="button" class="btn btn-dark" style="width: 150px;"
 						onclick="location.href='adminmain'">관리자목록</button>
 				</td>
 			</tr>
+			
+		<input type="radio" name="price_n" value="1" class="radion"/>
+        <input type="radio" name="price_n" value="2" class="radion"/>
+        <input type="radio" name="price_n" value="3" class="radion"/>
+        <input type="radio" name="price_n" value="4" class="radion"/>
+        <input type="radio" name="price_n" value="5" class="radion"/>
+       
+			
+			
 		</table>
 	</form>
 	  </div>
@@ -259,11 +318,11 @@ class="btn btn-large-warning">>상품 정보 입력</button>
 				aria-expanded="true" aria-controls="collapseExample2"
 				class="btn btn-large-warning">>상품 옵션(색상) 입력</button>
 		</div>
-		<div class="collapse" id="collapseExample2" style="width: 550px;  margin-top: 30px;">
+		<div class="collapse" id="collapseExample2" style="width: 550px;  margin-top: 20px;">
 			<div class="well">
 				<form action="insert2" method="post" enctype="multipart/form-data">
 					<b>색상 옵션 추가</b>
-					<table class="table table-bordered" style="width: 550px;">
+					<table class="table table-bordered" style="width: 550px; margin-top: 20px;">
 						<tr>
 							<th bgcolor="#ddd" width="120">상품아이디</th>
 							<td><c:if test="${!empty list}">
@@ -278,34 +337,50 @@ class="btn btn-large-warning">>상품 정보 입력</button>
 
 						<tr>
 							<th bgcolor="#ddd" width="120">색상</th>
-							<td><select name="color" required="required"
+							<td><select name="color" id="color" required="required"
 					style="width: 200px;">
-						<option value="000000">검정(#000000)</option>
-						<option value="FFFFFF">하양(#FFFFFF)</option>
-						<option value="F5F5DC">베이지(#F5F5DC)</option>
-						<option value="8B0000">빨강(#8B0000)</option>
-						<option value="00008B">파랑(#00008B)</option>
+						<option value="none">==색상선택==</option>
+						<option value="202020">검정</option>
+						<option value="F6F6F6">하양</option>
+						<option value="F5F5DC">베이지</option>
+						<option value="501331">빨강</option>
+						<option value="171350">남색</option>
+						<option value="006400">초록</option>
+						<option value="aaaaaa">회색</option>
+						<option value="505050">차콜</option>
 				</select></td>
-						</tr>
-
-						<input type="hidden" name="s" value="0">
-						<input type="hidden" name="m" value="0">
-						<input type="hidden" name="l" value="0">
-
-						<tr>
-							<td colspan="2" align="center">
-								<button type="submit" class="btn btn-dark" style="width: 100px;">저장</button>
-
-								<c:forEach var="j" items="${join}">
-									<tr>
-										<td>${j.pro_id}</td>
-										<td>${j.joindto.pro_name}</td>
-										<td>${j.color}</td>
-										<td>${j.s}</td>
-										<td>${j.m}</td>
-										<td>${j.l}</td>
-									</tr>
-								</c:forEach>
+			</tr>
+			<tr>
+				<th bgcolor="#ddd" width="120">사이즈</th>
+				<td><select name="c_size" required="required"
+					style="width: 200px;">
+						<option value="S">S</option>
+						<option value="M">M</option>
+						<option value="L">L</option>
+				</select></td>
+			</tr>
+			<tr>
+				<th bgcolor="#ddd" width="120">수량</th>
+				<td><input type="text" name="su" class="form-control"
+					style="width: 80px;" required="required" class="form"></td>
+			</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button type="submit" class="btn btn-dark" style="width: 100px;">저장</button>
+						<button type="button" class="btn btn-dark"
+			style="width: 150px;" onclick="location.href='adminmain?currentPage=${currentPage}'">관리자목록</button>
+							<tr>
+							
+						
+		<input type="radio" name="color_name" value="검정" class="radion2"/>
+        <input type="radio" name="color_name" value="하양" class="radion2"/>
+        <input type="radio" name="color_name" value="베이지" class="radion2"/>
+        <input type="radio" name="color_name" value="빨강" class="radion2"/>
+        <input type="radio" name="color_name" value="남색" class="radion2"/>
+        <input type="radio" name="color_name" value="초록" class="radion2"/>
+        <input type="radio" name="color_name" value="회색" class="radion2"/>
+        <input type="radio" name="color_name" value="차콜" class="radion2"/>
+        <input type="radio" name="color_name" value="" class="radion2"/>
 					</table>
 				</form>
 			</div>
@@ -314,18 +389,19 @@ class="btn btn-large-warning">>상품 정보 입력</button>
 </div>
 </div>
 <br>
-<div class="col-lg-7">
+<div class="col-lg-6">
 	<div>
-	<table class="table table-bordered" style="width:750px; margin-left: 50px;">
-		<tr bgcolor="#ddd" style="font-size: 0.9em;">
-			<th width="30">번호</th>
-			<th width="60">상품번호</th>
-			<th width="70">상품명</th>
-			<th width="60">색상</th>
-			<th width="60">가격</th>
-			<th width="90">상품분류</th>
-			<th width="90">입고날짜</th>
-			<th width="70">수정</th>
+	<table class="table table-bordered" style="width:100%; margin-left: 50px;">
+		<tr bgcolor="#ddd" style="font-size: 0.9em;text-align: center;">
+			<th width="50">번호</th>
+			<th width="100">상품번호</th>
+			<th width="100">상품명</th>
+			<th width="70">사이즈</th>
+			<th width="100">색상</th>
+			<th width="100">가격</th>
+			<th width="100">상품분류</th>
+			<th width="100">입고날짜</th>
+			<th width="100">수정</th>
 		</tr>
 		<c:if test="${totalCount==0}">
 			<tr height="50">
@@ -338,8 +414,8 @@ class="btn btn-large-warning">>상품 정보 입력</button>
 		</c:if>
 		</table>
 		</div>
-	<div class='mydiv' id='mydiv' style="margin-left: 50px;">
-	<table class="table table-bordered" style="width:100%;">
+	<div class='mydiv' id='mydiv' style="margin-left: 50px; width:100%; font-size: 0.9em;">
+	<table class="table table-bordered">
 		<c:if test="${totalCount>0}">
 			<c:forEach var="a" items="${list2}">
 				<tr>
@@ -350,16 +426,30 @@ class="btn btn-large-warning">>상품 정보 입력</button>
 					style="color: black;"> -->
 					<a>${a.pro_id}</a>
 					</td>
-					<td>${a.joindto.pro_name}</td>
-					<td>${a.color}</td>
+					<td style="width: 150px;">${a.joindto.pro_name}</td>
+					<td style="width: 50px;">${a.c_size}</td>
+				<c:choose>
+				<c:when test="${a.color eq null}">
+				<td style="width: 100px; text-align: center;">색상 미기입</td>
+				</c:when>
+				<c:otherwise>
+				<td style="width: 100px; background-color:  #${a.color}"></td>
+				</c:otherwise>
+				</c:choose>
 					<td>${a.joindto.price}</td>
 					<td>${a.joindto.pro_sub}</td>
 					<td>
 						<fmt:formatDate value="${a.joindto.ipgoday}" pattern="yyyy-MM-dd"/>
 					</td>
 					<td>
-	<button type="button" class="btn btn-dark btn-sm"
-		onclick="location.href='updateform?idx=${a.joindto.idx}&color=${a.color}'">수정</button>
+				<c:choose>
+				<c:when test="${a.color eq null}">
+				</c:when>
+				<c:otherwise>
+				<button class="btn btn-dark btn-sm"
+		onclick="location.href='updateform?idx=${a.joindto.idx}&pro_id=${a.joindto.pro_id}&color=${a.color}'">수정</button>
+				</c:otherwise>
+				</c:choose>
 					</td>
 				</tr>
 			</c:forEach>
@@ -369,5 +459,6 @@ class="btn btn-large-warning">>상품 정보 입력</button>
 </div>
 </div>
 	<p style="clear: both;"></p>
+	</div>
 </body>
 </html>

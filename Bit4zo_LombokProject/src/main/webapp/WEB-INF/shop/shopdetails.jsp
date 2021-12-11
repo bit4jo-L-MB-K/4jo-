@@ -27,7 +27,9 @@
                             <a href="${root}/shop/list">Shop</a>
                             <span>Product Details</span>
                         </div>
+                        <p><span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;${dto.readcount }</p>
                     </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-lg-3 col-md-3">
@@ -81,30 +83,52 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-8">
                         <div class="product__details__text">
-                            <h4>${dto.pro_name }</h4>
+                            <h2>${dto.pro_name }</h2>
                             <div class="rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half-o"></i>
                                 <i class="fa fa-star-o"></i>
                                 <span> - 5 Reviews</span>
                             </div>
-                            <h3><fmt:formatNumber value="${dto.price}" pattern="#,###,###"/> ￦</h3>
+                            <h4><fmt:formatNumber value="${dto.price}" pattern="#,###,###"/> ￦</h4>
                             <p>${dto.pro_content }</p>
-                            <p>조회수 : ${dto.readcount }</p>
-                            <!--  <p>${dto2.color }</p>--><p>색깔 :</p>
-                             <c:forEach var="po" items="${list2}">
-                           			 
-                           			 <p>${po.color }</p>
-                           			 
-                            	</c:forEach>
+                           
+                           
                            
                             
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
-                                    <span>Size:</span>
-                                    <label for="s">S
+                                    <div style="">Size:</div>		
+                                    	<select>
+                                   	    	<c:forEach var="po" items="${list6}">
+                                   	    		<!-- 색깔-사이즈 의 수량 -->
+                                   	    		<c:set var="ro" value="${fn:substringAfter(po.all_column,'-')}"></c:set>
+                                    			<c:forEach var="ro1" items="${ro }">
+                                    				<!-- 색깔과 사이즈 분리 -->
+                                    				<c:set var="cut" value="${fn:split(po.all_column,'-')}"></c:set>
+                                    					<c:forEach var="cut1" items="${cut}" begin="0" end="1" varStatus="stat">
+                                    						<c:if test="${stat.count==2 }">
+                                    							<c:forEach var="cut2" items="${cut}" begin="0" end="0" varStatus="stat2">
+                                    								<c:choose>
+                                    									<c:when test="${1<=ro1 and ro1<=5 }">
+                                    										<option value="${cut2}">${po.color_name }${cut2 }&nbsp;[수량 5개 이하][${ro1 }개 남음!]</option>
+                                    									</c:when>
+                                    									<c:when test="${ro1>5 }">
+                                    										<option value="${cut2}">${po.color_name }${cut2 }</option>
+                                    									</c:when>
+                                    									<c:when test="${ro1==0 }">
+                                    										<option value="${cut2}">${po.color_name }${cut2 }&nbsp;<품절></option>
+                                    									</c:when>
+                                    								</c:choose>
+                                    							</c:forEach>
+                                    						</c:if>
+                                    					</c:forEach>
+                                    			</c:forEach>
+                            		   		</c:forEach>
+                                    	</select>
+                                    <!-- <label for="s">S
                                         <input type="radio" id="s">
                                     </label>
                                     <label class="active" for="m">M
@@ -112,17 +136,14 @@
                                     </label>
                                     <label for="l">L
                                         <input type="radio" id="l">
-                                    </label>
+                                    </label> -->
                                    
-                                </div>
+                            </div>
+                           
                                 <div class="product__details__option__color">
                                     <span>Color: </span>
                                     	<c:forEach var="po" items="${list2}">
-                                    		<span id="colorbox" style="border:3px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${po.color}; float: right; margrin-right:5px;" >
-                           						        			 
-              
-              
-                                			</span>
+                                    		<span id="colorbox" style="border:3px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${po.color}; float: right; margrin-right:5px;" ></span>
                             			</c:forEach>
                                 </div>
                             </div>
@@ -321,16 +342,14 @@
                                     </div>
                                     <h5><fmt:formatNumber value="${p.price}" pattern="#,###,###"/> ￦ </h5>
                                     <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>
+                                        <c:forEach var="c" items="${list5}">                                 
+                              			<c:if test="${p.pro_id==c.pro_id}">
+                              				<div style="float: left;">
+                                 				 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${c.color}; float: right; margin-right:5px;" ></span>   
+                              				</div> 	
+                             	 	    </c:if>          
+                                    </c:forEach>      
+                                    </div>       
                                 
                                 </div>
                             </div>

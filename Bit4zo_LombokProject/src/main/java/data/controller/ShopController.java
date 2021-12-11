@@ -34,12 +34,12 @@ public class ShopController {
 
   @GetMapping("/shop/list")
   public ModelAndView shopMain(@RequestParam(defaultValue = "1") int currentPage,
-      @RequestParam(value = "pro_id", required = false) String pro_id) {
+      @RequestParam(value = "pro_id", required = false) String pro_id, HttpSession session) {
     ModelAndView mview = new ModelAndView();
     int totalCount = service.getTotalCount();
 
     // 페이징 처리에 필요한 변수선언
-    int perPage = 12;// 한페이지에 보여질 글의 갯수
+    int perPage = 9;// 한페이지에 보여질 글의 갯수
     int totalPage;// 총 페이지수
     int start;// 각페이지에서 불러올 db의 시작번호
     int perBlock = 5;// 몇개의 페이지번호씩 표현할것인가
@@ -59,8 +59,9 @@ public class ShopController {
     List<ProductDto> list = service.getAllLists(start, perPage);
     List<ProductDto> list2 = service.getAllListsLowPri(start, perPage);
     List<ProductDto> list3 = service.getAllListsHigPri(start, perPage);
-    List<ProductOpDto> list4 = service.getAllOptions(pro_id);
+
     List<ProductOpDto> list5 = service.getAllOp();
+
 
     // 각 페이지에 출력할 시작번호
     int no = totalCount - (currentPage - 1) * perPage;
@@ -69,7 +70,7 @@ public class ShopController {
     mview.addObject("list", list);
     mview.addObject("list2", list2);
     mview.addObject("list3", list3);
-    mview.addObject("list4", list4);
+
     mview.addObject("list5", list5);
     mview.addObject("startPage", startPage);
     mview.addObject("endPage", endPage);
@@ -82,6 +83,53 @@ public class ShopController {
     return mview;
   }
 
+  @GetMapping("/shop/search")
+  public ModelAndView shopSearch(
+
+      @RequestParam(defaultValue = "1") int currentPage,
+      @RequestParam(value = "keyword", required = false) String keyword, HttpSession session) {
+
+    session.setAttribute("keyword", keyword);
+    ModelAndView mview = new ModelAndView();
+    int totalCount = service.getSearchCount(keyword);
+
+    // 페이징 처리에 필요한 변수선언
+    int perPage = 9;// 한페이지에 보여질 글의 갯수
+    int totalPage;// 총 페이지수
+    int start;// 각페이지에서 불러올 db의 시작번호
+    int perBlock = 5;// 몇개의 페이지번호씩 표현할것인가
+    int startPage;// 각 블럭에 표시할 시작페이지
+    int endPage;// 각 블럭에 표시할 마지막페이지
+
+    // 총 페이지 갯수 구하기
+    totalPage = totalCount / perPage + (totalCount % perPage == 0 ? 0 : 1);
+    // 각 블럭의 시작페이지
+    startPage = (currentPage - 1) / perBlock * perBlock + 1;
+    endPage = startPage + perBlock - 1;
+    if (endPage > totalPage)
+      endPage = totalPage;
+    // 각 페이지에서 불러올 시작번호
+    start = (currentPage - 1) * perPage;
+    List<ProductDto> list6 = service.getSearch(keyword, start, perPage);
+    List<ProductDto> list1 = service.getSearchLowPri(keyword, start, perPage);
+    List<ProductDto> list2 = service.getSearchHigPri(keyword, start, perPage);
+    List<ProductOpDto> list5 = service.getAllOp();
+
+    int no = totalCount - (currentPage - 1) * perPage;
+    mview.addObject("list6", list6);
+    mview.addObject("list1", list1);
+    mview.addObject("list2", list2);
+    mview.addObject("list5", list5);
+    mview.addObject("startPage", startPage);
+    mview.addObject("endPage", endPage);
+    mview.addObject("totalPage", totalPage);
+    mview.addObject("no", no);
+    mview.addObject("currentPage", currentPage);
+    mview.addObject("totalCount", totalCount);
+    mview.setViewName("/shop/search");
+    return mview;
+  }
+
 
 
   @GetMapping("/shop/category")
@@ -89,14 +137,19 @@ public class ShopController {
       @RequestParam(defaultValue = "1") int currentPage,
       @RequestParam(value = "price_n", required = false) String price_n,
       @RequestParam(value = "pro_id", required = false) String pro_id,
-      @RequestParam(value = "color", required = false) String color) {
+      @RequestParam(value = "color", required = false) String color, HttpSession session) {
+
+
+    session.setAttribute("pro_sub", pro_sub);
+    session.setAttribute("price_n", price_n);
+    session.setAttribute("color", color);
+
+
     ModelAndView mview = new ModelAndView();
-    int totalCount = service.getTotalCountCategory(pro_sub, price_n);
+    int totalCount = service.getTotalCountCategory(pro_sub, price_n, color);
 
     // 페이징 처리에 필요한 변수선언
-    int perPage = 12;// 한페이지에 보여질 글의 갯수
-
-
+    int perPage = 1;// 한페이지에 보여질 글의 갯수
     int totalPage;// 총 페이지수
     int start;// 각페이지에서 불러올 db의 시작번호
     int perBlock = 5;// 몇개의 페이지번호씩 표현할것인가
@@ -116,11 +169,16 @@ public class ShopController {
     // 각 페이지에 출력할 시작번호
     int no = totalCount - (currentPage - 1) * perPage;
     List<ProductDto> list = service.getCategory(pro_sub, start, perPage, price_n, color);
-    List<ProductDto> list2 = service.getAllCateLowPri(pro_sub, start, perPage);
-    List<ProductDto> list3 = service.getAllCateHigPri(pro_sub, start, perPage);
+    List<ProductDto> list2 = service.getAllCateLowPri(pro_sub, start, perPage, price_n, color);
+    List<ProductDto> list3 = service.getAllCateHigPri(pro_sub, start, perPage, price_n, color);
+    List<ProductOpDto> list5 = service.getAllOp();
+
+
+
     mview.addObject("list", list);
     mview.addObject("list2", list2);
     mview.addObject("list3", list3);
+    mview.addObject("list5", list5);
     mview.addObject("totalCount", totalCount);
     mview.addObject("startPage", startPage);
     mview.addObject("endPage", endPage);
@@ -133,12 +191,15 @@ public class ShopController {
   }
 
   @GetMapping("/shop/pricesort")
-  public ModelAndView shopPrice(@RequestParam(defaultValue = "1") int currentPage) {
+  public ModelAndView shopPrice(@RequestParam(defaultValue = "1") int currentPage,
+      @RequestParam(value = "price_n", required = false) String price_n, HttpSession session) {
+
+    session.setAttribute("price_n", price_n);
     ModelAndView mview = new ModelAndView();
-    int totalCount = service.getPriceAllCount();
+    int totalCount = service.getPriceAllCount(price_n);
 
     // 페이징 처리에 필요한 변수선언
-    int perPage = 3;// 한페이지에 보여질 글의 갯수
+    int perPage = 9;// 한페이지에 보여질 글의 갯수
     int totalPage;// 총 페이지수
     int start;// 각페이지에서 불러올 db의 시작번호
     int perBlock = 5;// 몇개의 페이지번호씩 표현할것인가
@@ -157,8 +218,15 @@ public class ShopController {
 
     // 각 페이지에 출력할 시작번호
     int no = totalCount - (currentPage - 1) * perPage;
-    List<ProductDto> list = service.getPriceList(start, perPage);
+    List<ProductDto> list = service.getPriceList(start, perPage, price_n);
+    List<ProductDto> list2 = service.getPriceListLowPri(start, perPage, price_n);
+    List<ProductDto> list3 = service.getPriceListHigPri(start, perPage, price_n);
+    List<ProductOpDto> list5 = service.getAllOp();
+
     mview.addObject("list", list);
+    mview.addObject("list2", list2);
+    mview.addObject("list3", list3);
+    mview.addObject("list5", list5);
     mview.addObject("totalCount", totalCount);
     mview.addObject("startPage", startPage);
     mview.addObject("endPage", endPage);
@@ -190,12 +258,18 @@ public class ShopController {
     // System.out.println("1:" + pro_id);
     List<ProductOpDto> list2 = service.getAllOptions(pro_id);
     // System.out.println(list2.size());
+    List<ProductOpDto> list5 = service.getAllOp();
+    List<ProductOpDto> list6 = service.getAllTest(pro_id);
+    System.out.println(list6);
+
 
 
     // 출력에 필요한 변수들을 request에 저장
     mview.addObject("dto", dto);
     mview.addObject("list", list);
     mview.addObject("list2", list2);
+    mview.addObject("list5", list5);
+    mview.addObject("list6", list6);
     mview.addObject("currentPage", currentPage);
     mview.addObject("totalCount", totalCount);
     mview.setViewName("/shop/shopdetails");
@@ -341,11 +415,11 @@ public class ShopController {
   }
 
   @GetMapping("/shop/updateform")
-  public ModelAndView updateForm(String idx,
+  public ModelAndView updateForm(String idx, String pro_id,
       @RequestParam(value = "currentPage", defaultValue = "1") int currentPage, String color) {
     ModelAndView mview = new ModelAndView();
 
-    List<ProductOpDto> list = service.getJoinNum(idx, color);
+    List<ProductOpDto> list = service.getJoinNum(idx, color, pro_id);
 
     mview.addObject("color", color);
 
@@ -428,5 +502,29 @@ public class ShopController {
     return map;
   }
 
+  @GetMapping("/shop/stockform")
+  public ModelAndView stockForm(String idx, String pro_id,
+      @RequestParam(value = "currentPage", defaultValue = "1") int currentPage, String color) {
+    ModelAndView mview = new ModelAndView();
+
+    List<ProductOpDto> list = service.getJoinNum(idx, color, pro_id);
+
+    mview.addObject("color", color);
+    mview.addObject("list", list);
+    mview.addObject("currentPage", currentPage);
+    mview.setViewName("/shop/stockform");
+    return mview;
+
+  }
+
+  @PostMapping("/shop/update3")
+  public String update3(@ModelAttribute ProductOpDto dto,
+      @RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
+      HttpSession session) {
+
+    // 수정
+    service.updateSu(dto);
+    return "redirect:adminmain";
+  }
 
 }

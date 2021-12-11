@@ -26,14 +26,19 @@ public class ShopService {
     return mapper.getTotalCount();
   }
 
-  public int getPriceAllCount() {
-    return mapper.getPriceAllCount();
+  public int getPriceAllCount(String price_n) {
+    return mapper.getPriceAllCount(price_n);
   }
 
-  public int getTotalCountCategory(String pro_sub, String price_n) {
+  public int getSearchCount(String keyword) {
+    return mapper.getSearchCount(keyword);
+  }
+
+  public int getTotalCountCategory(String pro_sub, String price_n, String color) {
     HashMap<String, Object> map = new HashMap<String, Object>();
     map.put("pro_sub", pro_sub);
     map.put("price_n", price_n);
+    map.put("color", color);
     return mapper.getTotalCountCategory(map);
   }
 
@@ -50,6 +55,33 @@ public class ShopService {
     return mapper.getAllLists(map);
   }
 
+  public List<ProductDto> getSearch(String keyword, int start, int perPage) {
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put("keyword", keyword);
+    map.put("start", start);
+    map.put("perpage", perPage);
+
+    return mapper.getSearch(map);
+  }
+
+  public List<ProductDto> getSearchLowPri(String keyword, int start, int perPage) {
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put("keyword", keyword);
+    map.put("start", start);
+    map.put("perpage", perPage);
+
+    return mapper.getSearchLowPri(map);
+  }
+
+  public List<ProductDto> getSearchHigPri(String keyword, int start, int perPage) {
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put("keyword", keyword);
+    map.put("start", start);
+    map.put("perpage", perPage);
+
+    return mapper.getSearchHigPri(map);
+  }
+
   public List<ProductDto> getAllListsLowPri(int start, int perPage) {
     HashMap<String, Integer> map = new HashMap<String, Integer>();
     map.put("start", start);
@@ -57,11 +89,14 @@ public class ShopService {
     return mapper.getAllListsLowPri(map);
   }
 
-  public List<ProductDto> getAllCateLowPri(String pro_sub, int start, int perPage) {
+  public List<ProductDto> getAllCateLowPri(String pro_sub, int start, int perPage, String price_n,
+      String color) {
     HashMap<String, Object> map = new HashMap<String, Object>();
     map.put("pro_sub", pro_sub);
     map.put("start", start);
     map.put("perpage", perPage);
+    map.put("price_n", price_n);
+    map.put("color", color);
     return mapper.getAllCateLowPri(map);
   }
 
@@ -72,11 +107,14 @@ public class ShopService {
     return mapper.getAllListsHigPri(map);
   }
 
-  public List<ProductDto> getAllCateHigPri(String pro_sub, int start, int perPage) {
+  public List<ProductDto> getAllCateHigPri(String pro_sub, int start, int perPage, String price_n,
+      String color) {
     HashMap<String, Object> map = new HashMap<String, Object>();
     map.put("pro_sub", pro_sub);
     map.put("start", start);
     map.put("perpage", perPage);
+    map.put("price_n", price_n);
+    map.put("color", color);
     return mapper.getAllCateHigPri(map);
   }
 
@@ -86,12 +124,18 @@ public class ShopService {
 
   }
 
-  public List<ProductDto> getCategory(String pro_sub, int start, int perpage, String price_n,
+  public List<ProductOpDto> getAllTest(String pro_id) {
+    System.out.println("pro_id=" + pro_id);
+    return mapper.getAllTest(pro_id);
+
+  }
+
+  public List<ProductDto> getCategory(String pro_sub, int start, int perPage, String price_n,
       String color) {
     HashMap<String, Object> map = new HashMap<String, Object>();
     map.put("pro_sub", pro_sub);
     map.put("start", start);
-    map.put("perpage", perpage);
+    map.put("perpage", perPage);
     map.put("price_n", price_n);
     map.put("color", color);
 
@@ -100,11 +144,28 @@ public class ShopService {
     return mapper.getCategory(map);
   }
 
-  public List<ProductDto> getPriceList(int start, int perPage) {
-    HashMap<String, Integer> map = new HashMap<String, Integer>();
+  public List<ProductDto> getPriceList(int start, int perPage, String price_n) {
+    HashMap<String, Object> map = new HashMap<String, Object>();
     map.put("start", start);
     map.put("perpage", perPage);
+    map.put("price_n", price_n);
     return mapper.getPriceList(map);
+  }
+
+  public List<ProductDto> getPriceListLowPri(int start, int perPage, String price_n) {
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put("start", start);
+    map.put("perpage", perPage);
+    map.put("price_n", price_n);
+    return mapper.getPriceListLowPri(map);
+  }
+
+  public List<ProductDto> getPriceListHigPri(int start, int perPage, String price_n) {
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put("start", start);
+    map.put("perpage", perPage);
+    map.put("price_n", price_n);
+    return mapper.getPriceListHigPri(map);
   }
 
   public void updateReadCount(String idx) {
@@ -132,10 +193,11 @@ public class ShopService {
     return mapper.getJoinList(map);
   }
 
-  public List<ProductOpDto> getJoinNum(String idx, String color) {
+  public List<ProductOpDto> getJoinNum(String idx, String color, String pro_id) {
     HashMap<String, String> map = new HashMap<String, String>();
     map.put("idx", idx);
     map.put("color", color);
+    map.put("pro_id", pro_id);
 
     return mapper.getJoinNum(map);
   }
@@ -166,6 +228,10 @@ public class ShopService {
 
   public int getProIdCheck(String pro_id) {
     return mapper.getProIdCheck(pro_id);
+  }
+
+  public void updateSu(ProductOpDto dto) {
+    mapper.updateSu(dto);
   }
 
 }

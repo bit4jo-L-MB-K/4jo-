@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
@@ -43,18 +42,15 @@ $(function () {
 	      $(".seltb").hide();
 	      $("#t3").show();
 	   }
+	   
 	   $(".shop__sidebar__color label").click(function(){
 		   //alert("1");
-		   $(".shop__sidebar__color label").css("border","1 px solid black");
+		   $(".shop__sidebar__color label").css("border","1px solid black");
 		   $(this).css("border","3px solid #288cff");
 		   
 	   });
 });
 </script>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-
 <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Dokdo&family=Gugi&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
@@ -184,7 +180,7 @@ $(function () {
                                     <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__color">
-                                                       <label class="c-1"  for="sp-1">
+                                                      <label class="c-1"  for="sp-1">
                                                     <input type="radio" name="color" value="202020" id="sp-1">
                                                 </label>
                                                 <label class="c-2" for="sp-2">
@@ -231,7 +227,6 @@ $(function () {
                                     </div>
                                 </div>
                             </div>
-                            
                          <input type="submit" value="Search" style="font-weight:bold;  background-color: white; color: black; text-align: center; margin-top:40px; margin-left: 50px; width: 100px; ">
                         </form>
                         </div>
@@ -261,61 +256,9 @@ $(function () {
                             </div>
                         </div>
                     </div>
-                    <!-- 최신순 리스트 -->
+                    <!-- /////////////최신순 리스트/////////////// -->
                     <div class="row seltb" id="t1">
-                      <c:forEach var="p" items="${list}">     
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                               <c:choose>
-                            		<c:when test="${fn:substringBefore(p.pro_photo,',') !=''}">
-                                		<div class="product__item__pic set-bg" data-setbg="../photo/${fn:substringBefore(p.pro_photo,',')}">
-                                    		<ul class="product__hover">
-                                        		<li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
-                                        		<li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                       		    </li>
-                                        		<li><a href="${root}/shop/details?idx=${p.idx}&currentPage=${currentPage}&pro_id=${p.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
-                                    		</ul>
-                                		</div>
-                                	</c:when>
-                                	<c:otherwise>
-                                		<div class="product__item__pic set-bg" data-setbg="../photo/${p.pro_photo}">
-                                    		<ul class="product__hover">
-                                        		<li><a href="#"><img src="${root}/img/icon/heart.png" alt=""></a></li>
-                                        		<li><a href="#"><img src="${root}/img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                       		    </li>
-                                        		<li><a href="${root}/shop/details?idx=${p.idx}&currentPage=${currentPage}&pro_id=${p.pro_id}&key=list"><img src="${root}/img/icon/search.png" alt=""></a></li>
-                                    		</ul>
-                                		</div>                		
-                                	</c:otherwise>
-                                </c:choose>
-                                <div class="product__item__text">      
-                                    <h6>${p.pro_name}</h6>
-                                    <a href="#" class="add-cart">+ Add To Cart</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5><fmt:formatNumber value="${p.price}" pattern="#,###,###"/> ￦ </h5>
-                                    <div class="product__color__select">
-                                        <c:forEach var="c" items="${list5}">                                 
-                              			<c:if test="${p.pro_id==c.pro_id}">
-                              				<div style="float: left;">
-                                 				 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${c.color}; float: right; margin-right:5px;" ></span>   
-                              				</div> 	
-                             	 	    </c:if>          
-                                    </c:forEach>      
-                                    </div>                                   
-                                </div>
-                            </div>
-                        </div>       
-                </c:forEach>
-                </div>
-                 <!-- /////////////최신순 리스트/////////////// -->
-                    <div class="row seltb" id="t1">
-                      <c:forEach var="p" items="${list}">     
+                      <c:forEach var="p" items="${list6}">     
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                             	<c:choose>
@@ -353,7 +296,7 @@ $(function () {
                                     </div>
                                     <h5><fmt:formatNumber value="${p.price}" pattern="#,###,###"/> ￦ </h5>
                                     
-                                    <div class="product__color__select">
+                                   <div class="product__color__select">
                                         <c:forEach var="c" items="${list5}">                                 
                               			<c:if test="${p.pro_id==c.pro_id}">
                               				<div style="float: left;">
@@ -361,7 +304,8 @@ $(function () {
                               				</div> 	
                              	 	    </c:if>          
                                     </c:forEach>      
-                                    </div>                                                       
+                                    </div>       
+                                                                 
                                 </div>
                             </div>
                         </div>       
@@ -369,7 +313,7 @@ $(function () {
                 </div>
                 <!-- //////////////낮은순 가격 리스트///////////////// -->
                 <div class="row seltb" id="t2"  style="display:none;">               	
-                       <c:forEach var="p2" items="${list2}">     
+                       <c:forEach var="p2" items="${list1}">     
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                             <c:choose>
@@ -406,15 +350,13 @@ $(function () {
                                         <i class="fa fa-star-o"></i>
                                     </div>
                                     <h5><fmt:formatNumber value="${p2.price}" pattern="#,###,###"/> ￦ </h5>
-                                     <div class="product__color__select">
-                                        <c:forEach var="c" items="${list5}">                                 
+                                     <c:forEach var="c" items="${list5}">                                 
                               			<c:if test="${p2.pro_id==c.pro_id}">
                               				<div style="float: left;">
                                  				 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${c.color}; float: right; margin-right:5px;" ></span>   
                               				</div> 	
                              	 	    </c:if>          
-                                    </c:forEach>      
-                                    </div>                                  
+                                    </c:forEach>                          
                                 </div>
                             </div>
                         </div>       
@@ -422,7 +364,7 @@ $(function () {
                 </div>
                 <!-- //////////////높은순 가격 리스트//////////// -->
                 <div class="row seltb" id="t3"  style="display:none;">               	
-                       <c:forEach var="p3" items="${list3}">     
+                       <c:forEach var="p3" items="${list2}">     
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                             <c:choose>
@@ -459,26 +401,22 @@ $(function () {
                                         <i class="fa fa-star-o"></i>
                                     </div>
                                     <h5><fmt:formatNumber value="${p3.price}" pattern="#,###,###"/> ￦ </h5>
-                                    <div class="product__color__select">
-                                        <c:forEach var="c" items="${list5}">                                 
+                                     <c:forEach var="c" items="${list5}">                                 
                               			<c:if test="${p3.pro_id==c.pro_id}">
                               				<div style="float: left;">
                                  				 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${c.color}; float: right; margin-right:5px;" ></span>   
                               				</div> 	
                              	 	    </c:if>          
-                                    </c:forEach>      
-                                    </div>                                    
+                                    </c:forEach>                             
                                 </div>
                             </div>
                         </div>       
                 </c:forEach>
                 </div>
-                
-               
             </div>
+            
         </div>
-    </div>
-    
+      </div>
       
       <c:if test="${totalCount>0 }">
       <div class="row">
@@ -486,19 +424,19 @@ $(function () {
              <div class="product__pagination">
              <!-- 이전 -->
              	<c:if test="${startPage>1 }">
-                   <span><a href="pricesort?currentPage=${startPage-1 }&price_n=${price_n}"><</a></span>
+                   <span><a href="search?currentPage=${startPage-1 }&keyword=${keyword}"><</a></span>
                 </c:if>
                 	<c:forEach var="pp" begin="${startPage }" end="${endPage }">
                 		<c:if test="${currentPage==pp }">
-							<span class="active"><a href="pricesort?currentPage=${pp }&price_n=${price_n}">${pp }</a></span>
+							<span class="active"><a href="search?currentPage=${pp }&keyword=${keyword}">${pp }</a></span>
 						</c:if>
 						<c:if test="${currentPage!=pp }">
-							<span><a href="pricesort?currentPage=${pp }&price_n=${price_n}">${pp }</a></span>
+							<span><a href="search?currentPage=${pp }&keyword=${keyword}">${pp }</a></span>
 						</c:if>
                 	</c:forEach>
              <!-- 다음 -->
                 <c:if test="${endPage<totalPage }">
-						<span><a href="pricesort?currentPage=${endPage+1 }&price_n=${price_n}">></a></span>
+						<span><a href="search?currentPage=${endPage+1 }&keyword=${keyword}">></a></span>
 				</c:if>
              </div>
           </div>

@@ -13,9 +13,15 @@ public interface ShopMapper {
 
   public int getTotalCountCategory(HashMap<String, Object> map);
 
-
+  public int getSearchCount(String keyword);
 
   public List<ProductDto> getAllLists(HashMap<String, Integer> map);
+
+  public List<ProductDto> getSearch(HashMap<String, Object> map);
+
+  public List<ProductDto> getSearchLowPri(HashMap<String, Object> map);
+
+  public List<ProductDto> getSearchHigPri(HashMap<String, Object> map);
 
   public List<ProductDto> getAllListsLowPri(HashMap<String, Integer> map);
 
@@ -27,15 +33,21 @@ public interface ShopMapper {
 
   public List<ProductOpDto> getAllOptions(String pro_id);
 
+  public List<ProductOpDto> getAllTest(String pro_id);
+
   public List<ProductDto> getCategory(HashMap<String, Object> map);
 
-  public List<ProductDto> getPriceList(HashMap<String, Integer> map);
+  public List<ProductDto> getPriceList(HashMap<String, Object> map);
+
+  public List<ProductDto> getPriceListLowPri(HashMap<String, Object> map);
+
+  public List<ProductDto> getPriceListHigPri(HashMap<String, Object> map);
 
   public List<ProductOpDto> getAllOp();
 
   public ProductDto getData(String idx);
 
-  public int getPriceAllCount();
+  public int getPriceAllCount(String price_n);
 
   public void updateReadCount(String idx);
 
@@ -62,5 +74,5 @@ public interface ShopMapper {
 
   public int getProIdCheck(String pro_id);
 
-
+  public void updateSu(ProductOpDto dto);
 }

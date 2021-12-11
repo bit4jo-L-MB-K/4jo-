@@ -1313,43 +1313,44 @@ ol {
 	display: inline-block;
 	margin-bottom: 10px;
 	cursor: pointer;
+	border: 0.5px solid black;
 }
 
 .shop__sidebar__color label.c-1 {
-	background: #0b090c;
+	background: #202020;
 }
 
 .shop__sidebar__color label.c-2 {
-	background: #20315f;
+	background: #F6F6F6;
 }
 
 .shop__sidebar__color label.c-3 {
-	background: #f1af4d;
+	background: #cd1039;
 }
 
 .shop__sidebar__color label.c-4 {
-	background: #636068;
+	background: #F5F5DC;
 }
 
 .shop__sidebar__color label.c-5 {
-	background: #57594d;
+	background: #006400;
 }
 
 .shop__sidebar__color label.c-6 {
-	background: #e8bac4;
+	background: #323c73;
 }
 
 .shop__sidebar__color label.c-7 {
-	background: #d6c1d7;
+	background: #505050;
 }
 
 .shop__sidebar__color label.c-8 {
-	background: #ed1c24;
+	background: #aaaaaa;
 }
 
-.shop__sidebar__color label.c-9 {
-	background: #ffffff;
-}
+/* .shop__sidebar__color label.c-9 {
+	background: #505050;
+} */
 
 .shop__sidebar__color label:after {
 	position: absolute;
@@ -1357,7 +1358,7 @@ ol {
 	top: -3px;
 	height: 36px;
 	width: 36px;
-	border: 1px solid #e5e5e5;
+	/* border: 1px solid #e5e5e5; */
 	content: "";
 	border-radius: 50%;
 }

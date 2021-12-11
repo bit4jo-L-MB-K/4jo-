@@ -29,7 +29,6 @@ ul.mylist li, ol.mylist li {
 ul.mylist li:before,
 ol.mylist li:before {
    
-    display: inline-block;
     vertical-align: middle;
     padding: 0px 5px 6px 0px;
 }
@@ -54,14 +53,13 @@ ol.mylist li:before {
     </section>
     <!-- Breadcrumb Section End -->
 	 <section>	 
-     <div class="col-lg-2" style="margin-top: 20px;">
- <div>
+    <div class="col-lg-2" style="margin-top: 20px;">
+ 	<div>
        <div>
            <div class="card-body">
-               <div class="shop__sidebar__categories">	
+           <div class="shop__sidebar__categories">	
          <ul class="mylist">
              <li><a href="${root}/shop/addform">> 상품추가</a></li>
-             <li><a href="#">> 재고관리</a></li>
              <li><a href="#">> 회원관리</a></li>
              <li><a href="${root}/shop/list">> 상품메인으로</a></li>
          </ul>
@@ -79,18 +77,20 @@ ol.mylist li:before {
 	<table class="table table-bordered">
 		<tr bgcolor="#ddd">
 			<th width="40">번호</th>
-			<th width="70">상품번호</th>
-			<th width="70">상품명</th>
-			<th width="80">색상</th>
-			<th width="50">가격</th>
-			<th width="70">상품분류</th>
+			<th width="50">상품번호</th>
+			<th width="65">상품명</th>
+			<th width="30">색상</th>
+			<th width="40">사이즈</th>
+			<th width="30">가격</th>
+			<th width="50">상품분류</th>
+			<th width="30">수량</th>
 			<th width="80">입고날짜</th>
-			<th width="80">수정/삭제</th>
+			<th width="80">관리</th>
 		</tr>
 		
 		<c:if test="${totalCount==0}">
 			<tr height="50">
-				<td colspan="8" align="center">
+				<td colspan="10" align="center">
 					<h2>
 						<b>등록된 글이 없습니다</b>
 					</h2>
@@ -108,15 +108,27 @@ ol.mylist li:before {
 					<a>${a.pro_id}</a>
 					</td>
 					<td>${a.joindto.pro_name}</td>
-					<td>${a.color}</td>
+
+<c:choose>
+<c:when test="${a.color eq 'none'}">
+<td style="text-align: center;">색상 미기입</td>
+</c:when>
+<c:otherwise>
+<td style=" background-color:  #${a.color}"></td>
+</c:otherwise>
+</c:choose>
+					<td>${a.c_size}</td>
 					<td>${a.joindto.price}</td>
 					<td>${a.joindto.pro_sub}</td>
+					<td>${a.su}
+					<button style="float:right;"class="btn btn-dark btn-sm"
+		onclick="location.href='stockform?idx=${a.joindto.idx}&color=${a.color}&pro_id=${a.joindto.pro_id}'">추가</button></td>
 					<td>
 						<fmt:formatDate value="${a.joindto.ipgoday}" pattern="yyyy-MM-dd"/>
 					</td>
 					<td>
 	<button class="btn btn-success btn-sm"
-		onclick="location.href='updateform?idx=${a.joindto.idx}&color=${a.color}'">수정</button>
+		onclick="location.href='updateform?idx=${a.joindto.idx}&color=${a.color}&pro_id=${a.joindto.pro_id}'">수정</button>
 	<a type="button" class="btn btn-secondary btn-sm"
 	onclick="if(!confirm('해당 상품(색상)을 삭제하시겠습니까?')){return false;}"
 		href="delete?idx=${a.joindto.idx}&color=${a.color}&currentPage=${currentPage}&key=list">항목삭제</a>

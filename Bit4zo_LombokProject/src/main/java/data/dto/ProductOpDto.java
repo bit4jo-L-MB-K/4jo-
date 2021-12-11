@@ -8,43 +8,20 @@ public class ProductOpDto {
   private String num;
   private String pro_id;
   private String color;
-  private String s;
-  private String m;
-  private String l;
+  private String color_name;
+  private String c_size;
+  private String su;
   private ProductDto joindto;
+  private String all_column;
 
 
 
-  public String getS() {
-    return s;
+  public String getAll_column() {
+    return all_column;
   }
 
-  public void setS(String s) {
-    this.s = s;
-  }
-
-  public String getM() {
-    return m;
-  }
-
-  public void setM(String m) {
-    this.m = m;
-  }
-
-  public String getL() {
-    return l;
-  }
-
-  public void setL(String l) {
-    this.l = l;
-  }
-
-  public ProductDto getJoindto() {
-    return joindto;
-  }
-
-  public void setJoindto(ProductDto joindto) {
-    this.joindto = joindto;
+  public void setAll_column(String all_column) {
+    this.all_column = all_column;
   }
 
   public String getNum() {
@@ -69,6 +46,38 @@ public class ProductOpDto {
 
   public void setColor(String color) {
     this.color = color;
+  }
+
+  public String getColor_name() {
+    return color_name;
+  }
+
+  public void setColor_name(String color_name) {
+    this.color_name = color_name;
+  }
+
+  public String getC_size() {
+    return c_size;
+  }
+
+  public void setC_size(String c_size) {
+    this.c_size = c_size;
+  }
+
+  public String getSu() {
+    return su;
+  }
+
+  public void setSu(String su) {
+    this.su = su;
+  }
+
+  public ProductDto getJoindto() {
+    return joindto;
+  }
+
+  public void setJoindto(ProductDto joindto) {
+    this.joindto = joindto;
   }
 
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.ReviewMapper">
+   <select id="getTotalCount" resultType="int">
+   		select count(*) from review
+   </select>
+   <select id="getData" parameterType="String" resultType="rdto">
+   		select * from review where num=#{num}
+   </select>
+   <select id="getMaxNum" resultType="int">
+   		select ifnull(max(num),0) from review
+   </select>
+   <select id="getList" parameterType="HashMap" resultType="rdto">
+   		select * from review order by num desc limit #{start},#{perpage}
+   </select>
+   <insert id="insertReview" parameterType="rdto">
+   		insert into review (myid,subject,content,uploadfile,writeday) values (#{myid},#{subject},#{content},#{uploadfile},now())
+   </insert>
+   <update id="updateReview" parameterType="rdto">
+   		update review set content=#{content}
+   		<if test="uploadfile!=null">
+   			,uploadfile=#{uploadfile}
+   		</if>
+   		where num=#{num}
+   </update>
+   <delete id="deleteReview" parameterType="String">
+		delete from review where num=#{num}
+	</delete>
+</mapper>

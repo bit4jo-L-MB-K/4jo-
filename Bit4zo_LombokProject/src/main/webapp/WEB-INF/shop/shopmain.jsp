@@ -6,27 +6,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript">
-function checkboxArr() {
-	var checkArr=[];
-	$("input[name='test_checked']:checked").each(function(i) {
-		checkArr.push($(this).val());
-	}
-	
-	
-	
-	$.ajax({
-		url:'test_check',
-		type:'post',
-		dataType:'text',
-		data{
-			valuearrTest:checkArr
-		}
-	})
-	})
-	
-}
-</script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
@@ -63,6 +42,13 @@ $(function () {
 	      $(".seltb").hide();
 	      $("#t3").show();
 	   }
+	   $(".shop__sidebar__color label").click(function(){
+		   //alert("1");
+		   $(".shop__sidebar__color label").css("border","1px solid black");
+		   $(this).css("border","3px solid #288cff");
+		   
+	   });   
+	   
 });
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Dokdo&family=Gugi&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
@@ -107,7 +93,7 @@ $(function () {
                             <div class="accordion" id="accordionExample">
                                 <div class="card">
                                     <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                        <a data-toggle="collapse show" data-target="#collapseOne">Categories</a>
                                     </div>
                                     <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
@@ -118,22 +104,33 @@ $(function () {
                                                     	<a href="${root}/shop/list">전체</a>
                                                     </li>
                                                     <li>
-                                                    	 <input type="radio" name="pro_sub" value="반팔">
-                                                    	<a href="${root}/shop/category?pro_sub=반팔">반팔</a>
-                                                    </li>
-                                                    <li>
-                                                    	 <input type="radio" name="pro_sub" value="긴팔">
+                                                    	 <input type="radio" name="pro_sub" value="긴팔" id="pro_sub">
                                                     	<a href="${root}/shop/category?pro_sub=긴팔">긴팔</a>
                                                     </li>
                                                     <li>
-                                                    	 <input type="radio" name="pro_sub" value="패딩">
-                                                    	<a href="${root}/shop/category?pro_sub=패딩">패딩</a>
+                                                    	 <input type="radio" name="pro_sub" value="반팔">
+                                                    	<a href="${root}/shop/category?pro_sub=반팔">반팔</a>
                                                     </li>
                                                     <li>
                                                     	 <input type="radio" name="pro_sub" value="바지">
                                                     	<a href="${root}/shop/category?pro_sub=바지">바지</a>
                                                     </li> 
-                                                                                                
+                                                    <li>
+                                                    	 <input type="radio" name="pro_sub" value="스커트">
+                                                    	<a href="${root}/shop/category?pro_sub=스커트">스커트</a>
+                                                    </li>                                              
+                                                    <li>
+                                                    	 <input type="radio" name="pro_sub" value="패딩">
+                                                    	<a href="${root}/shop/category?pro_sub=패딩">패딩</a>
+                                                    </li>
+                                                    <li>
+                                                    	 <input type="radio" name="pro_sub" value="코트">
+                                                    	<a href="${root}/shop/category?pro_sub=코트">코트</a>
+                                                    </li>
+                                                    <li>
+                                                    	 <input type="radio" name="pro_sub" value="신발">
+                                                    	<a href="${root}/shop/category?pro_sub=신발">신발</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -151,23 +148,23 @@ $(function () {
                                                 
                                                     <li>
                                                     	 <input type="radio" name="price_n" value="1">
-                                                    	 <a href="${root}/shop/pricesort">~ 10,000￦</a>	
+                                                    	 <a href="${root}/shop/pricesort?price_n=1">~ 10,000￦</a>	
                                                     </li>
                                                     <li>
                                                    		 <input type="radio" name="price_n" value="2">
-                                                   		 <a href="#">10,001￦ - 30,000￦</a>
+                                                   		 <a href="${root}/shop/pricesort?price_n=2">10,001￦ - 30,000￦</a>
                                                     </li>
                                                     <li>
                                                     	 <input type="radio" name="price_n" value="3">
-                                                    	 <a href="#">30,001￦ - 50,000￦</a>
+                                                    	 <a href="${root}/shop/pricesort?price_n=3">30,001￦ - 50,000￦</a>
                                                     </li>
                                                     <li> 
                                                     	 <input type="radio" name="price_n" value="4">
-                                                   		 <a href="#">50,001￦ - 100,000￦</a>
+                                                   		 <a href="${root}/shop/pricesort?price_n=4">50,001￦ - 100,000￦</a>
                                                     </li>
                                                     <li> 
                                                          <input type="radio" name="price_n" value="5">
-                                                    	 <a href="#">100,001￦ ~</a>
+                                                    	 <a href="${root}/shop/pricesort?price_n=5">100,001￦ ~</a>
                                                     </li>
                                                
                                                 </ul>
@@ -175,60 +172,37 @@ $(function () {
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="card">
                                     <div class="card-heading">
-                                        <a data-toggle="collapse show" data-target="#collapseFour">Size</a>
-                                    </div>
-                                    <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__size">
-                                              
-                                                <label for="sm">s
-                                                    <input type="radio" id="sm">
-                                                </label>
-                                                <label for="md">m
-                                                    <input type="radio" id="md">
-                                                </label>
-                                                <label for="lg">l
-                                                    <input type="radio" id="lg">
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
+                                        <a data-toggle="collapse show" data-target="#collapseFive">Colors</a>
                                     </div>
                                     <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__color">
-                                                <label class="c-1" for="sp-1">
-                                                    <input type="radio" name="color" value="000000" id="sp-1">
+                                                <label class="c-1"  for="sp-1">
+                                                    <input type="radio" name="color" value="202020" id="sp-1">
                                                 </label>
                                                 <label class="c-2" for="sp-2">
-                                                    <input type="radio" name="color" value="323c73" id="sp-2">
+                                                    <input type="radio" name="color" value="F6F6F6" id="sp-2">
                                                 </label>
                                                 <label class="c-3" for="sp-3">
-                                                    <input type="radio" name="color" value="0000cd" id="sp-3">
+                                                    <input type="radio" name="color" value="cd1039" id="sp-3">
                                                 </label>
                                                 <label class="c-4" for="sp-4">
-                                                    <input type="radio" name="color" value="3" id="sp-4">
-                                                </label>
+                                                    <input type="radio" name="color" value="F5F5DC" id="sp-4">
+                                                </label>                                         
                                                 <label class="c-5" for="sp-5">
-                                                    <input type="radio" id="sp-5">
-                                                </label>
+                                                    <input type="radio" name="color" value="006400" id="sp-5">
+                                                </label>                                         
                                                 <label class="c-6" for="sp-6">
-                                                    <input type="radio" id="sp-6">
+                                                    <input type="radio" name="color" value="323c73" id="sp-6">
                                                 </label>
                                                 <label class="c-7" for="sp-7">
-                                                    <input type="radio" id="sp-7">
+                                                    <input type="radio" name="color" value="505050;" id="sp-7">
                                                 </label>
                                                 <label class="c-8" for="sp-8">
-                                                    <input type="radio" name="color" value="4" id="sp-8">
-                                                </label>
-                                                <label class="c-9" for="sp-9">
-                                                    <input type="radio" name="colors" value="5" id="sp-9">
+                                                    <input type="radio" name="color" value="aaaaaa" id="sp-8">
                                                 </label>
                                             </div>
                                         </div>
@@ -236,7 +210,7 @@ $(function () {
                                 </div>
                                 <div class="card">
                                     <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseSix">Tags</a>
+                                        <a data-toggle="collapse show" data-target="#collapseSix">Tags</a>
                                     </div>
                                     <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
@@ -253,7 +227,7 @@ $(function () {
                                     </div>
                                 </div>
                             </div>
-                         <input type="submit">
+                         <input type="submit" value="Search" style="font-weight:bold;  background-color: white; color: black; text-align: center; margin-top:40px; margin-left: 50px; width: 100px; ">
                         </form>
                         </div>
                     </div>
@@ -270,7 +244,7 @@ $(function () {
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
-                                    <p>Sort by Price:</p>
+                                    <p>Sort by :</p>
                                     <select class="selectsort">
                                         <option value="rec">신상품 순</option>
                                         <option value="highpri">가격 높은 순</option>
@@ -284,6 +258,7 @@ $(function () {
                     </div>
                     <!-- /////////////최신순 리스트/////////////// -->
                     <div class="row seltb" id="t1">
+                    		
                       <c:forEach var="p" items="${list}">     
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
@@ -322,17 +297,15 @@ $(function () {
                                     </div>
                                     <h5><fmt:formatNumber value="${p.price}" pattern="#,###,###"/> ￦ </h5>
                                     
-                                    <c:forEach var="c" items="${list5}">
-                                    
-                              <!--  class="product__color__select" -->
-                              	<c:if test="${p.pro_id==c.pro_id}">
-                              		<div style="float: left;">
-                                 			 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${c.color}; float: right; margin-right:5px;" ></span>   
-                              		</div> 	
-                             	    </c:if>
-		                                    
-                                    </c:forEach> 
-                                                                 
+                                    <div class="product__color__select">
+                                        <c:forEach var="c" items="${list5}">                                 
+                              			<c:if test="${p.pro_id==c.pro_id}">
+                              				<div style="float: left;">
+                                 				 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${c.color}; float: right; margin-right:5px;" ></span>   
+                              				</div> 	
+                             	 	    </c:if>          
+                                    </c:forEach>      
+                                    </div>                                                       
                                 </div>
                             </div>
                         </div>       
@@ -377,17 +350,15 @@ $(function () {
                                         <i class="fa fa-star-o"></i>
                                     </div>
                                     <h5><fmt:formatNumber value="${p2.price}" pattern="#,###,###"/> ￦ </h5>
-                                    <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>                                
+                                     <div class="product__color__select">
+                                        <c:forEach var="c" items="${list5}">                                 
+                              			<c:if test="${p2.pro_id==c.pro_id}">
+                              				<div style="float: left;">
+                                 				 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${c.color}; float: right; margin-right:5px;" ></span>   
+                              				</div> 	
+                             	 	    </c:if>          
+                                    </c:forEach>      
+                                    </div>                                  
                                 </div>
                             </div>
                         </div>       
@@ -433,16 +404,14 @@ $(function () {
                                     </div>
                                     <h5><fmt:formatNumber value="${p3.price}" pattern="#,###,###"/> ￦ </h5>
                                     <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>                                
+                                        <c:forEach var="c" items="${list5}">                                 
+                              			<c:if test="${p3.pro_id==c.pro_id}">
+                              				<div style="float: left;">
+                                 				 <span id="colorbox" style="border:2px solid black; width: 20px; height: 20px; border-radius: 100px; background-color:  #${c.color}; float: right; margin-right:5px;" ></span>   
+                              				</div> 	
+                             	 	    </c:if>          
+                                    </c:forEach>      
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>       

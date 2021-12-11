@@ -1,24 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mapper.ShopMapper">
-   
+    <!-- 미선 상품 등록 -->
     <insert id="insertShop" parameterType="pdto">
-        insert into product (pro_id,pro_name,price,stock,pro_sub,pro_photo,pro_content,ipgoday)
-        values (#{pro_id},#{pro_name},#{price},#{stock},#{pro_sub},#{pro_photo},#{pro_content},now())
+        insert into product (pro_id,pro_name,price,pro_sub,pro_photo,pro_content,price_n,ipgoday)
+        values (#{pro_id},#{pro_name},#{price},#{pro_sub},#{pro_photo},#{pro_content},#{price_n},now())
 	</insert>
     
     <insert id="insertShopOP" parameterType="podto">
-
-    	insert into pro_option (pro_id,color,s,m,l) values (#{pro_id},#{color},#{s},#{m},#{l})
-
+    	insert into pro_option (pro_id,color,color_name,c_size,su) values (#{pro_id},#{color},#{color_name},#{c_size},#{su})
 	</insert>
-    
+<!-- //////////////////////////////////////////////////////////////////////////////////////////// -->	
+	<!-- detail로 들어가는! -->
+ 	<select id="getData" parameterType="String" resultType="pdto">
+ 		select * from product where idx=#{idx}
+ 	</select>
+	
+	<!-- 옵션 테이블에서 모든거 가져오기 ex)색깔,수량 etc... -->
+ 	<select id="getAllOptions" parameterType="String" resultType="podto">
+ 		select * from pro_option where pro_id=#{pro_id} group by color
+ 	</select>
+ 	
+ 	<!-- 디테일 색갈,사이즈 /// 수량 나눈 시험용 -->
+ 	<select id="getAllTest" parameterType="String" resultType="podto">
+ 		select concat(color_name,'',c_size,'-',su) as all_column from pro_option where pro_id=#{pro_id}
+ 	</select>
+ 	
+ 	<!-- product 와 pro_option 을 조인하여 전체출력 -->
+ 	<select id="getAllOp" parameterType="String" resultType="podto">
+ 		<!-- select p.pro_id,po.color from product p left join pro_option po on p.pro_id=po.pro_id -->
+ 		select distinct
+p.pro_id,po.color
+from product p inner join pro_option po
+on p.pro_id=po.pro_id
+ 	</select>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////// -->	   
+    <!-- list 총 갯수 -->
     <select id="getTotalCount" resultType="int">
 		select count(*) from product
  	</select>
+ 	
+ 	<!-- 모든 리스트 출력 --> 	
+ 	<select id="getAllLists" parameterType="HashMap" resultType="pdto">
+ 		select * from product order by idx desc limit #{start},#{perpage}
+ 	</select>
+ 	
+ 	<!-- 전체 리스트 가격 낮은순 -->
+ 	<select id="getAllListsLowPri" parameterType="HashMap" resultType="pdto">
+ 		select * from product order by price asc limit #{start},#{perpage}
+ 	</select>
+ 	
+ 	<!-- 전체 리스트 가격 높은순 -->
+ 	<select id="getAllListsHigPri" parameterType="HashMap" resultType="pdto">
+ 		select * from product order by price desc limit #{start},#{perpage}
+ 	</select>
 
+<!-- //////////////////////////////////////////////////////////////////////////////////////////// -->		
+ 	<!-- 카테고리탭 총 갯수 -->
     <select id="getTotalCountCategory" parameterType="HashMap" resultType="int">
-		select count(*) from product  where pro_sub=#{pro_sub}
+		select count(distinct p.pro_id)
+ 				from product p join pro_option po on 
+ 				p.pro_id=po.pro_id 
+ 				where p.pro_sub=#{pro_sub}
 		<if test="price_n==1">
 			and price_n=1
 		</if>
@@ -34,59 +77,47 @@
 		<if test="price_n==5">
 			and price_n=5
 		</if>	
-		</select>
-
-
-
-
-     	
- 	<select id="getAllLists" parameterType="HashMap" resultType="pdto">
- 		select * from product order by idx desc limit #{start},#{perpage}
- 	</select>
- 	
- 	<select id="getAllListsLowPri" parameterType="HashMap" resultType="pdto">
- 		select * from product order by price asc limit #{start},#{perpage}
- 	</select>
- 	
+		<if test="'202020'.equals(color)">
+ 			and color="202020"
+ 		</if>
+ 		<if test="'F6F6F6'.equals(color)">
+ 			and color="F6F6F6"
+ 		</if>
+ 		<if test="'cd1039'.equals(color)">
+ 			and color="cd1039"
+ 		</if>
+ 		<if test="'006400'.equals(color)">
+ 			and color="006400"
+ 		</if>
+ 		<if test="'323c73'.equals(color)">
+ 			and color="323c73"
+ 		</if>
+ 		<if test="'F5F5DC'.equals(color)">
+ 			and color="F5F5DC"
+ 		</if>
+ 		<if test="'aaaaaa'.equals(color)">
+ 			and color="aaaaaa"
+ 		</if>
+ 		<if test="'505050'.equals(color)">
+ 			and color="505050"
+ 		</if>
+	</select>
+	
+	<!-- 카테고리 가격 낮은순 -->
  	<select id="getAllCateLowPri" parameterType="HashMap" resultType="pdto">
- 		select * from product where  pro_sub=#{pro_sub} order by price asc limit #{start},#{perpage}
- 	</select>
- 	
- 	<select id="getAllListsHigPri" parameterType="HashMap" resultType="pdto">
- 		select * from product order by price desc limit #{start},#{perpage}
- 	</select>
- 	
- 	<select id="getAllCateHigPri" parameterType="HashMap" resultType="pdto">
- 		select * from product where  pro_sub=#{pro_sub} order by price desc limit #{start},#{perpage}
- 	</select>
- 	
- 	<select id="getAllOptions" parameterType="String" resultType="podto">
- 		select * from pro_option where pro_id=#{pro_id} order by num desc
- 	</select>
- 	
- 	<select id="getAllOp" parameterType="String" resultType="podto">
- 		select p.pro_id,po.color from product p join pro_option po on p.pro_id=po.pro_id
- 	</select>
- 	
- 	<select id="getData" parameterType="String" resultType="pdto">
- 		select * from product where idx=#{idx}
- 	</select>
- 	
- 	<select id="getCategory" parameterType="HashMap" resultMap="pdto">
- 		select 	p.idx,
+ 		select 	
+ 				p.idx,
  				p.pro_id,
  				p.pro_name,
  				p.price,
- 				p.stock,
  				p.pro_sub,
  				p.pro_photo,
  				p.readcount,
  				p.price_n,
- 				p.color_n,
  				po.color
- 				from product p join pro_option po on 
+ 				from product p left join pro_option po on 
  				p.pro_id=po.pro_id 
- 				where p.pro_sub=#{pro_sub}
+ 				where p.pro_sub=#{pro_sub} 
  		<if test='price_n=="1"'>
  			and <![CDATA[price<=10000]]>
  		</if>
@@ -102,60 +133,302 @@
  		<if test='price_n=="5"'>
  			and <![CDATA[price>100000]]>
  		</if>
- 		<if test="'000000'.equals(color)">
- 			and color="000000"
+ 		<if test="'202020'.equals(color)">
+ 			and color="202020"
+ 		</if>
+ 		<if test="'F6F6F6'.equals(color)">
+ 			and color="F6F6F6"
+ 		</if>
+ 		<if test="'cd1039'.equals(color)">
+ 			and color="cd1039"
+ 		</if>
+ 		<if test="'006400'.equals(color)">
+ 			and color="006400"
  		</if>
  		<if test="'323c73'.equals(color)">
  			and color="323c73"
  		</if>
- 		<if test="'0000cd'.equals(color)">
- 			and color="0000cd"
+ 		<if test="'F5F5DC'.equals(color)">
+ 			and color="F5F5DC"
  		</if>
- 		
- 		
- 		 order by p.idx desc limit #{start},#{perpage}
+ 		<if test="'aaaaaa'.equals(color)">
+ 			and color="aaaaaa"
+ 		</if>
+ 		<if test="'505050'.equals(color)">
+ 			and color="505050"
+ 		</if>
+
+ 		group by p.pro_id order by p.price asc limit #{start},#{perpage}
  	</select>
  	
+ 	<!-- 카테 가격 높은순 -->
+ 	<select id="getAllCateHigPri" parameterType="HashMap" resultType="pdto">
+ 		select 	
+ 				p.idx,
+ 				p.pro_id,
+ 				p.pro_name,
+ 				p.price,
+ 				p.pro_sub,
+ 				p.pro_photo,
+ 				p.readcount,
+ 				p.price_n,
+ 				po.color
+ 				from product p left join pro_option po on 
+ 				p.pro_id=po.pro_id 
+ 				where p.pro_sub=#{pro_sub} 
+ 		<if test='price_n=="1"'>
+ 			and <![CDATA[price<=10000]]>
+ 		</if>
+ 		<if test='price_n=="2"'>
+ 			and <![CDATA[10000<price and price<=30000]]>
+ 		</if>
+ 		<if test='price_n=="3"'>
+ 			and <![CDATA[30000<price and price<=50000]]>
+ 		</if>
+ 		<if test='price_n=="4"'>
+ 			and <![CDATA[50000<price and price<=100000]]>
+ 		</if>
+ 		<if test='price_n=="5"'>
+ 			and <![CDATA[price>100000]]>
+ 		</if>
+ 		<if test="'202020'.equals(color)">
+ 			and color="202020"
+ 		</if>
+ 		<if test="'F6F6F6'.equals(color)">
+ 			and color="F6F6F6"
+ 		</if>
+ 		<if test="'cd1039'.equals(color)">
+ 			and color="cd1039"
+ 		</if>
+ 		<if test="'006400'.equals(color)">
+ 			and color="006400"
+ 		</if>
+ 		<if test="'323c73'.equals(color)">
+ 			and color="323c73"
+ 		</if>
+ 		<if test="'F5F5DC'.equals(color)">
+ 			and color="F5F5DC"
+ 		</if>
+ 		<if test="'aaaaaa'.equals(color)">
+ 			and color="aaaaaa"
+ 		</if>
+ 		<if test="'505050'.equals(color)">
+ 			and color="505050"
+ 		</if>
+
+ 		group by p.pro_id order by p.price desc limit #{start},#{perpage}
+ 	</select>
+ 	
+ 	
+ 	<!-- 카테고리 다중 체크박스 -->
+ 	<select id="getCategory" parameterType="HashMap" resultMap="pdto">
+ 		select 	
+ 				p.idx,
+ 				p.pro_id,
+ 				p.pro_name,
+ 				p.price,
+ 				p.pro_sub,
+ 				p.pro_photo,
+ 				p.readcount,
+ 				p.price_n,
+ 				po.color
+ 				from product p left join pro_option po on 
+ 				p.pro_id=po.pro_id 
+ 				where p.pro_sub=#{pro_sub} 
+ 		<if test='price_n=="1"'>
+ 			and <![CDATA[price<=10000]]>
+ 		</if>
+ 		<if test='price_n=="2"'>
+ 			and <![CDATA[10000<price and price<=30000]]>
+ 		</if>
+ 		<if test='price_n=="3"'>
+ 			and <![CDATA[30000<price and price<=50000]]>
+ 		</if>
+ 		<if test='price_n=="4"'>
+ 			and <![CDATA[50000<price and price<=100000]]>
+ 		</if>
+ 		<if test='price_n=="5"'>
+ 			and <![CDATA[price>100000]]>
+ 		</if>
+ 		<if test="'202020'.equals(color)">
+ 			and color="202020"
+ 		</if>
+ 		<if test="'F6F6F6'.equals(color)">
+ 			and color="F6F6F6"
+ 		</if>
+ 		<if test="'cd1039'.equals(color)">
+ 			and color="cd1039"
+ 		</if>
+ 		<if test="'006400'.equals(color)">
+ 			and color="006400"
+ 		</if>
+ 		<if test="'323c73'.equals(color)">
+ 			and color="323c73"
+ 		</if>
+ 		<if test="'F5F5DC'.equals(color)">
+ 			and color="F5F5DC"
+ 		</if>
+ 		<if test="'aaaaaa'.equals(color)">
+ 			and color="aaaaaa"
+ 		</if>
+ 		<if test="'505050'.equals(color)">
+ 			and color="505050"
+ 		</if>
+
+ 		group by p.pro_id order by p.idx desc limit #{start},#{perpage}
+ 	</select>
+	
+<!-- //////////////////////////////////////////////////////////////////////////////////////////// -->	
+ 	
+ 	<!-- 검색 총 갯수 -->	
+	<select id="getSearchCount" resultType="int">
+		select count(*) from product where pro_name like concat('%',#{keyword},'%')
+ 	</select>
+ 	
+    <!-- 검색 -->
+	<select id="getSearch" parameterType="HashMap" resultType="pdto">
+		select * from product where pro_name like concat('%',#{keyword},'%') order by idx desc limit #{start},#{perpage}
+	</select>
+ 	
+	<!-- 검색 낮은 가격순 정렬 -->
+	<select id="getSearchLowPri" parameterType="HashMap" resultType="pdto">
+		select * from product where pro_name like concat('%',#{keyword},'%') order by price asc limit #{start},#{perpage}
+	</select>
+	<!-- 검색 높은 가격순 정렬 -->
+	<select id="getSearchHigPri" parameterType="HashMap" resultType="pdto">
+		select * from product where pro_name like concat('%',#{keyword},'%') order by price desc limit #{start},#{perpage}
+	</select>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////// -->		
+ 	
+ 	
+ 	<!-- 조회수 -->
  	<update id="updateReadCount" parameterType="String">
       	update product set readcount=readcount+1 where idx=#{idx}
     </update>
+ 
+ <!-- //////////////////////////////////////////////////////////////////////////////////////////// -->		  
     
+    <!-- 가격순 list 출력 -->
     <select id="getPriceList" parameterType="HashMap" resultType="pdto">
- 		select * from product where <![CDATA[price<=10000]]> order by idx desc limit #{start},#{perpage}
+ 		select * from product where price_n=#{price_n}
+ 		<if test="price_n==1">
+ 			and <![CDATA[price<=10000]]>
+ 		</if>
+ 		<if test="price_n==2">
+ 			and <![CDATA[10000<price and price<=30000]]>
+ 		</if>
+ 		<if test="price_n==3">
+ 			and <![CDATA[30000<price and price<=50000]]>
+ 		</if>
+ 		<if test="price_n==4">
+ 			and <![CDATA[50000<price and price<=100000]]>
+ 		</if>
+ 		<if test="price_n==5">
+ 			and <![CDATA[price>100000]]>
+ 		</if>
+ 		
+ 		 order by idx desc limit #{start},#{perpage}
+ 	</select>
+    
+    <!-- 가격 낮은순 -->
+    <select id="getPriceListLowPri" parameterType="HashMap" resultType="pdto">
+ 		select * from product where price_n=#{price_n}
+ 		<if test="price_n==1">
+ 			and <![CDATA[price<=10000]]>
+ 		</if>
+ 		<if test="price_n==2">
+ 			and <![CDATA[10000<price and price<=30000]]>
+ 		</if>
+ 		<if test="price_n==3">
+ 			and <![CDATA[30000<price and price<=50000]]>
+ 		</if>
+ 		<if test="price_n==4">
+ 			and <![CDATA[50000<price and price<=100000]]>
+ 		</if>
+ 		<if test="price_n==5">
+ 			and <![CDATA[price>100000]]>
+ 		</if>
+ 		
+ 		 order by price asc limit #{start},#{perpage}
  	</select>
  	
- 	<select id="getPriceAllCount" resultType="int">
- 		select count(*) from product where <![CDATA[price<=10000]]>
+ 	<!-- 가격게시판 높은순 -->
+    <select id="getPriceListHigPri" parameterType="HashMap" resultType="pdto">
+ 		select * from product where price_n=#{price_n}
+ 		<if test="price_n==1">
+ 			and <![CDATA[price<=10000]]>
+ 		</if>
+ 		<if test="price_n==2">
+ 			and <![CDATA[10000<price and price<=30000]]>
+ 		</if>
+ 		<if test="price_n==3">
+ 			and <![CDATA[30000<price and price<=50000]]>
+ 		</if>
+ 		<if test="price_n==4">
+ 			and <![CDATA[50000<price and price<=100000]]>
+ 		</if>
+ 		<if test="price_n==5">
+ 			and <![CDATA[price>100000]]>
+ 		</if>
+ 		
+ 		 order by price desc limit #{start},#{perpage}
+ 	</select>
+ 	
+ 	<!-- 가격게시판 총 갯수 -->
+ 	<select id="getPriceAllCount" parameterType="String" resultType="int">
+ 		select count(*) from product where price_n=#{price_n}
+ 		
+ 		<if test="price_n==1">
+ 			and <![CDATA[price<=10000]]>
+ 		</if>
+ 		<if test="price_n==2">
+ 			and <![CDATA[10000<price and price<=30000]]>
+ 		</if>
+ 		<if test="price_n==3">
+ 			and <![CDATA[30000<price and price<=50000]]>
+ 		</if>
+ 		<if test="price_n==4">
+ 			and <![CDATA[50000<price and price<=100000]]>
+ 		</if>
+ 		<if test="price_n==5">
+ 			and <![CDATA[price>100000]]>
+ 		</if>
     </select>
     
+<!-- ////////////////////////////////////////미선이꺼////////////////////////////////////////////////// -->    
     <update id="updateProduct" parameterType="pdto">
-   		update product set pro_id=#{pro_id},pro_name=#{pro_name},price=#{price},stock=#{stock},pro_sub=#{pro_sub},pro_content=#{pro_content}
+   		update product set pro_id=#{pro_id},pro_name=#{pro_name},price=#{price},pro_sub=#{pro_sub},pro_content=#{pro_content}
    		<if test="pro_photo!=null">
      	,pro_photo=#{pro_photo}
    		</if>
    		where idx=#{idx}
 	</update> 
-<!-- ////////////////////////////////////////미선이꺼////////////////////////////////////////////////// -->
+
 	<select id="getJoinList" parameterType="HashMap" resultMap="podto">
-		SELECT p.idx, o.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
+		SELECT p.idx, o.num, o.pro_id, p.pro_name, p.price, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.color_name, o.c_size, o.su
 		FROM product p JOIN pro_option o ON p.pro_id=o.pro_id ORDER BY o.pro_id limit #{start},#{perpage}
 	</select>
 	
 	<select id="getJoinListLeft" parameterType="HashMap" resultMap="podto">
-		SELECT p.idx, o.num, p.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
+		SELECT p.idx, o.num, p.pro_id, p.pro_name, p.price, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.color_name, o.c_size, o.su
 		FROM product p LEFT JOIN pro_option o ON p.pro_id=o.pro_id ORDER BY o.pro_id limit #{start},#{perpage}
 	</select>
 	
 	<select id="getJoinNum" parameterType="HashMap" resultMap="podto">
-		SELECT p.idx, o.num, p.pro_id, p.pro_name, p.price, p.stock, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color, o.s, o.m, o.l
-		from product p join pro_option o on p.pro_id=o.pro_id where p.idx=#{idx} AND o.color=#{color} order by o.num
+		SELECT p.idx, o.num, p.pro_id, p.pro_name, p.price, p.pro_sub, p.pro_photo, p.pro_content, p.ipgoday, o.color,o.color_name, o.c_size, o.su
+		from product p join pro_option o on p.pro_id=o.pro_id where p.idx=#{idx} AND o.color=#{color} AND p.pro_id=#{pro_id} order by o.num
 	</select>
 	
 	<update id="updateOption" parameterType="podto">
-		   UPDATE pro_option o inner join product p
-		   on o.pro_id=p.pro_id
-		   set o.pro_id=#{pro_id}, o.color=#{color}
-		   where o.num=#{num}
+		   UPDATE pro_option
+		   set color=#{color},color_name=#{color_name},c_size=#{c_size}
+		   where num=#{num}
+	</update>
+	
+	<update id="updateSu" parameterType="podto">
+		   UPDATE pro_option
+		   set su=#{su}
+		   where num=#{num}
 	</update>
 
 
@@ -183,13 +456,12 @@ delete from product where idx=#{idx}
 		<result column="pro_name" property="pro_name"/>
 		<result column="pro_id" property="pro_id"/>
 		<result column="price" property="price"/>
-		<result column="stock" property="stock"/>
 		<result column="pro_sub" property="pro_sub"/>
 		<result column="pro_photo" property="pro_photo"/>
 		<result column="pro_content" property="pro_content"/>
 		<result column="ipgoday" property="ipgoday"/>
 		<result column="price_n" property="price_n"/>
-		<result column="color_n" property="color_n"/>
+		
 		<collection property="joindto2" resultMap="podto"/>
 	</resultMap>
 
@@ -197,10 +469,10 @@ delete from product where idx=#{idx}
 	   <result column="num" property="num"/>
 	   <result column="pro_id" property="pro_id"/>
 	   <result column="color" property="color"/>
-	   <result column="s" property="s"/>
-	   <result column="m" property="m"/>
-	   <result column="l" property="l"/>
-
+	   <result column="color_name" property="color_name"/>
+	   <result column="c_size" property="c_size"/>
+	   <result column="su" property="su"/>
+	  
 	<collection property="joindto" resultMap="pdto"/>
 	</resultMap>
     
