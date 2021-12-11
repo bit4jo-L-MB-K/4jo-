@@ -11,8 +11,8 @@
 </head>
 <body>
 <form action="finsert" method="post">
-		<table class="table table-bordered" style="width: 770px;">
-			<h2>자주묻는 질문 추가하기</h2>
+		<table class="table table-bordered" style="width: 700px; margin: 10px auto 30px auto;">
+			<h2 style="text-align: center; font-size: 25px;">자주묻는 질문 추가하기</h2>
 			<tr>
 				<th>카테고리</th>
 				<td>

@@ -18,6 +18,14 @@ public class InquiryDto {
 	private String uploadfile;
 	private MultipartFile upload;
 	private Timestamp writeday;
+	private int acount;
+	
+	public int getAcount() {
+		return acount;
+	}
+	public void setAcount(int acount) {
+		this.acount = acount;
+	}
 	public String getNum() {
 		return num;
 	}

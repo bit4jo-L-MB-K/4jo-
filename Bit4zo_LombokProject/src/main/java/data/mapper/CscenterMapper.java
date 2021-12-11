@@ -37,6 +37,9 @@ public interface CscenterMapper {
 	public List<FaqDto> etcList(HashMap<String, Integer> map);
 
 	public void insertInquiry(InquiryDto idto);
-	
+	public List<InquiryDto> getInqList(HashMap<String, Integer> map);
+	public int getInqTotalCount();
+	public InquiryDto getInqData(String num);
+	public void updateAcount(InquiryDto idto);
 	
 }

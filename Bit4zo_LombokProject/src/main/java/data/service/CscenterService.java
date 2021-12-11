@@ -121,4 +121,22 @@ public class CscenterService {
 		mapper.insertInquiry(idto);
 	}
 	
+	public int getInqTotalCount() {
+		return mapper.getInqTotalCount();
+	}
+	
+	public List<InquiryDto> getInqList(int start, int perpage){
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("start", start);
+		map.put("perpage", perpage);
+		return mapper.getInqList(map);
+	}
+	
+	public InquiryDto getInqData(String num) {
+		return mapper.getInqData(num);
+	}
+	
+	public void updateAcount(InquiryDto idto) {
+		mapper.updateAcount(idto);
+	}
 }

@@ -17,8 +17,8 @@
 </head>
 <body>
     <form action="ninsert" method="post">
-		<table class="table table-bordered" style="width: 770px;">
-			<h1>공지사항 추가 게시판</h1>
+		<table class="table table-bordered" style="width: 700px; margin: 10px auto 30px auto;">
+			<h1 style="text-align: center; font-size: 25px;">공지사항 추가 게시판</h1>
 			<tr>
 				<th>카테고리</th>
 				<td>
@@ -32,14 +32,14 @@
 			<tr>
 				<th>제목</th>
 				<td>
-				<input type="text" name="nsubject" class="form-text" style="width: 500px; height: 30px;">
+				<input type="text" name="nsubject" class="form-text" style="width: 500px; height: 30px;" required="required">
 				</td>
 			</tr>
 			<tr>
 				<th>내용</th>
 				<td>
 					<textarea name="ncontent" style="width: 500px; height: 100px;" 
-					onfocus="textCheck('#inquiryContent',5000);" class="form-text"></textarea>
+					onfocus="textCheck('#inquiryContent',5000);" class="form-text" required="required"></textarea>
 				</td>
 			</tr>
             <tr>
