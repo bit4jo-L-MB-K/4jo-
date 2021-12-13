@@ -13,8 +13,8 @@
 <form action="fupdate" method="post">
 	<input type="hidden" name="num" value="${fdto.num}">
 	
-		<table class="table table-bordered" style="width: 770px;">
-			<h2>자주묻는 질문 수정하기</h2>
+		<table class="table table-bordered" style="width: 770px; margin: 0 auto;">
+			<h2 style="text-align: center; font-size: 25px;">자주묻는 질문 수정하기</h2>
 			<tr>
 				<th>카테고리</th>
 				<td>
@@ -32,14 +32,14 @@
 			<tr>
 				<th>제목</th>
 				<td>
-				<input type="text" name="ftitle" class="form-text" style="width: 500px; height: 30px;"
+				<input type="text" name="ftitle" class="form-text" style="width: 600px; height: 30px;"
 				required="required" value="${fdto.ftitle}">
 				</td>
 			</tr>
 			<tr>
 				<th>내용</th>
 				<td>
-					<textarea name="fcontent" style="width: 500px; height: 100px;" 
+					<textarea name="fcontent" style="width: 600px; height: 100px;" 
 					onfocus="textCheck('#inquiryContent',5000);" class="form-text" required="required">${fdto.fcontent}</textarea>
 				</td>
 			</tr>
