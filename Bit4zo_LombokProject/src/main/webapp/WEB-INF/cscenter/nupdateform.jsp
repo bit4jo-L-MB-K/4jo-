@@ -18,8 +18,8 @@
 <body>
     <form action="nupdate" method="post">
     <input type="hidden" name="num" value="${ndto.num}">
-		<table class="table table-bordered" style="width: 770px;">
-			<h1>공지사항 수정 게시판</h1>
+		<table class="table table-bordered" style="width: 770px; margin: 0 auto;">
+			<h1 style="text-align: center; font-size: 25px;">공지사항 수정 게시판</h1>
 			<tr>
 				<th>카테고리</th>
 				<td>
@@ -33,14 +33,14 @@
 			<tr>
 				<th>제목</th>
 				<td>
-				<input type="text" name="nsubject" class="form-text" style="width: 500px; height: 30px;"
+				<input type="text" name="nsubject" class="form-text" style="width: 600px; height: 30px;"
 				required="required" value="${ndto.nsubject}">
 				</td>
 			</tr>
 			<tr>
 				<th>내용</th>
 				<td>
-					<textarea name="ncontent" style="width: 500px; height: 100px;" 
+					<textarea name="ncontent" style="width: 600px; height: 100px;" 
 					onfocus="textCheck('#inquiryContent',5000);" class="form-text" required="required">${ndto.ncontent}</textarea>
 				</td>
 			</tr>
